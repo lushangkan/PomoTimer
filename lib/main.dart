@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pomotimer/routes/app_routes.dart';
-import 'package:pomotimer/themes/default_theme.dart';
+import 'package:pomotimer/themes/app_theme.dart';
 import 'package:pomotimer/widgets/states/main_states.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +14,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppTheme appTheme = AppTheme();
+
     return ChangeNotifierProvider(
       create: (context) => MainStates(),
       child: MaterialApp.router(
         title: 'PomoTimer',
         routerConfig: routes,
         // TODO: 用户自定义主题
-        theme: defThemeLight,
-        darkTheme: defThemeDark,
+        theme: appTheme.getThemeData('default', false),
+        darkTheme: appTheme.getThemeData('default', true),
         themeMode: ThemeMode.system,
 
         // i18n
