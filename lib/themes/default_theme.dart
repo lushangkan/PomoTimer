@@ -4,13 +4,19 @@ import 'package:from_css_color/from_css_color.dart';
 final defThemeLight = ThemeData(
   useMaterial3: true,
   colorScheme: defColorSchemeLight,
-  fontFamily: 'MiSans'
+  fontFamily: 'MiSans',
+  highlightColor: fromCssColor('#c2beb2'),
+  splashColor: fromCssColor('#c2beb2'),
+  hoverColor: fromCssColor('#c2beb2'),
 );
 
 final defThemeDark = ThemeData(
   useMaterial3: true,
   colorScheme: defColorSchemeDark,
-  fontFamily: 'MiSans'
+  fontFamily: 'MiSans',
+  highlightColor: fromCssColor('#c2beb2'),
+  splashColor: fromCssColor('#c2beb2'),
+  hoverColor: fromCssColor('#c2beb2'),
 );
 
 final defColorSchemeLight = ColorScheme.light(
@@ -31,7 +37,7 @@ final defColorSchemeLight = ColorScheme.light(
   errorContainer: fromCssColor('#FFE8E1'),
   onErrorContainer: fromCssColor('#333333'),
   background: fromCssColor('#F5F0E4'),
-  onBackground: fromCssColor('#c2beb2'),
+  onBackground: fromCssColor('#5c5c5c'),
   surface: fromCssColor('#c2beb2'),
   onSurface: fromCssColor('#5c5c5c'),
 );
@@ -54,7 +60,7 @@ final defColorSchemeDark = ColorScheme.light(
   errorContainer: fromCssColor('#AF001A'),
   onErrorContainer: fromCssColor('#FFFFFF'),
   background: fromCssColor('#1A1A1A'),
-  onBackground: fromCssColor('#404040'),
+  onBackground: fromCssColor('#5c5c5c'),
   surface: fromCssColor('#404040'),
   onSurface: fromCssColor('#e0e0e0'),
 );
