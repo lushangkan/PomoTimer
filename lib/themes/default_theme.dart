@@ -3,7 +3,7 @@ import 'package:from_css_color/from_css_color.dart';
 
 final defThemeLight = ThemeData(
   useMaterial3: true,
-  colorScheme: defColorSchemeLight,
+  colorScheme: _defColorSchemeLight,
   fontFamily: 'MiSans',
   highlightColor: fromCssColor('#c2beb2'),
   splashColor: fromCssColor('#c2beb2'),
@@ -12,14 +12,14 @@ final defThemeLight = ThemeData(
 
 final defThemeDark = ThemeData(
   useMaterial3: true,
-  colorScheme: defColorSchemeDark,
+  colorScheme: _defColorSchemeDark,
   fontFamily: 'MiSans',
   highlightColor: fromCssColor('#c2beb2'),
   splashColor: fromCssColor('#c2beb2'),
   hoverColor: fromCssColor('#c2beb2'),
 );
 
-final defColorSchemeLight = ColorScheme.light(
+final _defColorSchemeLight = ColorScheme.light(
   primary: fromCssColor('#FFB366'),
   onPrimary: fromCssColor('#935606'),
   primaryContainer: fromCssColor('#FFC488'),
@@ -42,7 +42,7 @@ final defColorSchemeLight = ColorScheme.light(
   onSurface: fromCssColor('#5c5c5c'),
 );
 
-final defColorSchemeDark = ColorScheme.light(
+final _defColorSchemeDark = ColorScheme.light(
   primary: fromCssColor('#FFB366'),
   onPrimary: fromCssColor('#ffffa1'),
   primaryContainer: fromCssColor('#EE7800'),

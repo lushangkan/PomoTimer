@@ -44,6 +44,8 @@ dependencies:
   go_router: ^13.0.1
   flutter_localizations:
     sdk: flutter
+  kotlin_flavor: ^0.2.0
+  tuple: ^2.0.2
 
 dependency_overrides:
   intl: ^0.19.0
@@ -76,7 +78,8 @@ flutter:
   fonts:
     - family: MiSans
       fonts:
-        - asset: assets/fonts/misans/MiSans_VF.woff2
+        - asset: assets/fonts/misans/MiSans_VF.ttf
+
 
 flutter_launcher_icons:
   android: true
@@ -86,3 +89,7 @@ flutter_launcher_icons:
   adaptive_icon_background: "#F5F0E4"
   min_sdk_android: 21
   remove_alpha_ios: true
+
+flutter_intl:
+  enabled: true
+  main_locale: zh
