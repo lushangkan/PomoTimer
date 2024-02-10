@@ -1,7 +1,10 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:from_css_color/from_css_color.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:pomotimer/app_text_style.dart';
 import 'package:pomotimer/widgets/measure_widget.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../generated/l10n.dart';
@@ -71,7 +74,7 @@ class _TimerControllerState extends State<TimerController> {
     var theme = Theme.of(context);
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         AttributeSwitcher(
           key: switchKey,
@@ -79,6 +82,9 @@ class _TimerControllerState extends State<TimerController> {
           onSelected: (selected) => setState(() {
             this.selected = selected;
           }),
+        ),
+        const AttributeMonitor(
+          inProgress: false,
         ),
       ],
     );
@@ -100,7 +106,8 @@ class AttributeSwitcher extends StatefulWidget {
   State<AttributeSwitcher> createState() => _AttributeSwitcherState();
 }
 
-class _AttributeSwitcherState extends State<AttributeSwitcher> with AutomaticKeepAliveClientMixin  {
+class _AttributeSwitcherState extends State<AttributeSwitcher>
+    with AutomaticKeepAliveClientMixin {
   var _selected = 0;
   final List<Tuple2<Size, Offset>> _btnInfos = [
     const Tuple2(Size.zero, Offset.zero),
@@ -152,7 +159,8 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> with AutomaticKee
   Widget build(BuildContext context) {
     super.build(context);
 
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    ThemeData theme = Theme.of(context);
+    ColorScheme colorScheme = theme.colorScheme;
 
     return Stack(
       children: [
@@ -170,6 +178,14 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> with AutomaticKee
                   decoration: BoxDecoration(
                     color: colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(80),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.primary.withOpacity(0.25),
+                        spreadRadius: 4,
+                        blurRadius: 5,
+                        offset: Offset.zero,
+                      ),
+                    ],
                   ),
                 ),
               )),
@@ -284,6 +300,87 @@ class AttributeSplitter extends StatelessWidget {
       ),
       height: 4,
       width: 4,
+    );
+  }
+}
+
+class AttributeMonitor extends StatelessWidget {
+  const AttributeMonitor({super.key, required this.inProgress});
+
+  final bool inProgress;
+
+  @override
+  Widget build(BuildContext context) {
+    if (inProgress) {
+      return const TimeDisplay();
+    } else {
+      return const AttributeSelector();
+    }
+  }
+}
+
+// TODO: 专注次数显示
+
+class AttributeSelector extends StatelessWidget {
+  const AttributeSelector({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    ColorScheme colorScheme = theme.colorScheme;
+
+    return SleekCircularSlider(
+      min: 0,
+      max: 100,
+      initialValue: 3,
+      innerWidget: (double value) => Center(
+        child: Text(
+          "${value.toInt()}%",
+          style: AppTextStyle.generate(
+            fontWeight: FontWeight.w300,
+            fontSize: 25,
+          ),
+        ),
+      ),
+      appearance: CircularSliderAppearance(
+        size: 238,
+        customWidths: CustomSliderWidths(
+          trackWidth: 11,
+          progressBarWidth: 30,
+          shadowWidth: 30 * 1.4,
+          handlerSize: 5,
+        ),
+        customColors: CustomSliderColors(
+          // 背景颜色
+          trackColor: colorScheme.surface.withOpacity(0.35),
+          // 进度条颜色
+          progressBarColors: [
+            colorScheme.primary,
+            colorScheme.primary.lighten(5)
+          ],
+          dynamicGradient: true,
+          dotColor: fromCssColor('#F3F3F3'),
+          shadowColor: colorScheme.primary.withOpacity(0.25),
+          shadowMaxOpacity: 0.19,
+          shadowStep: 1.2,
+        ),
+        startAngle: 270,
+        angleRange: 360,
+      ),
+      onChange: (double value) {
+        print(value);
+      },
+    );
+  }
+}
+
+class TimeDisplay extends StatelessWidget {
+  const TimeDisplay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('TimeDisplay'),
     );
   }
 }

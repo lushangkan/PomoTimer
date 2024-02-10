@@ -19,7 +19,9 @@ final defThemeDark = ThemeData(
   hoverColor: fromCssColor('#c2beb2'),
 );
 
-final _defColorSchemeLight = ColorScheme.light(
+final _defColorSchemeLight = ColorScheme.fromSeed(
+  brightness: Brightness.light,
+  seedColor: fromCssColor('#FFB366'),
   primary: fromCssColor('#FFB366'),
   onPrimary: fromCssColor('#935606'),
   primaryContainer: fromCssColor('#FFC488'),
@@ -42,7 +44,9 @@ final _defColorSchemeLight = ColorScheme.light(
   onSurface: fromCssColor('#5c5c5c'),
 );
 
-final _defColorSchemeDark = ColorScheme.light(
+final _defColorSchemeDark = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: fromCssColor('#FFB366'),
   primary: fromCssColor('#FFB366'),
   onPrimary: fromCssColor('#ffffa1'),
   primaryContainer: fromCssColor('#EE7800'),
