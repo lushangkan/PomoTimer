@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:pomotimer/app_text_style.dart';
+import 'package:pomotimer/states/main_states.dart';
 import 'package:pomotimer/widgets/measure_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -73,6 +75,8 @@ class _TimerControllerState extends State<TimerController> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
+    var mainStates = context.watch<MainStates>();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -83,9 +87,13 @@ class _TimerControllerState extends State<TimerController> {
             this.selected = selected;
           }),
         ),
-        const AttributeMonitor(
-          inProgress: false,
-        ),
+        Builder(builder: (context) {
+          if (mainStates.timerRunning == true) {
+            return const TimeDisplay();
+          } else {
+            return const AttributeSelector();
+          }
+        })
       ],
     );
   }
@@ -301,21 +309,6 @@ class AttributeSplitter extends StatelessWidget {
       height: 4,
       width: 4,
     );
-  }
-}
-
-class AttributeMonitor extends StatelessWidget {
-  const AttributeMonitor({super.key, required this.inProgress});
-
-  final bool inProgress;
-
-  @override
-  Widget build(BuildContext context) {
-    if (inProgress) {
-      return const TimeDisplay();
-    } else {
-      return const AttributeSelector();
-    }
   }
 }
 
