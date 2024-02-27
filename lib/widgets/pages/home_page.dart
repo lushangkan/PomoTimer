@@ -60,6 +60,8 @@ class HomeBody extends StatelessWidget {
   }
 }
 
+enum Attribute { focus, shortBreak, longBreak }
+
 class TimerController extends StatefulWidget {
   const TimerController({super.key});
 
@@ -68,7 +70,7 @@ class TimerController extends StatefulWidget {
 }
 
 class _TimerControllerState extends State<TimerController> {
-  var selected = 0;
+  Attribute selected = Attribute.focus;
   var switchKey = GlobalKey();
 
   @override
@@ -100,15 +102,11 @@ class _TimerControllerState extends State<TimerController> {
 }
 
 class AttributeSwitcher extends StatefulWidget {
-  AttributeSwitcher(
-      {super.key, required this.selected, required this.onSelected}) {
-    if (selected < 0 || selected > 2) {
-      throw Exception('selected must be in [0, 2]');
-    }
-  }
+  const AttributeSwitcher(
+      {super.key, required this.selected, required this.onSelected});
 
-  final int selected;
-  final void Function(int) onSelected;
+  final Attribute selected;
+  final void Function(Attribute) onSelected;
 
   @override
   State<AttributeSwitcher> createState() => _AttributeSwitcherState();
@@ -116,15 +114,15 @@ class AttributeSwitcher extends StatefulWidget {
 
 class _AttributeSwitcherState extends State<AttributeSwitcher>
     with AutomaticKeepAliveClientMixin {
-  var _selected = 0;
-  final List<Tuple2<Size, Offset>> _btnInfos = [
-    const Tuple2(Size.zero, Offset.zero),
-    const Tuple2(Size.zero, Offset.zero),
-    const Tuple2(Size.zero, Offset.zero),
-  ];
+  var _selected = Attribute.focus;
+  final Map<Attribute, Tuple2<Size, Offset>> _btnInfos = {
+    Attribute.focus: const Tuple2(Size.zero, Offset.zero),
+    Attribute.shortBreak:  const Tuple2(Size.zero, Offset.zero),
+    Attribute.longBreak: const Tuple2(Size.zero, Offset.zero),
+  };
   Offset? _rowPos;
 
-  set setSelect(int index) {
+  set setSelect(Attribute index) {
     setState(() {
       _selected = index;
     });
@@ -136,27 +134,27 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
     return Offset(pos.dx - rowPos.dx, pos.dy - rowPos.dy);
   }
 
-  Offset _getLocPos(int index) {
+  Offset _getLocPos(Attribute index) {
     if (_btnInfos.length != 3) return Offset.zero;
     if (_rowPos == null) return Offset.zero;
 
     var btnInfo = _btnInfos[index];
-    var btnPos = btnInfo.item2;
+    var btnPos = btnInfo!.item2;
     var rowPos = _rowPos!;
     return _globalToLocal(btnPos, rowPos);
   }
 
-  Size _getBtnSize(int index) {
+  Size _getBtnSize(Attribute index) {
     if (_btnInfos.length != 3) return Size.zero;
-    return _btnInfos[index].item1;
+    return _btnInfos[index]!.item1;
   }
 
   bool _isReady() {
-    return _btnInfos.every((element) => element.item1 != Size.zero) &&
-        _btnInfos.every((element) => element.item2 != Offset.zero);
+    return _btnInfos.values.every((element) => element.item1 != Size.zero) &&
+        _btnInfos.values.every((element) => element.item2 != Offset.zero);
   }
 
-  void _onPressed(int index) {
+  void _onPressed(Attribute index) {
     setState(() {
       _selected = index;
     });
@@ -212,12 +210,12 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
                 AttributeBtn(
                   onSizeChange: (size, pos) {
                     setState(() {
-                      _btnInfos[0] = Tuple2(size, pos);
+                      _btnInfos[Attribute.focus] = Tuple2(size, pos);
                     });
                   },
                   text: '专注',
                   onPressed: () {
-                    _onPressed(0);
+                    _onPressed(Attribute.focus);
                   },
                 ),
                 const AttributeSplitter(),
@@ -225,23 +223,23 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
                   text: '小休息',
                   onSizeChange: (size, pos) {
                     setState(() {
-                      _btnInfos[1] = Tuple2(size, pos);
+                      _btnInfos[Attribute.shortBreak] = Tuple2(size, pos);
                     });
                   },
                   onPressed: () {
-                    _onPressed(1);
+                    _onPressed(Attribute.shortBreak);
                   },
                 ),
                 const AttributeSplitter(),
                 AttributeBtn(
                   onSizeChange: (size, pos) {
                     setState(() {
-                      _btnInfos[2] = Tuple2(size, pos);
+                      _btnInfos[Attribute.longBreak] = Tuple2(size, pos);
                     });
                   },
                   text: '大休息',
                   onPressed: () {
-                    _onPressed(2);
+                    _onPressed(Attribute.longBreak);
                   },
                 ),
               ],
