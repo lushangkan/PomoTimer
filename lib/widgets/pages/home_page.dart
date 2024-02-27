@@ -322,49 +322,122 @@ class AttributeSelector extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
 
+    const double sliderSize = 229;
+    const double progressBarWidth = 33;
+    const double innerSize = sliderSize - progressBarWidth * 2;
+
     return SleekCircularSlider(
       min: 0,
       max: 100,
       initialValue: 3,
-      innerWidget: (double value) => Center(
-        child: Text(
-          "${value.toInt()}%",
-          style: AppTextStyle.generate(
-            fontWeight: FontWeight.w300,
-            fontSize: 25,
-          ),
-        ),
-      ),
-      appearance: CircularSliderAppearance(
-        size: 238,
-        customWidths: CustomSliderWidths(
-          trackWidth: 11,
-          progressBarWidth: 30,
-          shadowWidth: 30 * 1.4,
-          handlerSize: 5,
-        ),
-        customColors: CustomSliderColors(
-          // 背景颜色
-          trackColor: colorScheme.surface.withOpacity(0.35),
-          // 进度条颜色
-          progressBarColors: [
-            colorScheme.primary,
-            colorScheme.primary.lighten(5)
-          ],
-          dynamicGradient: true,
-          dotColor: fromCssColor('#F3F3F3'),
-          shadowColor: colorScheme.primary.withOpacity(0.25),
-          shadowMaxOpacity: 0.19,
-          shadowStep: 1.2,
-        ),
-        startAngle: 270,
-        angleRange: 360,
+      innerWidget: (double value) => CircularSliderInner(size: innerSize, value: value),
+      appearance: AppCircularSliderAppearance(
+        sliderSize: sliderSize,
+        progressWidth: progressBarWidth,
+        colorScheme: colorScheme
       ),
       onChange: (double value) {
         print(value);
       },
     );
   }
+}
+
+class CircularSliderInner extends StatelessWidget {
+  const CircularSliderInner({super.key, required this.size, required this.value});
+
+  final double size;
+  final double value;
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    ColorScheme colorScheme = theme.colorScheme;
+
+    TextStyle? textTheme = AppTextStyle.generateWithTextStyle(theme.textTheme.headlineMedium!);
+
+    return Center(
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(9999),
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.surface.lighten(3).withOpacity(0.3),
+                blurRadius: 10,
+                spreadRadius: 5,
+              )
+            ],
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                colorScheme.primary.lighten(10).withOpacity(0.4),
+                colorScheme.secondary.lighten(10).withOpacity(0.4),
+              ],
+            ),
+        ),
+        child: Center(
+            child: Container(
+              width: size - 26,
+              height: size - 26,
+              decoration: BoxDecoration(
+                  color: colorScheme.background,
+                  borderRadius: BorderRadius.circular(9999)
+              ),
+              child: Center(
+                child: Text(
+                  value.toInt().toString(),
+                  style: textTheme,
+                ),
+              ),
+            )
+        ),
+      ),
+    );
+  }
+
+}
+
+class AppCircularSliderAppearance extends CircularSliderAppearance {
+  AppCircularSliderAppearance({
+    required this.sliderSize,
+    required this.progressWidth,
+    required this.colorScheme
+  }) : super(
+    size: sliderSize,
+    customWidths: CustomSliderWidths(
+      trackWidth: progressWidth,
+      progressBarWidth: progressWidth,
+      shadowWidth: 30 * 1.4,
+      handlerSize: 6,
+    ),
+    customColors: CustomSliderColors(
+      // 背景颜色
+      trackColor: colorScheme.surface.withOpacity(0.35),
+      // 进度条颜色
+      progressBarColors: [
+        colorScheme.primary,
+        colorScheme.secondary,
+      ],
+      gradientStartAngle: 270,
+      gradientEndAngle: 270 + 180,
+      dynamicGradient: false,
+      dotColor: fromCssColor('#F3F3F3'),
+      shadowColor: colorScheme.primary.withOpacity(0.25),
+      shadowMaxOpacity: 0.19,
+      shadowStep: 1.2,
+    ),
+    startAngle: 270,
+    angleRange: 360,
+  );
+
+  final double sliderSize;
+  final double progressWidth;
+  final ColorScheme colorScheme;
+
 }
 
 class TimeDisplay extends StatelessWidget {

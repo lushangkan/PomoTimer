@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:core';
+
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pomotimer/common/logger.dart';
-import 'package:pomotimer/common/string_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:reflectable/reflectable.dart';
 
 import '../common/reflector.dart';
 
@@ -13,6 +12,7 @@ part 'main_states.g.dart';
 
 @reflector
 @JsonSerializable()
+// TODO: 完善单元测试
 class MainStates extends ChangeNotifier {
   /// @loadFromStorage 是否从储存中加载
 
@@ -72,7 +72,7 @@ class MainStates extends ChangeNotifier {
     dynamic json;
 
     try {
-      json = jsonDecode(jsonText!);
+      json = jsonDecode(jsonText);
       if (json != null) {
         json = json as Map<String, dynamic>;
       } else {
