@@ -46,7 +46,10 @@ dependencies:
     sdk: flutter
   kotlin_flavor: ^0.2.0
   tuple: ^2.0.2
-  sleek_circular_slider: ^2.0.1
+  sleek_circular_slider:
+    git:
+      url: https://github.com/uniquetrij/sleek_circular_slider.git
+      ref: master
   reflectable: ^4.0.5
   logger: ^2.0.2+1
 #  json_reflectable: ^1.0.1

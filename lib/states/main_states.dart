@@ -3,6 +3,7 @@ import 'dart:core';
 
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pomotimer/common/attribute.dart';
 import 'package:pomotimer/common/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +19,12 @@ class MainStates extends ChangeNotifier {
 
   bool? timerRunning; // 是否正在执行中
   DateTime? startTime; // 开始时间
+
+  Map<Attribute, int> get customTimes => {
+    Attribute.focus: customFocusTime!,
+    Attribute.shortBreak: customShortBreakTime!,
+    Attribute.longBreak: customLongBreakTime!,
+  };
 
   int? customFocusTime; // 自定义专注时间
   int? customShortBreakTime; // 自定义短休息时间

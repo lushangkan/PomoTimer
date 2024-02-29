@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:pomotimer/app_text_style.dart';
+import 'package:pomotimer/common/constants.dart';
 import 'package:pomotimer/states/main_states.dart';
 import 'package:pomotimer/widgets/measure_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:tuple/tuple.dart';
 
+import '../../common/attribute.dart';
 import '../../generated/l10n.dart';
 
 class HomePage extends StatelessWidget {
@@ -60,8 +62,6 @@ class HomeBody extends StatelessWidget {
   }
 }
 
-enum Attribute { focus, shortBreak, longBreak }
-
 class TimerController extends StatefulWidget {
   const TimerController({super.key});
 
@@ -93,7 +93,7 @@ class _TimerControllerState extends State<TimerController> {
           if (mainStates.timerRunning == true) {
             return const TimeDisplay();
           } else {
-            return const AttributeSelector();
+            return AttributeSelector(selected: selected);
           }
         })
       ],
@@ -114,13 +114,22 @@ class AttributeSwitcher extends StatefulWidget {
 
 class _AttributeSwitcherState extends State<AttributeSwitcher>
     with AutomaticKeepAliveClientMixin {
-  var _selected = Attribute.focus;
+
+  late Attribute _selected;
+
   final Map<Attribute, Tuple2<Size, Offset>> _btnInfos = {
     Attribute.focus: const Tuple2(Size.zero, Offset.zero),
     Attribute.shortBreak:  const Tuple2(Size.zero, Offset.zero),
     Attribute.longBreak: const Tuple2(Size.zero, Offset.zero),
   };
+
   Offset? _rowPos;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = widget.selected;
+  }
 
   set setSelect(Attribute index) {
     setState(() {
@@ -149,7 +158,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
     return _btnInfos[index]!.item1;
   }
 
-  bool _isReady() {
+  bool get _isReady {
     return _btnInfos.values.every((element) => element.item1 != Size.zero) &&
         _btnInfos.values.every((element) => element.item2 != Offset.zero);
   }
@@ -171,7 +180,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
     return Stack(
       children: [
         Visibility(
-          visible: _isReady(),
+          visible: _isReady,
           child: AnimatedPositioned(
               curve: Curves.ease,
               duration: const Duration(milliseconds: 200),
@@ -313,21 +322,25 @@ class AttributeSplitter extends StatelessWidget {
 // TODO: 专注次数显示
 
 class AttributeSelector extends StatelessWidget {
-  const AttributeSelector({super.key});
+  const AttributeSelector({super.key, required this.selected});
+
+  final Attribute selected;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
 
+    MainStates mainStates = context.watch<MainStates>();
+
     const double sliderSize = 229;
     const double progressBarWidth = 33;
     const double innerSize = sliderSize - progressBarWidth * 2;
 
     return SleekCircularSlider(
-      min: 0,
-      max: 100,
-      initialValue: 3,
+      min: Constants.timeRange[selected]!.item1 * 60,
+      max: Constants.timeRange[selected]!.item2 * 60,
+      initialValue: mainStates.customTimes[selected]!.toDouble(),
       innerWidget: (double value) => CircularSliderInner(size: innerSize, value: value),
       appearance: AppCircularSliderAppearance(
         sliderSize: sliderSize,
