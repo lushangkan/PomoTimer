@@ -333,15 +333,15 @@ class AttributeSelector extends StatelessWidget {
 
     MainStates mainStates = context.watch<MainStates>();
 
-    const double sliderSize = 229;
-    const double progressBarWidth = 33;
+    const double sliderSize = 238;
+    const double progressBarWidth = 32;
     const double innerSize = sliderSize - progressBarWidth * 2;
 
     return SleekCircularSlider(
       min: Constants.timeRange[selected]!.item1 * 60,
       max: Constants.timeRange[selected]!.item2 * 60,
       initialValue: mainStates.customTimes[selected]!.toDouble(),
-      innerWidget: (double value) => CircularSliderInner(size: innerSize, value: value),
+      innerWidget: (double value) => CircularSliderInner(size: innerSize, second: value.floor()),
       appearance: AppCircularSliderAppearance(
         sliderSize: sliderSize,
         progressWidth: progressBarWidth,
@@ -355,17 +355,26 @@ class AttributeSelector extends StatelessWidget {
 }
 
 class CircularSliderInner extends StatelessWidget {
-  const CircularSliderInner({super.key, required this.size, required this.value});
+  const CircularSliderInner({super.key, required this.size, required this.second});
 
   final double size;
-  final double value;
+  final int second;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
 
-    TextStyle? textTheme = AppTextStyle.generateWithTextStyle(theme.textTheme.headlineMedium!);
+    TextStyle? textTheme = AppTextStyle.generateWithTextStyle(theme.textTheme.headlineMedium!.copyWith(
+      fontWeight: FontWeight.w400
+    ));
+
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(second * 1000);
+
+    var hour = dateTime.hour < 10 ? '0${dateTime.hour}' : '${dateTime.hour}';
+    var minute = dateTime.minute < 10 ? '0${dateTime.minute}' : '${dateTime.minute}';
+
+    var showText = '$hour:$minute';
 
     return Center(
       child: Container(
@@ -400,7 +409,7 @@ class CircularSliderInner extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  value.toInt().toString(),
+                  showText,
                   style: textTheme,
                 ),
               ),
