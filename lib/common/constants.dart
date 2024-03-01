@@ -11,4 +11,12 @@ class Constants {
     Attribute.shortBreak: const Tuple2(5, 15),
     Attribute.longBreak: const Tuple2(15, 30),
   };
+
+  /// 专注时间默认值
+  /// Attribute: int
+  static final Map<Attribute, int> defaultTime = {
+    Attribute.focus: 25,
+    Attribute.shortBreak: 5,
+    Attribute.longBreak: 20,
+  };
 }

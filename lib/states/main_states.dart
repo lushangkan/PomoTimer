@@ -107,9 +107,11 @@ class MainStates extends ChangeNotifier {
 enum _AppStates {
   timerRunning(false, false),
   startTime(-1, true),
-  customFocusTime(25 * 60, false),
-  customShortBreakTime(5 * 60, false), // 5 分钟
-  customLongBreakTime(15 * 60, false); // 15 分钟
+
+  // 由于dart限制，无法直接引用常量类中的值
+  customFocusTime(25, false), // 25 分钟
+  customShortBreakTime(5, false), // 5 分钟
+  customLongBreakTime(20, false); // 20 分钟
 
   final Object? defaultValue; // 默认值
   final bool canBeNull; // 是否可以为null

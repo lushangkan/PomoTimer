@@ -338,10 +338,10 @@ class AttributeSelector extends StatelessWidget {
     const double innerSize = sliderSize - progressBarWidth * 2;
 
     return SleekCircularSlider(
-      min: Constants.timeRange[selected]!.item1 * 60,
-      max: Constants.timeRange[selected]!.item2 * 60,
+      min: Constants.timeRange[selected]!.item1.toDouble(),
+      max: Constants.timeRange[selected]!.item2.toDouble(),
       initialValue: mainStates.customTimes[selected]!.toDouble(),
-      innerWidget: (double value) => CircularSliderInner(size: innerSize, second: value.floor()),
+      innerWidget: (double value) => CircularSliderInner(size: innerSize, minute: value.round(), selected: selected),
       appearance: AppCircularSliderAppearance(
         sliderSize: sliderSize,
         progressWidth: progressBarWidth,
@@ -355,10 +355,11 @@ class AttributeSelector extends StatelessWidget {
 }
 
 class CircularSliderInner extends StatelessWidget {
-  const CircularSliderInner({super.key, required this.size, required this.second});
+  const CircularSliderInner({super.key, required this.size, required this.minute, required this.selected});
 
   final double size;
-  final int second;
+  final int minute;
+  final Attribute selected;
 
   @override
   Widget build(BuildContext context) {
@@ -369,12 +370,18 @@ class CircularSliderInner extends StatelessWidget {
       fontWeight: FontWeight.w400
     ));
 
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(second * 1000);
+    TextStyle? recTextStyle = AppTextStyle.generateWithTextStyle(theme.textTheme.bodySmall!.copyWith(
+      fontWeight: FontWeight.w200,
+      fontSize: 11,
+    ));
 
-    var hour = dateTime.hour < 10 ? '0${dateTime.hour}' : '${dateTime.hour}';
-    var minute = dateTime.minute < 10 ? '0${dateTime.minute}' : '${dateTime.minute}';
+    int recTimeMinute = (Constants.defaultTime[selected]!).floor();
 
-    var showText = '$hour:$minute';
+    var showMinute = minute < 10 ? '0$minute' : '$minute';
+    var showSecond = '00';
+
+    var showText = '$showMinute:$showSecond';
+    var recText = '推荐设置为$recTimeMinute分钟';
 
     return Center(
       child: Container(
@@ -408,9 +415,18 @@ class CircularSliderInner extends StatelessWidget {
                   borderRadius: BorderRadius.circular(9999)
               ),
               child: Center(
-                child: Text(
-                  showText,
-                  style: textTheme,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      showText,
+                      style: textTheme,
+                    ),
+                    Text(
+                      recText,
+                      style: recTextStyle,
+                    )
+                  ],
                 ),
               ),
             )
