@@ -1,25 +1,23 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
-import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../app_text_style.dart';
 import '../../../common/attribute.dart';
 import '../../../common/constants.dart';
-import '../../../states/main_states.dart';
 
 class AttributeSelector extends StatelessWidget {
-  const AttributeSelector({super.key, required this.selected});
+  const AttributeSelector({super.key, required this.selected, required this.customTimes, required this.onSelected, });
 
   final Attribute selected;
+  final Map<Attribute, int> customTimes;
+  final Function(int) onSelected;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
-
-    MainStates mainStates = context.watch<MainStates>();
 
     const double sliderSize = 238;
     const double progressBarWidth = 32;
@@ -28,7 +26,7 @@ class AttributeSelector extends StatelessWidget {
     return SleekCircularSlider(
       min: Constants.timeRange[selected]!.item1.toDouble(),
       max: Constants.timeRange[selected]!.item2.toDouble(),
-      initialValue: mainStates.customTimes[selected]!.toDouble(),
+      initialValue: customTimes[selected]!.toDouble(),
       innerWidget: (double value) => CircularSliderInner(size: innerSize, minute: value.round(), selected: selected),
       appearance: AppCircularSliderAppearance(
           sliderSize: sliderSize,
@@ -36,8 +34,8 @@ class AttributeSelector extends StatelessWidget {
           colorScheme: colorScheme
       ),
       onChange: (double value) {
-        print(value);
-      },
+        onSelected(value.round());
+      }
     );
   }
 }

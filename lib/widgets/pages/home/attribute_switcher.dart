@@ -16,8 +16,7 @@ class AttributeSwitcher extends StatefulWidget {
   State<AttributeSwitcher> createState() => _AttributeSwitcherState();
 }
 
-class _AttributeSwitcherState extends State<AttributeSwitcher>
-    with AutomaticKeepAliveClientMixin {
+class _AttributeSwitcherState extends State<AttributeSwitcher> {
 
   late Attribute _selected;
   final Map<Attribute, Tuple2<Size, Offset>> _btnInfos = {
@@ -73,8 +72,6 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
 
@@ -157,9 +154,6 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
       ],
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class AttributeBtn extends StatelessWidget {
