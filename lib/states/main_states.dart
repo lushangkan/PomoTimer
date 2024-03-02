@@ -48,7 +48,7 @@ class MainStates extends ChangeNotifier {
       }
     }
 
-    notifyListeners();
+    notifyListeners(saveToStorage: false);
   }
 
   factory MainStates.fromJson(Map<String, dynamic> json) =>_$MainStatesFromJson(json);
@@ -95,10 +95,12 @@ class MainStates extends ChangeNotifier {
   }
 
   @override
-  void notifyListeners() {
+  void notifyListeners({bool saveToStorage = true}) {
     super.notifyListeners();
 
-    _saveToStorage();
+    if (saveToStorage) {
+      _saveToStorage();
+    }
   }
 
 }
