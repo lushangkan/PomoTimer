@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pomotimer/common/constants.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
+import 'package:pomotimer/widgets/pages/home/total_time_display.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/attribute.dart';
@@ -60,7 +62,15 @@ class _TimerControllerState extends State<TimerController> with AutomaticKeepAli
               });
             },);
           }
-        })
+        }),
+        Row(
+          children: [
+            Expanded(
+              child: TotalTimeDisplay(customTimes: tmpCustomTimes, longBreakInterval: Constants.longBreakInterval),
+            ),
+
+          ],
+        )
       ],
     );
   }

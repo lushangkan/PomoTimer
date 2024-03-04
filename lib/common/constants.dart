@@ -19,4 +19,7 @@ class Constants {
     Attribute.shortBreak: 5,
     Attribute.longBreak: 20,
   };
+
+  /// 长休息间隔
+  static const int longBreakInterval = 4;
 }
