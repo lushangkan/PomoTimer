@@ -108,7 +108,7 @@ class MainStates extends ChangeNotifier {
 /// 状态枚举
 enum _AppStates {
   timerRunning(false, false),
-  startTime(-1, true),
+  startTime(null, true),
 
   // 由于dart限制，无法直接引用常量类中的值
   customFocusTime(25, false), // 25 分钟
