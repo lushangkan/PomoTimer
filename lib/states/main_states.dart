@@ -37,6 +37,8 @@ class MainStates extends ChangeNotifier {
     this.customShortBreakTime,
     this.customLongBreakTime,
   }) {
+    var dirty = false;
+
     for (var element in _AppStates.values) {
       var mirror = reflector.reflect(this);
 
@@ -45,6 +47,7 @@ class MainStates extends ChangeNotifier {
       if (varValue == null && !element.canBeNull) {
         logger.t('${element.name} is null, setting to default value: ${element.defaultValue}');
         mirror.invokeSetter(element.name, element.defaultValue);
+        dirty = true;
       }
     }
 
