@@ -2,22 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 
 final defThemeLight = ThemeData(
-  useMaterial3: true,
-  colorScheme: _defColorSchemeLight,
-  fontFamily: 'MiSans',
-  highlightColor: fromCssColor('#c2beb2'),
-  splashColor: fromCssColor('#c2beb2'),
-  hoverColor: fromCssColor('#c2beb2'),
-);
+    useMaterial3: true,
+    colorScheme: _defColorSchemeLight,
+    fontFamily: 'MiSans',
+    highlightColor: fromCssColor('#ebe6da'),
+    splashColor: fromCssColor('#ebe6da'),
+    hoverColor: fromCssColor('#ebe6da'),
+    buttonTheme: const ButtonThemeData(
+      textTheme: ButtonTextTheme.normal,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      position: PopupMenuPosition.under,
+      color: _defColorSchemeLight.background,
+      shadowColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ));
 
 final defThemeDark = ThemeData(
-  useMaterial3: true,
-  colorScheme: _defColorSchemeDark,
-  fontFamily: 'MiSans',
-  highlightColor: fromCssColor('#c2beb2'),
-  splashColor: fromCssColor('#c2beb2'),
-  hoverColor: fromCssColor('#c2beb2'),
-);
+    useMaterial3: true,
+    colorScheme: _defColorSchemeDark,
+    fontFamily: 'MiSans',
+    highlightColor: fromCssColor('#ebe6da'),
+    splashColor: fromCssColor('#ebe6da'),
+    hoverColor: fromCssColor('#ebe6da'),
+    buttonTheme: const ButtonThemeData(
+      textTheme: ButtonTextTheme.normal,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      position: PopupMenuPosition.under,
+      color: _defColorSchemeDark.background,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ));
 
 final _defColorSchemeLight = ColorScheme.fromSeed(
   brightness: Brightness.light,
@@ -40,7 +59,7 @@ final _defColorSchemeLight = ColorScheme.fromSeed(
   onErrorContainer: fromCssColor('#333333'),
   background: fromCssColor('#F5F0E4'),
   onBackground: fromCssColor('#5c5c5c'),
-  surface: fromCssColor('#c2beb2'),
+  surface: fromCssColor('#ebe6da'),
   onSurface: fromCssColor('#5c5c5c'),
 );
 

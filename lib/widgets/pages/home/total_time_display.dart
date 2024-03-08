@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../common/app_utils.dart';
-import '../../../common/attribute.dart';
-import '../../../common/timer_utils.dart';
+import '../../../common/enum/attribute.dart';
+import '../../../common/utils/app_utils.dart';
+import '../../../common/utils/timer_utils.dart';
 
 class TotalTimeDisplay extends StatelessWidget {
   const TotalTimeDisplay({super.key, required this.customTimes, required this.longBreakInterval});
@@ -33,6 +33,8 @@ class TotalTimeDisplay extends StatelessWidget {
 
     return Center(
       child: Container(
+        height: 60,
+        width: 180,
         decoration: BoxDecoration(
           color: colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(9999),

@@ -14,6 +14,8 @@ MainStates _$MainStatesFromJson(Map<String, dynamic> json) => MainStates(
       customFocusTime: json['customFocusTime'] as int?,
       customShortBreakTime: json['customShortBreakTime'] as int?,
       customLongBreakTime: json['customLongBreakTime'] as int?,
+      reminderType:
+          $enumDecodeNullable(_$ReminderTypeEnumMap, json['reminderType']),
     );
 
 Map<String, dynamic> _$MainStatesToJson(MainStates instance) =>
@@ -23,4 +25,12 @@ Map<String, dynamic> _$MainStatesToJson(MainStates instance) =>
       'customFocusTime': instance.customFocusTime,
       'customShortBreakTime': instance.customShortBreakTime,
       'customLongBreakTime': instance.customLongBreakTime,
+      'reminderType': _$ReminderTypeEnumMap[instance.reminderType],
     };
+
+const _$ReminderTypeEnumMap = {
+  ReminderType.none: 'none',
+  ReminderType.notification: 'notification',
+  ReminderType.vibration: 'vibration',
+  ReminderType.alarm: 'alarm',
+};

@@ -2,9 +2,9 @@
 // https://github.com/dart-lang/reflectable.
 
 import 'dart:core';
+
 import 'package:pomotimer/common/reflector.dart' as prefix0;
 import 'package:pomotimer/states/main_states.dart' as prefix1;
-
 // ignore_for_file: camel_case_types
 // ignore_for_file: implementation_imports
 // ignore_for_file: prefer_adjacent_string_concatenation
@@ -14,9 +14,9 @@ import 'package:pomotimer/states/main_states.dart' as prefix1;
 // ignore:unused_import
 import 'package:reflectable/mirrors.dart' as m;
 // ignore:unused_import
-import 'package:reflectable/src/reflectable_builder_based.dart' as r;
-// ignore:unused_import
 import 'package:reflectable/reflectable.dart' as r show Reflectable;
+// ignore:unused_import
+import 'package:reflectable/src/reflectable_builder_based.dart' as r;
 
 final _data = <r.Reflectable, r.ReflectorData>{
   const prefix0.Reflector(): r.ReflectorData(
@@ -31,7 +31,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null,
             -1,
-            {},
+            {r'loadFromStorage': () => prefix1.MainStates.loadFromStorage},
             {},
             {
               r'': (bool b) => (
@@ -39,44 +39,53 @@ final _data = <r.Reflectable, r.ReflectorData>{
                       startTime,
                       customFocusTime,
                       customShortBreakTime,
-                      customLongBreakTime}) =>
+                      customLongBreakTime,
+                      reminderType}) =>
                   b
                       ? prefix1.MainStates(
                           customFocusTime: customFocusTime,
                           customLongBreakTime: customLongBreakTime,
                           customShortBreakTime: customShortBreakTime,
+                          reminderType: reminderType,
                           startTime: startTime,
                           timerRunning: timerRunning)
                       : null,
               r'fromJson': (bool b) =>
-                  (json) => b ? prefix1.MainStates.fromJson(json) : null
+                  (json) => b ? prefix1.MainStates.fromJson(json) : null,
+              r'fromJsonText': (bool b) =>
+                  (json) => b ? prefix1.MainStates.fromJsonText(json) : null
             },
             -1,
             -1,
             const <int>[-1],
             null,
             {
-              r'==': 1,
+              r'==': 2,
               r'toString': 0,
-              r'noSuchMethod': 1,
+              r'noSuchMethod': 2,
               r'hashCode': 0,
               r'runtimeType': 0,
-              r'addListener': 1,
-              r'removeListener': 1,
+              r'addListener': 2,
+              r'removeListener': 2,
               r'dispose': 0,
-              r'notifyListeners': 0,
+              r'notifyListeners': 1,
               r'hasListeners': 0,
               r'toJson': 0,
+              r'toJsonText': 0,
               r'timerRunning': 0,
-              r'timerRunning=': 1,
+              r'timerRunning=': 2,
               r'startTime': 0,
-              r'startTime=': 1,
+              r'startTime=': 2,
               r'customFocusTime': 0,
-              r'customFocusTime=': 1,
+              r'customFocusTime=': 2,
               r'customShortBreakTime': 0,
-              r'customShortBreakTime=': 1,
+              r'customShortBreakTime=': 2,
               r'customLongBreakTime': 0,
-              r'customLongBreakTime=': 1
+              r'customLongBreakTime=': 2,
+              r'reminderType': 0,
+              r'reminderType=': 2,
+              r'customTimes': 0,
+              r'loadFromStorage': 0
             })
       ],
       null,
@@ -95,13 +104,16 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'notifyListeners': (dynamic instance) => instance.notifyListeners,
         r'hasListeners': (dynamic instance) => instance.hasListeners,
         r'toJson': (dynamic instance) => instance.toJson,
+        r'toJsonText': (dynamic instance) => instance.toJsonText,
         r'timerRunning': (dynamic instance) => instance.timerRunning,
         r'startTime': (dynamic instance) => instance.startTime,
         r'customFocusTime': (dynamic instance) => instance.customFocusTime,
         r'customShortBreakTime': (dynamic instance) =>
             instance.customShortBreakTime,
         r'customLongBreakTime': (dynamic instance) =>
-            instance.customLongBreakTime
+            instance.customLongBreakTime,
+        r'reminderType': (dynamic instance) => instance.reminderType,
+        r'customTimes': (dynamic instance) => instance.customTimes
       },
       {
         r'timerRunning=': (dynamic instance, value) =>
@@ -112,11 +124,18 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'customShortBreakTime=': (dynamic instance, value) =>
             instance.customShortBreakTime = value,
         r'customLongBreakTime=': (dynamic instance, value) =>
-            instance.customLongBreakTime = value
+            instance.customLongBreakTime = value,
+        r'reminderType=': (dynamic instance, value) =>
+            instance.reminderType = value
       },
       null,
       [
         const [0, 0, null],
+        const [
+          0,
+          0,
+          const [#saveToStorage]
+        ],
         const [1, 0, null],
         const [
           0,
@@ -126,7 +145,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             #startTime,
             #customFocusTime,
             #customShortBreakTime,
-            #customLongBreakTime
+            #customLongBreakTime,
+            #reminderType
           ]
         ]
       ])

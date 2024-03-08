@@ -3,10 +3,11 @@ import 'dart:core';
 
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pomotimer/common/attribute.dart';
+import 'package:pomotimer/common/enum/attribute.dart';
 import 'package:pomotimer/common/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../common/enum/reminder_type.dart';
 import '../common/reflector.dart';
 
 part 'main_states.g.dart';
@@ -30,12 +31,20 @@ class MainStates extends ChangeNotifier {
   int? customShortBreakTime; // 自定义短休息时间
   int? customLongBreakTime; // 自定义长休息时间
 
+  ReminderType? reminderType; // 计时器完成提醒类型
+
+  void setReminderType(ReminderType type) {
+    reminderType = type;
+    notifyListeners();
+  }
+
   MainStates({
     this.timerRunning,
     this.startTime,
     this.customFocusTime,
     this.customShortBreakTime,
     this.customLongBreakTime,
+    this.reminderType,
   }) {
     var dirty = false;
 
@@ -51,7 +60,7 @@ class MainStates extends ChangeNotifier {
       }
     }
 
-    notifyListeners(saveToStorage: false);
+    notifyListeners(saveToStorage: dirty);
   }
 
   factory MainStates.fromJson(Map<String, dynamic> json) =>_$MainStatesFromJson(json);
@@ -116,7 +125,9 @@ enum _AppStates {
   // 由于dart限制，无法直接引用常量类中的值
   customFocusTime(25, false), // 25 分钟
   customShortBreakTime(5, false), // 5 分钟
-  customLongBreakTime(20, false); // 20 分钟
+  customLongBreakTime(20, false), // 20 分钟
+
+  reminderType(ReminderType.alarm, false);
 
   final Object? defaultValue; // 默认值
   final bool canBeNull; // 是否可以为null

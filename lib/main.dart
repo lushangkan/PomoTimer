@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logger/logger.dart';
-import 'package:pomotimer/common/debug_utils.dart';
 import 'package:pomotimer/main.reflectable.dart';
 import 'package:pomotimer/routes/app_routes.dart';
 import 'package:pomotimer/states/main_states.dart';
 import 'package:pomotimer/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
+import 'common/utils/debug_utils.dart';
 import 'generated/l10n.dart';
 
 void main() async {

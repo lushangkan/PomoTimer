@@ -1,4 +1,8 @@
 {
   "@@locale": "en",
-  "settingBtnTooltip": "Settings"
+  "settingBtnTooltip": "Settings",
+  "reminderNone": "None",
+  "reminderNotification": "Notification",
+  "reminderVibration": "Vibration",
+  "reminderAlarm": "Alarm"
 }

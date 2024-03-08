@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
-import '../../../app_text_style.dart';
-import '../../../common/attribute.dart';
+import '../../../common/app_text_style.dart';
+import '../../../common/enum/attribute.dart';
 import '../../measure_widget.dart';
 
 class AttributeSwitcher extends StatefulWidget {

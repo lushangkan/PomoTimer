@@ -1,11 +1,10 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:from_css_color/from_css_color.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-import '../../../app_text_style.dart';
-import '../../../common/attribute.dart';
+import '../../../common/app_text_style.dart';
 import '../../../common/constants.dart';
+import '../../../common/enum/attribute.dart';
 
 class AttributeSelector extends StatelessWidget {
   const AttributeSelector({super.key, required this.selected, required this.customTimes, required this.onSelected, });
@@ -78,7 +77,7 @@ class CircularSliderInner extends StatelessWidget {
           borderRadius: BorderRadius.circular(9999),
           boxShadow: [
             BoxShadow(
-              color: colorScheme.surface.lighten(3).withOpacity(0.3),
+              color: colorScheme.surface.withOpacity(0.2),
               blurRadius: 10,
               spreadRadius: 5,
             )
@@ -138,7 +137,7 @@ class AppCircularSliderAppearance extends CircularSliderAppearance {
     ),
     customColors: CustomSliderColors(
       // 背景颜色
-      trackColor: colorScheme.surface.withOpacity(0.35),
+      trackColor: colorScheme.surface,
       // 进度条颜色
       progressBarColors: [
         colorScheme.primary,
@@ -147,7 +146,7 @@ class AppCircularSliderAppearance extends CircularSliderAppearance {
       gradientStartAngle: 270,
       gradientEndAngle: 270 + 180,
       dynamicGradient: false,
-      dotColor: fromCssColor('#F3F3F3'),
+      dotColor: colorScheme.background,
       shadowColor: colorScheme.primary.withOpacity(0.25),
       shadowMaxOpacity: 0.19,
       shadowStep: 1.2,

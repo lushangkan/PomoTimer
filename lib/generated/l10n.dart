@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -55,6 +56,46 @@ class S {
     return Intl.message(
       '设置',
       name: 'settingBtnTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `无提醒`
+  String get reminderNone {
+    return Intl.message(
+      '无提醒',
+      name: 'reminderNone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `仅通知`
+  String get reminderNotification {
+    return Intl.message(
+      '仅通知',
+      name: 'reminderNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `震动提醒`
+  String get reminderVibration {
+    return Intl.message(
+      '震动提醒',
+      name: 'reminderVibration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `闹钟提醒`
+  String get reminderAlarm {
+    return Intl.message(
+      '闹钟提醒',
+      name: 'reminderAlarm',
       desc: '',
       args: [],
     );

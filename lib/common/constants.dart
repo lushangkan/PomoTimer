@@ -1,6 +1,11 @@
+import 'dart:core';
+
+import 'package:flutter/material.dart';
+import 'package:pomotimer/common/enum/reminder_type.dart';
 import 'package:tuple/tuple.dart';
 
-import 'attribute.dart';
+import '../generated/l10n.dart';
+import 'enum/attribute.dart';
 
 class Constants {
 
@@ -19,6 +24,17 @@ class Constants {
     Attribute.shortBreak: 5,
     Attribute.longBreak: 20,
   };
+
+  /// 提醒方式翻译
+  /// ReminderType: String Function(BuildContext)
+  static final Map<ReminderType, String Function(BuildContext)> reminderTypeTranslation = {
+    ReminderType.none: (context) => S.of(context).reminderNone,
+    ReminderType.notification: (context) => S.of(context).reminderNotification,
+    ReminderType.vibration: (context) => S.of(context).reminderVibration,
+    ReminderType.alarm: (context) => S.of(context).reminderAlarm,
+  };
+
+
 
   /// 长休息间隔
   static const int longBreakInterval = 4;

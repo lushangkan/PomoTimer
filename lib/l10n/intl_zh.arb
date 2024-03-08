@@ -1,4 +1,8 @@
 {
   "@@locale": "zh",
-  "settingBtnTooltip": "设置"
+  "settingBtnTooltip": "设置",
+  "reminderNone": "无提醒",
+  "reminderNotification": "仅通知",
+  "reminderVibration": "震动提醒",
+  "reminderAlarm": "闹钟提醒"
 }

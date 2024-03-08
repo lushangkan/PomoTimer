@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "reminderAlarm": MessageLookupByLibrary.simpleMessage("闹钟提醒"),
+        "reminderNone": MessageLookupByLibrary.simpleMessage("无提醒"),
+        "reminderNotification": MessageLookupByLibrary.simpleMessage("仅通知"),
+        "reminderVibration": MessageLookupByLibrary.simpleMessage("震动提醒"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("设置")
       };
 }

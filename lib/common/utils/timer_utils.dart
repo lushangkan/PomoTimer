@@ -1,4 +1,4 @@
-import 'attribute.dart';
+import '../enum/attribute.dart';
 
 /// 计算总时间
 /// @customTimes 自定义时间
