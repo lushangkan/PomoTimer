@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pomotimer/common/constants.dart';
 import 'package:pomotimer/common/enum/reminder_type.dart';
 import 'package:pomotimer/widgets/pages/home/reminder_type_switcher.dart';
+import 'package:pomotimer/widgets/pages/home/start_button.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
 import 'package:pomotimer/widgets/pages/home/total_time_display.dart';
 import 'package:provider/provider.dart';
@@ -104,7 +105,8 @@ class _TimerControllerState extends State<TimerController>
                   onSelected: _onReminderTypeSwitcherSelected),
             ],
           ),
-        )
+        ),
+        const StartButton()
       ],
     );
   }

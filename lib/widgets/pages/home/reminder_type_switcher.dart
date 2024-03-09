@@ -27,7 +27,7 @@ class ReminderTypeSwitcher extends StatelessWidget {
         child: PopupMenuButton(
           // TODO: PopupMenuButton背景颜色和color不一致，提交issue
           tooltip: "选择提醒类型",
-          icon: Icon(reminderType?.icon),
+          icon: Icon(reminderType.icon),
           onSelected: (ReminderType? value) {
             if (value != null) {
               onSelected(value);

@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminderNone": MessageLookupByLibrary.simpleMessage("无提醒"),
         "reminderNotification": MessageLookupByLibrary.simpleMessage("仅通知"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("震动提醒"),
-        "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("设置")
+        "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("设置"),
+        "startBtn": MessageLookupByLibrary.simpleMessage("开始")
       };
 }

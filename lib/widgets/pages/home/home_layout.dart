@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
 
 import '../../../generated/l10n.dart';
@@ -48,16 +48,12 @@ class HomeBody extends StatelessWidget {
       constraints: const BoxConstraints.expand(),
       child: Center(
         child: Container(
-            constraints: const BoxConstraints.tightFor(width: 300, height: 500),
+            constraints: const BoxConstraints.tightFor(width: 300, height: 600),
             child: const TimerController()),
       ),
     );
   }
 }
-
-
-
-
 
 // TODO: 专注次数显示
 

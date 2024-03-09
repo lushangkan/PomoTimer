@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminderNotification":
             MessageLookupByLibrary.simpleMessage("Notification"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("Vibration"),
-        "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("Settings")
+        "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("Settings"),
+        "startBtn": MessageLookupByLibrary.simpleMessage("Start")
       };
 }

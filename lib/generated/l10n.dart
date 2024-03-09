@@ -100,6 +100,16 @@ class S {
       args: [],
     );
   }
+
+  /// `开始`
+  String get startBtn {
+    return Intl.message(
+      '开始',
+      name: 'startBtn',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

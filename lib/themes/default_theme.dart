@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 
+final buttonTheme = ButtonThemeData(
+  textTheme: ButtonTextTheme.normal,
+  highlightColor: fromCssColor('#ebe6da'),
+  splashColor: fromCssColor('#ebe6da'),
+  hoverColor: fromCssColor('#ebe6da'),
+);
+
 final defThemeLight = ThemeData(
     useMaterial3: true,
     colorScheme: _defColorSchemeLight,
@@ -8,9 +15,7 @@ final defThemeLight = ThemeData(
     highlightColor: fromCssColor('#ebe6da'),
     splashColor: fromCssColor('#ebe6da'),
     hoverColor: fromCssColor('#ebe6da'),
-    buttonTheme: const ButtonThemeData(
-      textTheme: ButtonTextTheme.normal,
-    ),
+    buttonTheme: buttonTheme,
     popupMenuTheme: PopupMenuThemeData(
       position: PopupMenuPosition.under,
       color: _defColorSchemeLight.background,
@@ -27,9 +32,7 @@ final defThemeDark = ThemeData(
     highlightColor: fromCssColor('#ebe6da'),
     splashColor: fromCssColor('#ebe6da'),
     hoverColor: fromCssColor('#ebe6da'),
-    buttonTheme: const ButtonThemeData(
-      textTheme: ButtonTextTheme.normal,
-    ),
+    buttonTheme: buttonTheme,
     popupMenuTheme: PopupMenuThemeData(
       position: PopupMenuPosition.under,
       color: _defColorSchemeDark.background,

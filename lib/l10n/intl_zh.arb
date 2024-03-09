@@ -4,5 +4,6 @@
   "reminderNone": "无提醒",
   "reminderNotification": "仅通知",
   "reminderVibration": "震动提醒",
-  "reminderAlarm": "闹钟提醒"
+  "reminderAlarm": "闹钟提醒",
+  "startBtn": "开始"
 }

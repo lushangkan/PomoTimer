@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 enum ReminderType {
-  none(LucideIcons.alarmClockOff),
-  notification(LucideIcons.bellDot),
+  none(LucideIcons.alarm_clock_off),
+  notification(LucideIcons.bell_dot),
   vibration(LucideIcons.vibrate),
-  alarm(LucideIcons.alarmClock);
+  alarm(LucideIcons.alarm_clock);
 
   final IconData icon;
 

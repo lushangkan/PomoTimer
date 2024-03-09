@@ -4,5 +4,6 @@
   "reminderNone": "None",
   "reminderNotification": "Notification",
   "reminderVibration": "Vibration",
-  "reminderAlarm": "Alarm"
+  "reminderAlarm": "Alarm",
+  "startBtn": "Start"
 }
