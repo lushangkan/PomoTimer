@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
 
+import '../../../common/utils/debug_utils.dart';
 import '../../../generated/l10n.dart';
-
-
+import '../../debugging/debugging_tools.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,6 +25,9 @@ class TopBar extends AppBar {
   TopBar(ThemeData theme, {super.key})
       : super(
             backgroundColor: Colors.transparent,
+            actions: [
+              if (isDebugMode) Container(padding: const EdgeInsets.only(right: 15),child: const DebuggingTools()),
+            ],
             leading: Container(
               margin: const EdgeInsets.only(left: 15),
               child: IconButton(
@@ -56,4 +59,3 @@ class HomeBody extends StatelessWidget {
 }
 
 // TODO: 专注次数显示
-

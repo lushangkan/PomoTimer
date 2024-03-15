@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:pomotimer/main.reflectable.dart';
-import 'package:pomotimer/states/main_states.dart';
+import 'package:pomotimer/states/timer_states.dart';
 
 void main() {
 
@@ -11,7 +10,7 @@ void main() {
     test('Testing the main state constructor', () {
       var startTime = DateTime.now();
 
-      var states = MainStates(
+      var states = TimerStates(
           timerRunning: true,
           startTime: startTime,
           customFocusTime: 25,
@@ -31,7 +30,7 @@ void main() {
     test('Testing the main state toJson function', () {
       var startTime = DateTime.now();
 
-      var states = MainStates(
+      var states = TimerStates(
           timerRunning: true,
           startTime: startTime,
           customFocusTime: 25,
@@ -53,7 +52,7 @@ void main() {
     test('Testing the main state fromJson function', () {
       var startTime = DateTime.now();
 
-      var states = MainStates(
+      var states = TimerStates(
           timerRunning: true,
           startTime: startTime,
           customFocusTime: 25,
@@ -63,7 +62,7 @@ void main() {
 
       var json = states.toJson();
 
-      var newStates = MainStates.fromJson(json);
+      var newStates = TimerStates.fromJson(json);
 
       expect(() {
         if (newStates.timerRunning == true && newStates.startTime == startTime && newStates.customFocusTime == 25 && newStates.customShortBreakTime == 5 && newStates.customLongBreakTime == 20) {
@@ -77,7 +76,7 @@ void main() {
     test('Testing the main state fromJson function with missing data', () {
       var startTime = DateTime.now();
 
-      var states = MainStates(
+      var states = TimerStates(
           timerRunning: true,
           startTime: startTime,
           customFocusTime: 25,
@@ -89,7 +88,7 @@ void main() {
 
       var newStatesJson = Map<String, dynamic>.fromEntries(json.entries.where((element) => element.key != 'customFocusTime'));
 
-      var newStates = MainStates.fromJson(newStatesJson);
+      var newStates = TimerStates.fromJson(newStatesJson);
 
       expect(() {
         if (newStates.timerRunning == true && newStates.startTime == startTime && newStates.customFocusTime == 25 * 60 && newStates.customShortBreakTime == 5 && newStates.customLongBreakTime == 20) {

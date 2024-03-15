@@ -5,7 +5,9 @@ import 'package:pomotimer/common/app_text_style.dart';
 import '../../../generated/l10n.dart';
 
 class StartButton extends StatelessWidget {
-  const StartButton({super.key});
+  const StartButton({super.key, required this.onPressed});
+
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class StartButton extends StatelessWidget {
 
             backgroundColor: buttonColor,
           ),
-          onPressed: () {},
+          onPressed: onPressed,
           child: Text(
             S.current.startBtn,
             style: textStyle,

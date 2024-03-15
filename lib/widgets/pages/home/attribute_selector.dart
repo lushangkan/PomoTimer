@@ -9,8 +9,8 @@ import '../../../common/enum/attribute.dart';
 class AttributeSelector extends StatelessWidget {
   const AttributeSelector({super.key, required this.selected, required this.customTimes, required this.onSelected, });
 
-  final Attribute selected;
-  final Map<Attribute, int> customTimes;
+  final Phase selected;
+  final Map<Phase, int> customTimes;
   final Function(int) onSelected;
 
   @override
@@ -44,7 +44,7 @@ class CircularSliderInner extends StatelessWidget {
 
   final double size;
   final int minute;
-  final Attribute selected;
+  final Phase selected;
 
   @override
   Widget build(BuildContext context) {

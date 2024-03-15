@@ -10,21 +10,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../common/enum/reminder_type.dart';
 import '../common/reflector.dart';
 
-part 'main_states.g.dart';
+part 'timer_states.g.dart';
 
 @reflector
 @JsonSerializable()
-// TODO: 完善单元测试
-class MainStates extends ChangeNotifier {
+class TimerStates extends ChangeNotifier {
   /// @loadFromStorage 是否从储存中加载
 
   bool? timerRunning; // 是否正在执行中
-  DateTime? startTime; // 开始时间
+  DateTime? startTime; // 开始时间，未运行时为null
+  int? offsetTime; // 快进的偏移时间，单位毫秒，未 运行时为null
 
-  Map<Attribute, int> get customTimes => {
-    Attribute.focus: customFocusTime!,
-    Attribute.shortBreak: customShortBreakTime!,
-    Attribute.longBreak: customLongBreakTime!,
+  Map<Phase, int> get customTimes => {
+    Phase.focus: customFocusTime!,
+    Phase.shortBreak: customShortBreakTime!,
+    Phase.longBreak: customLongBreakTime!,
   };
 
   int? customFocusTime; // 自定义专注时间
@@ -33,12 +33,7 @@ class MainStates extends ChangeNotifier {
 
   ReminderType? reminderType; // 计时器完成提醒类型
 
-  void setReminderType(ReminderType type) {
-    reminderType = type;
-    notifyListeners();
-  }
-
-  MainStates({
+  TimerStates({
     this.timerRunning,
     this.startTime,
     this.customFocusTime,
@@ -48,7 +43,7 @@ class MainStates extends ChangeNotifier {
   }) {
     var dirty = false;
 
-    for (var element in _AppStates.values) {
+    for (var element in _TimerStates.values) {
       var mirror = reflector.reflect(this);
 
       var varValue = mirror.invokeGetter(element.name);
@@ -63,11 +58,11 @@ class MainStates extends ChangeNotifier {
     notifyListeners(saveToStorage: dirty);
   }
 
-  factory MainStates.fromJson(Map<String, dynamic> json) =>_$MainStatesFromJson(json);
+  factory TimerStates.fromJson(Map<String, dynamic> json) =>_$TimerStatesFromJson(json);
 
-  factory MainStates.fromJsonText(String json) => _$MainStatesFromJson(jsonDecode(json) as Map<String, dynamic>);
+  factory TimerStates.fromJsonText(String json) => _$TimerStatesFromJson(jsonDecode(json) as Map<String, dynamic>);
 
-  Map<String, dynamic> toJson() => _$MainStatesToJson(this);
+  Map<String, dynamic> toJson() => _$TimerStatesToJson(this);
 
   String toJsonText() => jsonEncode(toJson());
 
@@ -76,15 +71,15 @@ class MainStates extends ChangeNotifier {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString('states', toJsonText());
+    await prefs.setString('timer_states', toJsonText());
   }
 
-  static Future<MainStates> loadFromStorage() async {
+  static Future<TimerStates> loadFromStorage() async {
     logger.d('Loading main states from storage');
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var jsonText = prefs.getString('states');
+    var jsonText = prefs.getString('timer_states');
 
     jsonText ??= '{}';
 
@@ -103,7 +98,7 @@ class MainStates extends ChangeNotifier {
       json = {};
     }
 
-    return MainStates.fromJson(json);
+    return TimerStates.fromJson(json);
   }
 
   @override
@@ -118,9 +113,10 @@ class MainStates extends ChangeNotifier {
 }
 
 /// 状态枚举
-enum _AppStates {
+enum _TimerStates {
   timerRunning(false, false),
   startTime(null, true),
+  offsetTime(null, true),
 
   // 由于dart限制，无法直接引用常量类中的值
   customFocusTime(25, false), // 25 分钟
@@ -129,8 +125,9 @@ enum _AppStates {
 
   reminderType(ReminderType.alarm, false);
 
+
   final Object? defaultValue; // 默认值
   final bool canBeNull; // 是否可以为null
 
-  const _AppStates(this.defaultValue, this.canBeNull);
+  const _TimerStates(this.defaultValue, this.canBeNull);
 }

@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/enum/attribute.dart';
 import '../../../common/utils/app_utils.dart';
-import '../../../common/utils/timer_utils.dart';
+import '../../../states/app_states.dart';
+import '../../../states/timer_states.dart';
 
 class TotalTimeDisplay extends StatelessWidget {
   const TotalTimeDisplay({super.key, required this.customTimes, required this.longBreakInterval});
 
-  final Map<Attribute, int> customTimes;
+  final Map<Phase, int> customTimes;
   final int longBreakInterval;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
+
+    var timerStates = context.watch<TimerStates>();
+    var appStates = context.watch<AppStates>();
+    var timer = appStates.timer;
 
     var timeTextStyle = theme.textTheme.bodyLarge!.copyWith(
       fontWeight: FontWeight.w400,
@@ -26,10 +32,11 @@ class TotalTimeDisplay extends StatelessWidget {
       color: colorScheme.onPrimaryContainer.withOpacity(0.5)
     );
 
-    int totalTime = calculateTotalTime(customTimes, longBreakInterval);
+    var totalTime = timer.totalTime!;
+
     String languageCode = getAppLocal(context)!;
 
-    var timeText = DateFormat.jms(languageCode).format(DateTime.fromMillisecondsSinceEpoch(totalTime * 60 * 1000 , isUtc: true));
+    var timeText = DateFormat.jms(languageCode).format(DateTime.fromMillisecondsSinceEpoch(totalTime , isUtc: true));
 
     return Center(
       child: Container(

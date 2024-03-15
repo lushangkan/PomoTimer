@@ -1,1 +1,1 @@
-enum Attribute { focus, shortBreak, longBreak }
+enum Phase { focus, shortBreak, longBreak }

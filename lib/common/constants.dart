@@ -11,18 +11,18 @@ class Constants {
 
   /// 专注时间范围
   /// Attribute: Tuple2<min, max>
-  static final Map<Attribute, Tuple2<int, int>> timeRange = {
-    Attribute.focus: const Tuple2(20, 60),
-    Attribute.shortBreak: const Tuple2(5, 15),
-    Attribute.longBreak: const Tuple2(15, 30),
+  static final Map<Phase, Tuple2<int, int>> timeRange = {
+    Phase.focus: const Tuple2(20, 60),
+    Phase.shortBreak: const Tuple2(5, 15),
+    Phase.longBreak: const Tuple2(15, 30),
   };
 
   /// 专注时间默认值
   /// Attribute: int
-  static final Map<Attribute, int> defaultTime = {
-    Attribute.focus: 25,
-    Attribute.shortBreak: 5,
-    Attribute.longBreak: 20,
+  static final Map<Phase, int> defaultTime = {
+    Phase.focus: 25,
+    Phase.shortBreak: 5,
+    Phase.longBreak: 20,
   };
 
   /// 提醒方式翻译

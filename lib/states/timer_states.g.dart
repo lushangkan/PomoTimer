@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'main_states.dart';
+part of 'timer_states.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MainStates _$MainStatesFromJson(Map<String, dynamic> json) => MainStates(
+TimerStates _$TimerStatesFromJson(Map<String, dynamic> json) => TimerStates(
       timerRunning: json['timerRunning'] as bool?,
       startTime: json['startTime'] == null
           ? null
@@ -16,12 +16,13 @@ MainStates _$MainStatesFromJson(Map<String, dynamic> json) => MainStates(
       customLongBreakTime: json['customLongBreakTime'] as int?,
       reminderType:
           $enumDecodeNullable(_$ReminderTypeEnumMap, json['reminderType']),
-    );
+    )..offsetTime = json['offsetTime'] as int?;
 
-Map<String, dynamic> _$MainStatesToJson(MainStates instance) =>
+Map<String, dynamic> _$TimerStatesToJson(TimerStates instance) =>
     <String, dynamic>{
       'timerRunning': instance.timerRunning,
       'startTime': instance.startTime?.toIso8601String(),
+      'offsetTime': instance.offsetTime,
       'customFocusTime': instance.customFocusTime,
       'customShortBreakTime': instance.customShortBreakTime,
       'customLongBreakTime': instance.customLongBreakTime,

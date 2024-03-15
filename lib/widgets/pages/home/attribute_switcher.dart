@@ -9,8 +9,8 @@ class AttributeSwitcher extends StatefulWidget {
   const AttributeSwitcher(
       {super.key, required this.selected, required this.onSelected});
 
-  final Attribute selected;
-  final void Function(Attribute) onSelected;
+  final Phase selected;
+  final void Function(Phase) onSelected;
 
   @override
   State<AttributeSwitcher> createState() => _AttributeSwitcherState();
@@ -18,11 +18,11 @@ class AttributeSwitcher extends StatefulWidget {
 
 class _AttributeSwitcherState extends State<AttributeSwitcher> {
 
-  late Attribute _selected;
-  final Map<Attribute, Tuple2<Size, Offset>> _btnInfos = {
-    Attribute.focus: const Tuple2(Size.zero, Offset.zero),
-    Attribute.shortBreak:  const Tuple2(Size.zero, Offset.zero),
-    Attribute.longBreak: const Tuple2(Size.zero, Offset.zero),
+  late Phase _selected;
+  final Map<Phase, Tuple2<Size, Offset>> _btnInfos = {
+    Phase.focus: const Tuple2(Size.zero, Offset.zero),
+    Phase.shortBreak:  const Tuple2(Size.zero, Offset.zero),
+    Phase.longBreak: const Tuple2(Size.zero, Offset.zero),
   };
   Offset? _rowPos;
 
@@ -32,7 +32,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
     _selected = widget.selected;
   }
 
-  set setSelect(Attribute index) {
+  set setSelect(Phase index) {
     setState(() {
       _selected = index;
     });
@@ -40,7 +40,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
 
   get getSelect => _selected;
 
-  Offset _getLocPos(Attribute index) {
+  Offset _getLocPos(Phase index) {
     var btnInfo = _getBtnInfo(index);
     if (btnInfo == null || _rowPos == null) return Offset.zero;
     var btnPos = btnInfo.item2;
@@ -48,12 +48,12 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
     return Offset(btnPos.dx - rowPos.dx, btnPos.dy - rowPos.dy);
   }
 
-  Size _getBtnSize(Attribute index) {
+  Size _getBtnSize(Phase index) {
     var btnInfo = _getBtnInfo(index);
     return btnInfo?.item1 ?? Size.zero;
   }
 
-  Tuple2<Size, Offset>? _getBtnInfo(Attribute index) {
+  Tuple2<Size, Offset>? _getBtnInfo(Phase index) {
     if (_btnInfos.length != 3) return null;
     return _btnInfos[index];
   }
@@ -63,7 +63,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
         _btnInfos.values.every((element) => element.item2 != Offset.zero);
   }
 
-  void _onPressed(Attribute index) {
+  void _onPressed(Phase index) {
     setState(() {
       _selected = index;
     });
@@ -117,12 +117,12 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
                 AttributeBtn(
                   onSizeChange: (size, pos) {
                     setState(() {
-                      _btnInfos[Attribute.focus] = Tuple2(size, pos);
+                      _btnInfos[Phase.focus] = Tuple2(size, pos);
                     });
                   },
                   text: '专注',
                   onPressed: () {
-                    _onPressed(Attribute.focus);
+                    _onPressed(Phase.focus);
                   },
                 ),
                 const AttributeSplitter(),
@@ -130,23 +130,23 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
                   text: '小休息',
                   onSizeChange: (size, pos) {
                     setState(() {
-                      _btnInfos[Attribute.shortBreak] = Tuple2(size, pos);
+                      _btnInfos[Phase.shortBreak] = Tuple2(size, pos);
                     });
                   },
                   onPressed: () {
-                    _onPressed(Attribute.shortBreak);
+                    _onPressed(Phase.shortBreak);
                   },
                 ),
                 const AttributeSplitter(),
                 AttributeBtn(
                   onSizeChange: (size, pos) {
                     setState(() {
-                      _btnInfos[Attribute.longBreak] = Tuple2(size, pos);
+                      _btnInfos[Phase.longBreak] = Tuple2(size, pos);
                     });
                   },
                   text: '大休息',
                   onPressed: () {
-                    _onPressed(Attribute.longBreak);
+                    _onPressed(Phase.longBreak);
                   },
                 ),
               ],
