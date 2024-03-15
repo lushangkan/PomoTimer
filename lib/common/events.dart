@@ -1,4 +1,5 @@
-import 'dart:async';
+
+import 'package:pomotimer/common/timer/timer.dart';
 
 import 'enum/attribute.dart';
 
@@ -10,11 +11,11 @@ class TimerEvent {
 /// 计时器时间更新事件
 /// @elapsedTime 已经经过的时间
 /// @timer 计时器
-class TimerTimeUpdateEvent extends TimerEvent {
+class TimerTickEvent extends TimerEvent {
   final int elapsedTime;
-  final Timer timer;
+  final AppTimer timer;
 
-  TimerTimeUpdateEvent(this.elapsedTime, this.timer);
+  TimerTickEvent(this.elapsedTime, this.timer);
 }
 
 /// 计时器状态改变事件
@@ -22,7 +23,7 @@ class TimerTimeUpdateEvent extends TimerEvent {
 /// @phase 改变后的阶段
 class TimerPhaseChangeEvent extends TimerEvent {
   final Phase phase;
-  final Timer timer;
+  final AppTimer timer;
 
   TimerPhaseChangeEvent(this.phase, this.timer);
 }

@@ -1,13 +1,15 @@
 import 'dart:async';
 
+import 'package:pomotimer/common/event_bus.dart';
+import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
 import 'package:tuple/tuple.dart';
 
-import '../states/timer_states.dart';
-import 'constants.dart';
-import 'enum/attribute.dart';
-import 'enum/reminder_type.dart';
-import 'logger.dart';
+import '../../states/timer_states.dart';
+import '../constants.dart';
+import '../enum/attribute.dart';
+import '../enum/reminder_type.dart';
+import '../logger.dart';
 
 // TODO: 完善单元测试
 class AppTimer {
@@ -20,15 +22,7 @@ class AppTimer {
 
   late final TimerStates _states;
   late Timer timer;
-
-  Future<void> init() async {
-    checkAndResetTimer();
-    var now = DateTime.now();
-    var microsecondsToNextSecond = 1000000 - now.microsecond;
-    await Future.delayed(Duration(microseconds: microsecondsToNextSecond));
-
-    timer = Timer.periodic(duration, run);
-  }
+  Phase? lastPhase;
 
   /// 是否正在运行
   /// @return 是否正在运行
@@ -61,6 +55,15 @@ class AppTimer {
       return passedTime;
     }
     return null;
+  }
+
+  Future<void> init() async {
+    checkAndResetTimer();
+    var now = DateTime.now();
+    var microsecondsToNextSecond = 1000000 - now.microsecond;
+    await Future.delayed(Duration(microseconds: microsecondsToNextSecond));
+
+    timer = Timer.periodic(duration, run);
   }
 
   /// 快进一段时间
@@ -191,6 +194,18 @@ class AppTimer {
     }
 
     checkAndResetTimer();
+
+    var currentPhase = calculateCurrentPhase()?.item1;
+
+    if (currentPhase != null && currentPhase != lastPhase) {
+      eventBus.fire(TimerPhaseChangeEvent(currentPhase, this));
+    }
+
+    if (currentPhase != null) {
+      lastPhase = currentPhase;
+    }
+
+    eventBus.fire(TimerTickEvent(elapsedTime!, this));
   }
 
 }
