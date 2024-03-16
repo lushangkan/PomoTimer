@@ -21,8 +21,8 @@ class AttributeSelector extends StatelessWidget {
     const double innerSize = sliderSize - progressBarWidth * 2;
 
     return AppCircularSlider(
-      min: Constants.timeRange[selected]!.item1.toDouble(),
-      max: Constants.timeRange[selected]!.item2.toDouble(),
+      min: Constants.timeRange[selected]!.$1.toDouble(),
+      max: Constants.timeRange[selected]!.$2.toDouble(),
       value: customTimes[selected]!.toDouble(),
       innerWidget: (double value) => CircularSliderInner(size: innerSize, minute: value.round(), selected: selected),
       onChange: (double value) {

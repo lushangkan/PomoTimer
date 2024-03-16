@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 
 import '../../../common/app_text_style.dart';
 import '../../../common/enum/attribute.dart';
@@ -18,34 +17,34 @@ class AttributeSwitcher extends StatefulWidget {
 
 class _AttributeSwitcherState extends State<AttributeSwitcher> {
 
-  final Map<Phase, Tuple2<Size, Offset>> _btnInfos = {
-    Phase.focus: const Tuple2(Size.zero, Offset.zero),
-    Phase.shortBreak:  const Tuple2(Size.zero, Offset.zero),
-    Phase.longBreak: const Tuple2(Size.zero, Offset.zero),
+  final Map<Phase, (Size, Offset)> _btnInfos = {
+    Phase.focus: const (Size.zero, Offset.zero),
+    Phase.shortBreak:  const (Size.zero, Offset.zero),
+    Phase.longBreak: const (Size.zero, Offset.zero),
   };
   Offset? _rowPos;
 
   Offset _getLocPos(Phase index) {
     var btnInfo = _getBtnInfo(index);
     if (btnInfo == null || _rowPos == null) return Offset.zero;
-    var btnPos = btnInfo.item2;
+    var btnPos = btnInfo.$2;
     var rowPos = _rowPos!;
     return Offset(btnPos.dx - rowPos.dx, btnPos.dy - rowPos.dy);
   }
 
   Size _getBtnSize(Phase index) {
     var btnInfo = _getBtnInfo(index);
-    return btnInfo?.item1 ?? Size.zero;
+    return btnInfo?.$1 ?? Size.zero;
   }
 
-  Tuple2<Size, Offset>? _getBtnInfo(Phase index) {
+  (Size, Offset)? _getBtnInfo(Phase index) {
     if (_btnInfos.length != 3) return null;
     return _btnInfos[index];
   }
 
   bool get _isReady {
-    return _btnInfos.values.every((element) => element.item1 != Size.zero) &&
-        _btnInfos.values.every((element) => element.item2 != Offset.zero);
+    return _btnInfos.values.every((element) => element.$1 != Size.zero) &&
+        _btnInfos.values.every((element) => element.$2 != Offset.zero);
   }
 
   void _onPressed(Phase index) {
@@ -54,7 +53,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
 
   void _onButtonSizeChange(Phase index, Size size, Offset pos) {
     setState(() {
-      _btnInfos[index] = Tuple2(size, pos);
+      _btnInfos[index] = (size, pos);
     });
   }
 

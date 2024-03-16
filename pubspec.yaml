@@ -45,7 +45,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   kotlin_flavor: ^0.2.0
-  tuple: ^2.0.2
   sleek_circular_slider:
     git:
       url: https://github.com/uniquetrij/sleek_circular_slider.git

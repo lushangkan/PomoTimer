@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
-import 'package:tuple/tuple.dart';
 
 import '../../states/timer_states.dart';
 import '../constants.dart';
@@ -132,7 +131,7 @@ class AppTimer {
 
   /// 计算当前阶段
   /// @return 当前阶段, 当前阶段的剩余时间
-  Tuple2<Phase, int>? calculateCurrentPhase() {
+  (Phase?, int?)? calculateCurrentPhase() {
     int focusTimeMs = _states.customFocusTime! * 60 * 1000;
     int shortBreakTimeMs = _states.customShortBreakTime! * 60 * 1000;
     int longBreakTimeMs = _states.customLongBreakTime! * 60 * 1000;
@@ -163,14 +162,14 @@ class AppTimer {
 
       // 根据剩余时间判断是在专注阶段还是小休息阶段
       if (timeInSmallCycleMs < focusTimeMs) {
-        return Tuple2(Phase.focus, focusTimeMs - timeInSmallCycleMs);
+        return (Phase.focus, focusTimeMs - timeInSmallCycleMs);
       } else {
-        return Tuple2(Phase.shortBreak, shortBreakTimeMs - (timeInSmallCycleMs - focusTimeMs));
+        return (Phase.shortBreak, shortBreakTimeMs - (timeInSmallCycleMs - focusTimeMs));
       }
     } else {
       // 如果剩余时间超过了一个完整循环，则当前处于大休息阶段
       int timeInLongBreakMs = passedTimeMs - cycleTimeMs;
-      return Tuple2(Phase.longBreak, longBreakTimeMs - timeInLongBreakMs);
+      return (Phase.longBreak, longBreakTimeMs - timeInLongBreakMs);
     }
   }
 

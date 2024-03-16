@@ -2,7 +2,6 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:pomotimer/common/enum/reminder_type.dart';
-import 'package:tuple/tuple.dart';
 
 import '../generated/l10n.dart';
 import 'enum/attribute.dart';
@@ -10,11 +9,11 @@ import 'enum/attribute.dart';
 class Constants {
 
   /// 专注时间范围
-  /// Attribute: Tuple2<min, max>
-  static final Map<Phase, Tuple2<int, int>> timeRange = {
-    Phase.focus: const Tuple2(20, 60),
-    Phase.shortBreak: const Tuple2(5, 15),
-    Phase.longBreak: const Tuple2(15, 30),
+  /// Attribute: (min, max)
+  static final Map<Phase, (int, int)> timeRange = {
+    Phase.focus: const (20, 60),
+    Phase.shortBreak: const (5, 15),
+    Phase.longBreak: const (15, 30),
   };
 
   /// 专注时间默认值
