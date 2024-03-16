@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pomotimer/common/utils/timer_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/enum/attribute.dart';
@@ -32,7 +33,7 @@ class TotalTimeDisplay extends StatelessWidget {
       color: colorScheme.onPrimaryContainer.withOpacity(0.5)
     );
 
-    var totalTime = timer.totalTime!;
+    var totalTime = (calculateTotalTime(customTimes, longBreakInterval) ?? 0) * 60 * 1000;
 
     String languageCode = getAppLocal(context)!;
 
