@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pomotimer/common/constants.dart';
 import 'package:pomotimer/common/enum/reminder_type.dart';
+import 'package:pomotimer/common/event_bus.dart';
+import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/widgets/pages/home/reminder_type_switcher.dart';
 import 'package:pomotimer/widgets/pages/home/start_button.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
@@ -26,8 +30,16 @@ class _TimerControllerState extends State<TimerController>
 
   // 创建临时变量保存customTimes, 这个变量会在用户开始后保存到states和localstorage
   // 为了避免在用户选择时间后立即开始时, 保存的customTimes不是最新的
-  late Map<Phase, int> tmpCustomTimes;
-  late ReminderType tmpReminderType;
+  late Map<Phase, int> _tmpCustomTimes;
+  late ReminderType _tmpReminderType;
+
+  late StreamSubscription<TimerPhaseChangeEvent> _timerPhaseChangeEventSubscription;
+
+  void onTimerPhaseChanged(TimerPhaseChangeEvent event) {
+    setState(() {
+      selected = event.phase;
+    });
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -38,8 +50,19 @@ class _TimerControllerState extends State<TimerController>
 
     // 从State复制customTimes
     var timerStates = context.read<TimerStates>();
-    tmpCustomTimes = timerStates.customTimes;
-    tmpReminderType = timerStates.reminderType!;
+    _tmpCustomTimes = timerStates.customTimes;
+    _tmpReminderType = timerStates.reminderType!;
+
+    // 监听事件
+    _timerPhaseChangeEventSubscription = eventBus.on<TimerPhaseChangeEvent>().listen(onTimerPhaseChanged);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    // 卸载监听器
+    _timerPhaseChangeEventSubscription.cancel();
   }
 
   @override
@@ -53,6 +76,9 @@ class _TimerControllerState extends State<TimerController>
     var timer = appStates.timer;
 
     void onAttributeSwitcherSelected(Phase value) {
+      // 如果计时器正在运行, 则不允许切换
+      if (timerStates.timerRunning == true) return;
+
       setState(() {
         selected = value;
       });
@@ -60,13 +86,13 @@ class _TimerControllerState extends State<TimerController>
 
     void onAttributeSelectorSelected(int value) {
       setState(() {
-        tmpCustomTimes[selected] = value;
+        _tmpCustomTimes[selected] = value;
       });
     }
 
     void onReminderTypeSwitcherSelected(ReminderType value) {
       setState(() {
-        tmpReminderType = value;
+        _tmpReminderType = value;
       });
     }
 
@@ -86,7 +112,7 @@ class _TimerControllerState extends State<TimerController>
         else
           AttributeSelector(
             selected: selected,
-            customTimes: tmpCustomTimes,
+            customTimes: _tmpCustomTimes,
             onSelected: onAttributeSelectorSelected,
           ),
         if (timerStates.timerRunning == false)
@@ -96,7 +122,7 @@ class _TimerControllerState extends State<TimerController>
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TotalTimeDisplay(
-                    customTimes: tmpCustomTimes,
+                    customTimes: _tmpCustomTimes,
                     longBreakInterval: Constants.longBreakInterval),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
@@ -106,7 +132,7 @@ class _TimerControllerState extends State<TimerController>
                   ),
                 ),
                 ReminderTypeSwitcher(
-                    reminderType: tmpReminderType,
+                    reminderType: _tmpReminderType,
                     onSelected: onReminderTypeSwitcherSelected),
               ],
             ),

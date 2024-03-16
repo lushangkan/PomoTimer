@@ -7,10 +7,9 @@ import '../../measure_widget.dart';
 
 class AttributeSwitcher extends StatefulWidget {
   const AttributeSwitcher(
-      {super.key, required this.selected, required this.onSelected, this.canChange = true});
+      {super.key, required this.selected, required this.onSelected});
 
   final Phase selected;
-  final bool canChange;
   final void Function(Phase) onSelected;
 
   @override

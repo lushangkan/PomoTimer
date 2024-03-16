@@ -29,6 +29,17 @@ class DebuggingTools extends StatelessWidget {
               onCancel: () {}));
     }
 
+    Future<int?> showFastForwardToSpecificTimeDialog() async {
+      return await showDialog<int>(
+          context: context,
+          builder: (context) => FastForwardToSpecificTimeDialog(
+              onPressed: (int seconds) {
+                var newTime = seconds * 1000;
+                timer.fastForward(newTime);
+              },
+              onCancel: () {}));
+    }
+
     return PopupMenuButton(
         icon: Icon(
           LucideIcons.bug,
@@ -42,16 +53,21 @@ class DebuggingTools extends StatelessWidget {
             case DebuggingTypeButton.fastForwardToStart:
               if (!timer.isRunning) return;
               showFastForwardToEndDialog();
+            case DebuggingTypeButton.fastForwardToSpecificTime:
+              if (!timer.isRunning) return;
+              showFastForwardToSpecificTimeDialog();
           }
         },
         itemBuilder: (context) => [
-              const FastForwardToEnd(),
+              if (timer.isRunning) const FastForwardToEnd(),
+              if (timer.isRunning) const FastForwardToSpecificTime(),
             ]);
   }
 }
 
 enum DebuggingTypeButton {
   fastForwardToStart,
+  fastForwardToSpecificTime,
 }
 
 class FastForwardToEnd extends PopupMenuItem {
@@ -90,7 +106,6 @@ class _FastForwardToEndDialogState extends State<FastForwardToEndDialog> {
 
   @override
   Widget build(BuildContext context) {
-
     controller.text = "3";
 
     return AlertDialog(
@@ -102,6 +117,77 @@ class _FastForwardToEndDialogState extends State<FastForwardToEndDialog> {
         textInputAction: TextInputAction.done,
         decoration: const InputDecoration(
           hintText: "要快进到的剩余秒数",
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            widget.onCancel();
+            Navigator.of(context).pop();
+          },
+          child: const Text("取消"),
+        ),
+        TextButton(
+          onPressed: () {
+            widget.onPressed(int.parse(controller.text));
+            Navigator.of(context).pop();
+          },
+          child: const Text("确定"),
+        ),
+      ],
+    );
+  }
+}
+
+class FastForwardToSpecificTime extends PopupMenuItem {
+  const FastForwardToSpecificTime({super.key})
+      : super(
+          child: const Text("快进到指定时间"),
+          value: DebuggingTypeButton.fastForwardToSpecificTime,
+        );
+}
+
+class FastForwardToSpecificTimeDialog extends StatefulWidget {
+  const FastForwardToSpecificTimeDialog(
+      {super.key, required this.onPressed, required this.onCancel});
+
+  final void Function(int) onPressed;
+  final void Function() onCancel;
+
+  @override
+  State<FastForwardToSpecificTimeDialog> createState() =>
+      _FastForwardToSpecificTimeDialogState();
+}
+
+class _FastForwardToSpecificTimeDialogState
+    extends State<FastForwardToSpecificTimeDialog> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    controller.text = "3";
+
+    return AlertDialog(
+      title: const Text("快进到指定时间"),
+      content: TextField(
+        controller: controller,
+        autofocus: true,
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
+        decoration: const InputDecoration(
+          hintText: "要快进到的秒数",
         ),
       ),
       actions: [
