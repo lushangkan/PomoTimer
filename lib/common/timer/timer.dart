@@ -80,10 +80,13 @@ class AppTimer {
 
   /// 检查并重置计时器
   /// 如果计时器已经完成，则重置计时器
-  void checkAndResetTimer() {
+  /// @return 是否已经完成
+  bool checkAndResetTimer() {
     if (totalTime != null && elapsedTime != null && elapsedTime! >= totalTime!) {
       stopTimer();
+      return true;
     }
+    return false;
   }
 
   /// 重置偏移时间
@@ -193,7 +196,9 @@ class AppTimer {
       return;
     }
 
-    checkAndResetTimer();
+    if (checkAndResetTimer()) {
+      return;
+    }
 
     var currentPhase = calculateCurrentPhase()?.item1;
 
@@ -206,6 +211,10 @@ class AppTimer {
     }
 
     eventBus.fire(TimerTickEvent(elapsedTime!, this));
+  }
+
+  void dispose() {
+    timer.cancel();
   }
 
 }

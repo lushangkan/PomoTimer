@@ -62,18 +62,34 @@ class FastForwardToEnd extends PopupMenuItem {
         );
 }
 
-@immutable
-class FastForwardToEndDialog extends StatelessWidget {
-  FastForwardToEndDialog(
+class FastForwardToEndDialog extends StatefulWidget {
+  const FastForwardToEndDialog(
       {super.key, required this.onPressed, required this.onCancel});
 
-  late TextEditingController controller;
   final void Function(int) onPressed;
   final void Function() onCancel;
 
   @override
+  State<FastForwardToEndDialog> createState() => _FastForwardToEndDialogState();
+}
+
+class _FastForwardToEndDialogState extends State<FastForwardToEndDialog> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    controller = TextEditingController(text: "3");
 
     return AlertDialog(
       title: const Text("快进到末尾指定时间"),
@@ -89,23 +105,19 @@ class FastForwardToEndDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            onCancel();
+            widget.onCancel();
             Navigator.of(context).pop();
           },
           child: const Text("取消"),
         ),
         TextButton(
           onPressed: () {
-            onPressed(int.parse(controller.text));
+            widget.onPressed(int.parse(controller.text));
             Navigator.of(context).pop();
           },
           child: const Text("确定"),
         ),
       ],
     );
-  }
-
-  void dispose() {
-    controller.dispose();
   }
 }
