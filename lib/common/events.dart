@@ -27,3 +27,27 @@ class TimerPhaseChangeEvent extends TimerEvent {
 
   TimerPhaseChangeEvent(this.phase, this.timer);
 }
+
+/// 计时器开始计数事件
+/// @timer 计时器
+class TimerStartEvent extends TimerEvent {
+  final AppTimer timer;
+
+  TimerStartEvent(this.timer);
+}
+
+/// 计时器暂停计数事件
+/// @timer 计时器
+class TimerPauseEvent extends TimerEvent {
+  final AppTimer timer;
+
+  TimerPauseEvent(this.timer);
+}
+
+/// 计时器停止计数事件
+/// @timer 计时器
+class TimerStopEvent extends TimerEvent {
+  final AppTimer timer;
+
+  TimerStopEvent(this.timer);
+}

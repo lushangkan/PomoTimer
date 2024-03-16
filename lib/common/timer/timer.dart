@@ -181,7 +181,11 @@ class AppTimer {
     _states.offsetTime = 0;
     _states.timerRunning = true;
     _states.notifyListeners();
+
+    eventBus.fire(TimerStartEvent(this));
   }
+
+  // TODO: 暂停
 
   /// 停止计时
   void stopTimer() {
@@ -189,6 +193,8 @@ class AppTimer {
     _states.offsetTime = null;
     _states.timerRunning = false;
     _states.notifyListeners();
+
+    eventBus.fire(TimerStopEvent(this));
   }
 
   void run(timer) {
