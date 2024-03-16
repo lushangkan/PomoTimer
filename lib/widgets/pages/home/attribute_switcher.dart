@@ -7,9 +7,10 @@ import '../../measure_widget.dart';
 
 class AttributeSwitcher extends StatefulWidget {
   const AttributeSwitcher(
-      {super.key, required this.selected, required this.onSelected});
+      {super.key, required this.selected, required this.onSelected, this.canChange = true});
 
   final Phase selected;
+  final bool canChange;
   final void Function(Phase) onSelected;
 
   @override
@@ -18,28 +19,12 @@ class AttributeSwitcher extends StatefulWidget {
 
 class _AttributeSwitcherState extends State<AttributeSwitcher> {
 
-  late Phase _selected;
-
   final Map<Phase, Tuple2<Size, Offset>> _btnInfos = {
     Phase.focus: const Tuple2(Size.zero, Offset.zero),
     Phase.shortBreak:  const Tuple2(Size.zero, Offset.zero),
     Phase.longBreak: const Tuple2(Size.zero, Offset.zero),
   };
   Offset? _rowPos;
-
-  @override
-  void initState() {
-    super.initState();
-    _selected = widget.selected;
-  }
-
-  set setSelect(Phase index) {
-    setState(() {
-      _selected = index;
-    });
-  }
-
-  get getSelect => _selected;
 
   Offset _getLocPos(Phase index) {
     var btnInfo = _getBtnInfo(index);
@@ -65,9 +50,6 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
   }
 
   void _onPressed(Phase index) {
-    setState(() {
-      _selected = index;
-    });
     widget.onSelected(index);
   }
 
@@ -95,12 +77,12 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
           child: AnimatedPositioned(
               curve: Curves.ease,
               duration: const Duration(milliseconds: 200),
-              top: _getLocPos(_selected).dy,
-              left: _getLocPos(_selected).dx,
+              top: _getLocPos(widget.selected).dy,
+              left: _getLocPos(widget.selected).dx,
               child: UnconstrainedBox(
                 child: Container(
-                  height: _getBtnSize(_selected).height,
-                  width: _getBtnSize(_selected).width,
+                  height: _getBtnSize(widget.selected).height,
+                  width: _getBtnSize(widget.selected).width,
                   decoration: BoxDecoration(
                     color: colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(80),
