@@ -19,6 +19,7 @@ class AttributeSwitcher extends StatefulWidget {
 class _AttributeSwitcherState extends State<AttributeSwitcher> {
 
   late Phase _selected;
+
   final Map<Phase, Tuple2<Size, Offset>> _btnInfos = {
     Phase.focus: const Tuple2(Size.zero, Offset.zero),
     Phase.shortBreak:  const Tuple2(Size.zero, Offset.zero),
@@ -70,6 +71,18 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
     widget.onSelected(index);
   }
 
+  void _onButtonSizeChange(Phase index, Size size, Offset pos) {
+    setState(() {
+      _btnInfos[index] = Tuple2(size, pos);
+    });
+  }
+
+  void _onRowSizeChange(Size size, Offset pos) {
+    setState(() {
+      _rowPos = pos;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -104,50 +117,28 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
               )),
         ),
         MeasureWidget(
-            onChange: (size, pos) {
-              setState(() {
-                _rowPos = pos;
-              });
-            },
+            onChange: _onRowSizeChange,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AttributeBtn(
-                  onSizeChange: (size, pos) {
-                    setState(() {
-                      _btnInfos[Phase.focus] = Tuple2(size, pos);
-                    });
-                  },
+                  onSizeChange: (size, pos) => _onButtonSizeChange(Phase.focus, size, pos),
                   text: '专注',
-                  onPressed: () {
-                    _onPressed(Phase.focus);
-                  },
+                  onPressed: () => _onPressed(Phase.focus),
                 ),
                 const AttributeSplitter(),
                 AttributeBtn(
                   text: '小休息',
-                  onSizeChange: (size, pos) {
-                    setState(() {
-                      _btnInfos[Phase.shortBreak] = Tuple2(size, pos);
-                    });
-                  },
-                  onPressed: () {
-                    _onPressed(Phase.shortBreak);
-                  },
+                  onSizeChange: (size, pos) => _onButtonSizeChange(Phase.shortBreak, size, pos),
+                  onPressed: () => _onPressed(Phase.shortBreak),
                 ),
                 const AttributeSplitter(),
                 AttributeBtn(
-                  onSizeChange: (size, pos) {
-                    setState(() {
-                      _btnInfos[Phase.longBreak] = Tuple2(size, pos);
-                    });
-                  },
+                  onSizeChange: (size, pos) => _onButtonSizeChange(Phase.longBreak, size, pos),
                   text: '大休息',
-                  onPressed: () {
-                    _onPressed(Phase.longBreak);
-                  },
+                  onPressed: () => _onPressed(Phase.longBreak),
                 ),
               ],
             ))
