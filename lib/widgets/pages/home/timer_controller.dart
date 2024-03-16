@@ -97,6 +97,9 @@ class _TimerControllerState extends State<TimerController>
     }
 
     void onPressedStartButton() {
+      timer.setCustomTimes(_tmpCustomTimes);
+      timer.setReminderType(_tmpReminderType);
+
       timer.startTimer();
     }
 
