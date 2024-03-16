@@ -91,6 +91,8 @@ class _FastForwardToEndDialogState extends State<FastForwardToEndDialog> {
   @override
   Widget build(BuildContext context) {
 
+    controller.text = "3";
+
     return AlertDialog(
       title: const Text("快进到末尾指定时间"),
       content: TextField(
