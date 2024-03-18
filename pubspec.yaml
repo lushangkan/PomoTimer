@@ -54,6 +54,7 @@ dependencies:
 #  json_reflectable: ^1.0.1
   json_annotation: ^4.8.1
   drop_shadow: ^0.1.0
+  quiver: ^3.2.1
 
 dependency_overrides:
   intl: ^0.19.0

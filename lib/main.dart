@@ -23,7 +23,7 @@ void main() async {
   // 初始化State，因为获取储存是异步的，需要在MaterialApp之前初始化
   final TimerStates timerStates = await TimerStates.loadFromStorage();
   final AppStates appStates = AppStates(timerStates);
-  await appStates.timer.init();
+  appStates.timer.init();
 
   runApp(App(timerStates: timerStates, appStates: appStates));
 }

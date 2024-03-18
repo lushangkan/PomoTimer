@@ -117,13 +117,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'hasListeners': (dynamic instance) => instance.hasListeners,
         r'fastForward': (dynamic instance) => instance.fastForward,
         r'checkAndResetTimer': (dynamic instance) =>
-            instance.checkAndResetTimer,
+            instance._checkAndResetTimer,
         r'resetOffsetTime': (dynamic instance) => instance.resetOffsetTime,
         r'setReminderType': (dynamic instance) => instance.setReminderType,
         r'setCustomTime': (dynamic instance) => instance.setCustomTime,
         r'setCustomTimes': (dynamic instance) => instance.setCustomTimes,
         r'calculateCurrentPhase': (dynamic instance) =>
-            instance.calculateCurrentPhase,
+            instance.getCurrentPhase,
         r'startTimer': (dynamic instance) => instance.startTimer,
         r'stopTimer': (dynamic instance) => instance.stopTimer,
         r'toJson': (dynamic instance) => instance.toJson,

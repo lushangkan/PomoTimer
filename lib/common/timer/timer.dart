@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
 
@@ -8,6 +7,7 @@ import '../../states/timer_states.dart';
 import '../constants.dart';
 import '../enum/attribute.dart';
 import '../enum/reminder_type.dart';
+import '../event_bus.dart';
 import '../logger.dart';
 
 // TODO: 完善单元测试
@@ -20,8 +20,9 @@ class AppTimer {
   static const duration = Duration(seconds: 1);
 
   late final TimerStates _states;
-  late Timer timer;
-  Phase? lastPhase;
+  Timer? timer;
+  Phase? _lastPhase;
+
 
   /// 是否正在运行
   /// @return 是否正在运行
@@ -56,13 +57,16 @@ class AppTimer {
     return null;
   }
 
-  Future<void> init() async {
-    checkAndResetTimer();
-    var now = DateTime.now();
-    var microsecondsToNextSecond = 1000000 - now.microsecond;
-    await Future.delayed(Duration(microseconds: microsecondsToNextSecond));
+  /// 初始化，仅在应用启动时调用
+  void init() async {
+    _checkAndResetTimer();
 
-    timer = Timer.periodic(duration, run);
+    if (!isRunning) {
+      // 未运行
+      return;
+    }
+
+    _startTimerAtNextSecond();
   }
 
   /// 快进一段时间
@@ -74,13 +78,19 @@ class AppTimer {
       _states.offsetTime = _states.offsetTime! + milliseconds;
     }
     _states.notifyListeners();
+  }
 
+  /// 设置快进偏移时间
+  /// @milliseconds 快进的时间，单位毫秒
+  void setOffsetTime(int milliseconds) {
+    _states.offsetTime = milliseconds;
+    _states.notifyListeners();
   }
 
   /// 检查并重置计时器
   /// 如果计时器已经完成，则重置计时器
   /// @return 是否已经完成
-  bool checkAndResetTimer() {
+  bool _checkAndResetTimer() {
     if (totalTime != null && elapsedTime != null && elapsedTime! >= totalTime!) {
       stopTimer();
       return true;
@@ -131,13 +141,15 @@ class AppTimer {
 
   /// 计算当前阶段
   /// @return 当前阶段, 当前阶段的剩余时间
-  (Phase?, int?)? calculateCurrentPhase() {
+  (Phase?, int?)? get getCurrentPhase {
     int focusTimeMs = _states.customFocusTime! * 60 * 1000;
     int shortBreakTimeMs = _states.customShortBreakTime! * 60 * 1000;
     int longBreakTimeMs = _states.customLongBreakTime! * 60 * 1000;
 
-    // 计算每个循环的总时间（3个专注时间 + 3个小休息时间）
-    int cycleTimeMs = (focusTimeMs + shortBreakTimeMs) * (Constants.longBreakInterval - 1);
+    int interval = Constants.longBreakInterval;
+
+    // 计算每个循环的总时间（4个专注时间 + 3个小休息时间）
+    int cycleTimeMs = focusTimeMs * interval + shortBreakTimeMs * (interval - 1);
     // 计算完整循环的总时间（包括一个大休息时间）
     int fullCycleTimeMs = cycleTimeMs + longBreakTimeMs;
 
@@ -150,6 +162,11 @@ class AppTimer {
     // 计算当前所在的完整循环次数
     int cyclesCompleted = passedTimeMs ~/ fullCycleTimeMs;
 
+    if (cyclesCompleted >= 1) {
+      // 已经运行超过一个完整循环
+      return null;
+    }
+
     // 计算当前循环中剩余的时间
     int timeInCurrentCycleMs = passedTimeMs % fullCycleTimeMs;
 
@@ -157,6 +174,7 @@ class AppTimer {
     if (timeInCurrentCycleMs <= cycleTimeMs) {
       // 计算当前所在的小循环次数（专注 + 小休息）
       int smallCyclesCompleted = timeInCurrentCycleMs ~/ (focusTimeMs + shortBreakTimeMs);
+
       // 计算当前小循环中剩余的时间
       int timeInSmallCycleMs = timeInCurrentCycleMs % (focusTimeMs + shortBreakTimeMs);
 
@@ -173,53 +191,85 @@ class AppTimer {
     }
   }
 
+  void _startTimerAtNextSecond() async {
+    // 立即执行一次
+    run();
+
+    // 启动定时任务，每秒执行一次
+    timer = Timer.periodic(duration, (_) => run());
+  }
+
+  void _destroyTimer() {
+    timer?.cancel();
+  }
 
   /// 开始计时
   void startTimer() {
+    // 初始化变量
     _states.startTime = DateTime.now();
     _states.offsetTime = 0;
     _states.timerRunning = true;
-    _states.notifyListeners();
+    _lastPhase = null;
 
+    // 触发事件
     eventBus.fire(TimerStartEvent(this));
+
+    _startTimerAtNextSecond();
+
+    _states.notifyListeners();
   }
 
   // TODO: 暂停
 
   /// 停止计时
   void stopTimer() {
+    if (!isRunning) {
+      // 未运行，返回
+      return;
+    }
+
+    // 清除变量
     _states.startTime = null;
     _states.offsetTime = null;
     _states.timerRunning = false;
-    _states.notifyListeners();
+    _lastPhase = null;
 
+    // 触发事件
     eventBus.fire(TimerStopEvent(this));
+
+    if (timer != null) _destroyTimer();
+
+    _states.notifyListeners();
   }
 
-  void run(timer) {
-    if (_states.timerRunning != true) {
+  void run() {
+    if (!isRunning) {
       return;
     }
 
-    if (checkAndResetTimer()) {
+    if (_checkAndResetTimer()) {
       return;
     }
 
-    var currentPhase = calculateCurrentPhase()?.item1;
+    var (currentPhase, timeRemainingInCurrentPhase) = getCurrentPhase ?? (null, null);
 
-    if (currentPhase != null && currentPhase != lastPhase) {
+    if (currentPhase == null || timeRemainingInCurrentPhase == null) {
+      return;
+    }
+
+    if (currentPhase != _lastPhase) {
       eventBus.fire(TimerPhaseChangeEvent(currentPhase, this));
     }
 
-    if (currentPhase != null) {
-      lastPhase = currentPhase;
-    }
+    _lastPhase = currentPhase;
 
-    eventBus.fire(TimerTickEvent(elapsedTime!, this));
+    var timeOfCurrentPhase = _states.customTimes[currentPhase]! * 60 * 1000 - timeRemainingInCurrentPhase;
+
+    eventBus.fire(TimerTickEvent(elapsedTime!, timeOfCurrentPhase, this));
   }
 
   void dispose() {
-    timer.cancel();
+    timer?.cancel();
   }
 
 }

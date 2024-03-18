@@ -3,6 +3,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:provider/provider.dart';
 
 import '../../states/app_states.dart';
+import '../../states/timer_states.dart';
 
 class DebuggingTools extends StatelessWidget {
   const DebuggingTools({super.key});
@@ -13,6 +14,7 @@ class DebuggingTools extends StatelessWidget {
     var colorScheme = theme.colorScheme;
 
     var appStates = context.watch<AppStates>();
+    var timerStates = context.watch<TimerStates>();
     var timer = appStates.timer;
 
     Future<int?> showFastForwardToEndDialog() async {
@@ -24,7 +26,7 @@ class DebuggingTools extends StatelessWidget {
                 if (newTime < 0) {
                   newTime = 0;
                 }
-                timer.fastForward(newTime);
+                timer.setOffsetTime(newTime + (timerStates.offsetTime ?? 0));
               },
               onCancel: () {}));
     }
@@ -112,7 +114,6 @@ class _FastForwardToEndDialogState extends State<FastForwardToEndDialog> {
       title: const Text("快进到末尾指定时间"),
       content: TextField(
         controller: controller,
-        autofocus: true,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         decoration: const InputDecoration(
@@ -183,7 +184,6 @@ class _FastForwardToSpecificTimeDialogState
       title: const Text("快进到指定时间"),
       content: TextField(
         controller: controller,
-        autofocus: true,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         decoration: const InputDecoration(

@@ -26,7 +26,11 @@ class TimerController extends StatefulWidget {
 
 class _TimerControllerState extends State<TimerController>
     with AutomaticKeepAliveClientMixin {
+
   Phase selected = Phase.focus;
+
+  Phase? phase;
+  int? timeOfCurrentPhase;
 
   // 创建临时变量保存customTimes, 这个变量会在用户开始后保存到states和localstorage
   // 为了避免在用户选择时间后立即开始时, 保存的customTimes不是最新的
@@ -34,12 +38,32 @@ class _TimerControllerState extends State<TimerController>
   late ReminderType _tmpReminderType;
 
   late StreamSubscription<TimerPhaseChangeEvent> _timerPhaseChangeEventSubscription;
+  late StreamSubscription<TimerTickEvent> _timerTickSubscription;
+  late StreamSubscription<TimerStopEvent> _timeStopEventSubscription;
+
+  void onTimerTick(TimerTickEvent event) {
+    setState(() {
+      timeOfCurrentPhase = event.timeOfCurrentPhase;
+    });
+  }
 
   void onTimerPhaseChanged(TimerPhaseChangeEvent event) {
     setState(() {
-      selected = event.phase;
+      phase = event.phase;
     });
   }
+
+  void onTimerStop(TimerStopEvent event) {
+    reset();
+  }
+
+  void reset() {
+    setState(() {
+      phase = null;
+      timeOfCurrentPhase = null;
+    });
+  }
+
 
   @override
   bool get wantKeepAlive => true;
@@ -50,11 +74,23 @@ class _TimerControllerState extends State<TimerController>
 
     // 从State复制customTimes
     var timerStates = context.read<TimerStates>();
+    var appStates = context.read<AppStates>();
+    var timer = appStates.timer;
+
     _tmpCustomTimes = timerStates.customTimes;
     _tmpReminderType = timerStates.reminderType!;
 
+    // 更新时间
+    if (timerStates.timerRunning == true) {
+      var (phase, timeOfCurrentPhase) = timer.getCurrentPhase ?? (null, null);
+      this.phase = phase!;
+      this.timeOfCurrentPhase = timeOfCurrentPhase!;
+    }
+
     // 监听事件
-    _timerPhaseChangeEventSubscription = eventBus.on<TimerPhaseChangeEvent>().listen(onTimerPhaseChanged);
+    eventBus.on<TimerPhaseChangeEvent>().listen(onTimerPhaseChanged);
+    eventBus.on<TimerTickEvent>().listen(onTimerTick);
+    eventBus.on<TimerStopEvent>().listen(onTimerStop);
   }
 
   @override
@@ -63,6 +99,8 @@ class _TimerControllerState extends State<TimerController>
 
     // 卸载监听器
     _timerPhaseChangeEventSubscription.cancel();
+    _timerTickSubscription.cancel();
+    _timeStopEventSubscription.cancel();
   }
 
   @override
@@ -100,6 +138,8 @@ class _TimerControllerState extends State<TimerController>
       timer.setCustomTimes(_tmpCustomTimes);
       timer.setReminderType(_tmpReminderType);
 
+      reset();
+
       timer.startTimer();
     }
 
@@ -107,11 +147,11 @@ class _TimerControllerState extends State<TimerController>
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         AttributeSwitcher(
-          selected: selected,
+          selected: timer.isRunning ? phase! : selected,
           onSelected: onAttributeSwitcherSelected,
         ),
         if (timerStates.timerRunning == true)
-          const TimeDisplay()
+          TimeDisplay(phase: phase!, timeOfCurrentPhase: timeOfCurrentPhase!,)
         else
           AttributeSelector(
             selected: selected,
