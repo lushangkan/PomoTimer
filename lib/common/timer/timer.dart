@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
@@ -22,7 +23,6 @@ class AppTimer {
   late final TimerStates _states;
   Timer? timer;
   Phase? _lastPhase;
-
 
   /// 是否正在运行
   /// @return 是否正在运行
@@ -146,34 +146,21 @@ class AppTimer {
     int shortBreakTimeMs = _states.customShortBreakTime! * 60 * 1000;
     int longBreakTimeMs = _states.customLongBreakTime! * 60 * 1000;
 
-    int interval = Constants.longBreakInterval;
+    const interval = Constants.longBreakInterval;
 
     // 计算每个循环的总时间（4个专注时间 + 3个小休息时间）
     int cycleTimeMs = focusTimeMs * interval + shortBreakTimeMs * (interval - 1);
-    // 计算完整循环的总时间（包括一个大休息时间）
-    int fullCycleTimeMs = cycleTimeMs + longBreakTimeMs;
 
     // 获取已过时间
-    int? passedTimeMs = elapsedTime;
-    if (passedTimeMs == null) {
+    int? timeInCurrentCycleMs = elapsedTime;
+    if (timeInCurrentCycleMs == null) {
       return null;
     }
-
-    // 计算当前所在的完整循环次数
-    int cyclesCompleted = passedTimeMs ~/ fullCycleTimeMs;
-
-    if (cyclesCompleted >= 1) {
-      // 已经运行超过一个完整循环
-      return null;
-    }
-
-    // 计算当前循环中剩余的时间
-    int timeInCurrentCycleMs = passedTimeMs % fullCycleTimeMs;
 
     // 如果剩余时间在一个完整循环之内，计算当前阶段
     if (timeInCurrentCycleMs <= cycleTimeMs) {
       // 计算当前所在的小循环次数（专注 + 小休息）
-      int smallCyclesCompleted = timeInCurrentCycleMs ~/ (focusTimeMs + shortBreakTimeMs);
+      // int smallCyclesCompleted = timeInCurrentCycleMs ~/ (focusTimeMs + shortBreakTimeMs);
 
       // 计算当前小循环中剩余的时间
       int timeInSmallCycleMs = timeInCurrentCycleMs % (focusTimeMs + shortBreakTimeMs);
@@ -186,7 +173,7 @@ class AppTimer {
       }
     } else {
       // 如果剩余时间超过了一个完整循环，则当前处于大休息阶段
-      int timeInLongBreakMs = passedTimeMs - cycleTimeMs;
+      int timeInLongBreakMs = timeInCurrentCycleMs - cycleTimeMs;
       return (Phase.longBreak, longBreakTimeMs - timeInLongBreakMs);
     }
   }
@@ -243,6 +230,8 @@ class AppTimer {
   }
 
   void run() {
+    Timeline.startSync('run');
+
     if (!isRunning) {
       return;
     }
@@ -266,6 +255,8 @@ class AppTimer {
     var timeOfCurrentPhase = _states.customTimes[currentPhase]! * 60 * 1000 - timeRemainingInCurrentPhase;
 
     eventBus.fire(TimerTickEvent(elapsedTime!, timeOfCurrentPhase, this));
+
+    Timeline.finishSync();
   }
 
   void dispose() {

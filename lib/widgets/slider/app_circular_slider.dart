@@ -2,8 +2,20 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-class AppCircularSlider extends StatelessWidget {
-  const AppCircularSlider({super.key, this.sliderSize = 238, this.progressBarWidth = 32, required this.value, required this.min, required this.max, this.onChange, this.innerWidget, });
+class AppCircularSlider extends StatefulWidget {
+  const AppCircularSlider(
+      {super.key,
+      this.sliderSize = 238,
+      this.progressBarWidth = 32,
+      required this.value,
+      required this.min,
+      required this.max,
+      this.onChange,
+      this.innerWidget,
+      this.animationEnabled = true,
+      this.animationDuration = 500,
+      bool? selectMode})
+      : selectMode = selectMode ?? (onChange != null);
 
   final double sliderSize;
   final double progressBarWidth;
@@ -12,26 +24,80 @@ class AppCircularSlider extends StatelessWidget {
   final double max;
   final void Function(double)? onChange;
   final Widget Function(double)? innerWidget;
+  final bool animationEnabled;
+  final int animationDuration;
+  final bool selectMode;
+
+  @override
+  State createState() => _AppCircularSliderState();
+}
+
+class _AppCircularSliderState extends State<AppCircularSlider> with SingleTickerProviderStateMixin{
+
+  late Animation<double> _animation;
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: widget.animationDuration), );
+    CurvedAnimation curve = CurvedAnimation(parent: _animationController, curve: Curves.elasticOut);
+    _animation = Tween<double>(begin: 0, end: 6).animate(curve);
+    playAnimation();
+  }
+  
+  @override
+  void didUpdateWidget(covariant AppCircularSlider oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    if (oldWidget.selectMode != widget.selectMode) {
+      playAnimation();
+    }
+  }
+
+  void playAnimation() {
+    if (widget.selectMode) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse(from: _animationController.upperBound);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
 
-    double innerSize = sliderSize - progressBarWidth * 2;
+    double innerSize = widget.sliderSize - widget.progressBarWidth * 2;
 
-    return SleekCircularSlider(
-      min: min,
-      max: max,
-      initialValue: value,
-      innerWidget: (double value) => _AppCircularSliderInner(size: innerSize, child: innerWidget != null? innerWidget!(value) : null),
-      appearance: _AppCircularSliderAppearance(
-        sliderSize: sliderSize,
-        progressWidth: progressBarWidth,
-        colorScheme: colorScheme
-      ),
-      onChange: onChange
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return SleekCircularSlider(
+            min: widget.min,
+            max: widget.max,
+            initialValue: widget.value,
+            innerWidget: (double value) => _AppCircularSliderInner(
+                size: innerSize,
+                child: widget.innerWidget != null ? widget.innerWidget!(value) : null),
+            appearance: _AppCircularSliderAppearance(
+              animationEnabled: widget.animationEnabled,
+              sliderSize: widget.sliderSize,
+              progressWidth: widget.progressBarWidth,
+              colorScheme: colorScheme,
+              selectMode: widget.selectMode,
+              handlerSize: _animation.value,
+            ),
+            onChange: widget.onChange);
+      }
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
   }
 }
 
@@ -71,56 +137,62 @@ class _AppCircularSliderInner extends StatelessWidget {
         ),
         child: Center(
             child: Container(
-              width: size - 26,
-              height: size - 26,
-              decoration: BoxDecoration(
-                  color: colorScheme.background,
-                  borderRadius: BorderRadius.circular(9999)
-              ),
-              child: Center(
-                child: child,
-              ),
-            )
-        ),
+          width: size - 26,
+          height: size - 26,
+          decoration: BoxDecoration(
+              color: colorScheme.background,
+              borderRadius: BorderRadius.circular(9999)),
+          child: Center(
+            child: child,
+          ),
+        )),
       ),
     );
   }
 }
 
 class _AppCircularSliderAppearance extends CircularSliderAppearance {
-  _AppCircularSliderAppearance({
-    required this.sliderSize,
-    required this.progressWidth,
-    required this.colorScheme
-  }) : super(
-    size: sliderSize,
-    customWidths: CustomSliderWidths(
-      trackWidth: progressWidth,
-      progressBarWidth: progressWidth,
-      shadowWidth: 30 * 1.4,
-      handlerSize: 6,
-    ),
-    customColors: CustomSliderColors(
-      // 背景颜色
-      trackColor: colorScheme.surface,
-      // 进度条颜色
-      progressBarColors: [
-        colorScheme.primary,
-        colorScheme.secondary,
-      ],
-      gradientStartAngle: 270,
-      gradientEndAngle: 270 + 180,
-      dynamicGradient: false,
-      dotColor: colorScheme.background,
-      shadowColor: colorScheme.primary.withOpacity(0.25),
-      shadowMaxOpacity: 0.19,
-      shadowStep: 1.2,
-    ),
-    startAngle: 270,
-    angleRange: 360,
-  );
+  _AppCircularSliderAppearance(
+      {required this.sliderSize,
+      required this.progressWidth,
+      required this.colorScheme,
+      required this.animationEnabled,
+        required this.handlerSize,
+      required this.selectMode})
+      : super(
+          size: sliderSize,
+          customWidths: CustomSliderWidths(
+            trackWidth: progressWidth,
+            progressBarWidth: progressWidth,
+            shadowWidth: 30 * 1.4,
+            handlerSize: handlerSize,
+          ),
+          customColors: CustomSliderColors(
+            // 背景颜色
+            trackColor: colorScheme.surface,
+            // 进度条颜色
+            progressBarColors: [
+              colorScheme.primary,
+              colorScheme.secondary,
+            ],
+            gradientStartAngle: 270,
+            gradientEndAngle: 270 + 180,
+            dynamicGradient: false,
+            dotColor: colorScheme.background,
+            shadowColor: colorScheme.primary.withOpacity(0.25),
+            shadowMaxOpacity: 0.19,
+            shadowStep: 1.2,
+          ),
+          startAngle: 270,
+          angleRange: 360,
+          animationEnabled: animationEnabled,
+          animDurationMultiplier: 1.05,
+        );
 
   final double sliderSize;
   final double progressWidth;
   final ColorScheme colorScheme;
+  final bool animationEnabled;
+  final double handlerSize;
+  final bool selectMode;
 }

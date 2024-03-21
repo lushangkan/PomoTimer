@@ -8,7 +8,8 @@ import '../../../common/utils/app_utils.dart';
 import '../../../states/timer_states.dart';
 
 class TimeDisplay extends StatefulWidget {
-  const TimeDisplay({super.key, required this.phase, required this.timeOfCurrentPhase});
+  const TimeDisplay(
+      {super.key, required this.phase, required this.timeOfCurrentPhase});
 
   final Phase phase;
   final int timeOfCurrentPhase;
@@ -18,28 +19,36 @@ class TimeDisplay extends StatefulWidget {
 }
 
 class _TimeDisplayState extends State<TimeDisplay> {
-
   @override
   Widget build(BuildContext context) {
     var timerStates = context.watch<TimerStates>();
 
     const double min = 0;
-    var max = ((timerStates.customTimes[widget.phase] ?? 0) * 60 * 1000).toDouble();
+    var max =
+        ((timerStates.customTimes[widget.phase] ?? 0) * 60 * 1000).toDouble();
 
-    return AppCircularSlider(value: widget.timeOfCurrentPhase.toDouble(), min: min, max: max, innerWidget: (_) => _TimeDisplayInner(timeOfCurrentPhase: widget.timeOfCurrentPhase, phase: widget.phase));
+    return AppCircularSlider(
+        value: widget.timeOfCurrentPhase.toDouble(),
+        min: min,
+        max: max,
+        animationEnabled: timerStates.timerRunning == false, // TODO: 待提Issue，如果运行时启用动画，运行半小时后会卡顿，每3秒一帧
+        innerWidget: (_) => _TimeDisplayInner(
+            timeOfCurrentPhase: widget.timeOfCurrentPhase,
+            phase: widget.phase));
   }
 }
 
 class _TimeDisplayInner extends StatelessWidget {
-  const _TimeDisplayInner({super.key, required this.timeOfCurrentPhase, required this.phase});
+  const _TimeDisplayInner(
+      {super.key, required this.timeOfCurrentPhase, required this.phase});
 
   final int timeOfCurrentPhase;
   final Phase phase;
 
   @override
   Widget build(BuildContext context) {
-
-    var time = DateTime.fromMillisecondsSinceEpoch(timeOfCurrentPhase, isUtc: true);
+    var time =
+        DateTime.fromMillisecondsSinceEpoch(timeOfCurrentPhase, isUtc: true);
 
     String languageCode = getAppLocal(context)!;
 
@@ -47,10 +56,7 @@ class _TimeDisplayInner extends StatelessWidget {
 
     return Container(
       alignment: Alignment.center,
-      child: Text(
-          timeText
-      ),
+      child: Text(timeText),
     );
   }
-
 }

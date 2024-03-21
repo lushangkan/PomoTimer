@@ -5,6 +5,7 @@ import 'package:pomotimer/common/constants.dart';
 import 'package:pomotimer/common/enum/reminder_type.dart';
 import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
+import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/widgets/pages/home/reminder_type_switcher.dart';
 import 'package:pomotimer/widgets/pages/home/start_button.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
@@ -110,8 +111,7 @@ class _TimerControllerState extends State<TimerController>
     var theme = Theme.of(context);
 
     var timerStates = context.watch<TimerStates>();
-    var appStates = context.watch<AppStates>();
-    var timer = appStates.timer;
+    var timer = context.select<AppStates, AppTimer>((value) => value.timer);
 
     void onAttributeSwitcherSelected(Phase value) {
       // 如果计时器正在运行, 则不允许切换
