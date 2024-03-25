@@ -7,7 +7,9 @@ import '../../../generated/l10n.dart';
 import '../../debugging/debugging_tools.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.timerController});
+
+  final TimerController timerController;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: TopBar(theme),
-      body: const HomeBody(),
+      body: HomeBody(timerController: timerController,),
     );
   }
 }
@@ -43,7 +45,9 @@ class TopBar extends AppBar {
 }
 
 class HomeBody extends StatelessWidget {
-  const HomeBody({super.key});
+  const HomeBody({super.key, required this.timerController});
+
+  final TimerController timerController;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,7 @@ class HomeBody extends StatelessWidget {
       child: Center(
         child: Container(
             constraints: const BoxConstraints.tightFor(width: 300, height: 600),
-            child: const TimerController()),
+            child: timerController),
       ),
     );
   }

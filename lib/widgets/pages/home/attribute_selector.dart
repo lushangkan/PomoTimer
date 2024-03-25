@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/app_text_style.dart';
 import '../../../common/constants.dart';
 import '../../../common/enum/attribute.dart';
+import '../../../states/timer_states.dart';
 import '../../slider/app_circular_slider.dart';
 
 class AttributeSelector extends StatelessWidget {
@@ -16,6 +18,8 @@ class AttributeSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
+    var timerStates = context.watch<TimerStates>();
+
     const double sliderSize = 238;
     const double progressBarWidth = 32;
     const double innerSize = sliderSize - progressBarWidth * 2;
@@ -24,6 +28,7 @@ class AttributeSelector extends StatelessWidget {
       min: Constants.timeRange[selected]!.$1.toDouble(),
       max: Constants.timeRange[selected]!.$2.toDouble(),
       value: customTimes[selected]!.toDouble(),
+      animationEnabled: timerStates.timerRunning == false,
       innerWidget: (double value) => CircularSliderInner(size: innerSize, minute: value.round(), selected: selected),
       onChange: (double value) {
         onSelected(value.round());

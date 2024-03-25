@@ -221,12 +221,12 @@ class AppTimer {
     _states.timerRunning = false;
     _lastPhase = null;
 
-    // 触发事件
-    eventBus.fire(TimerStopEvent(this));
+    _states.notifyListeners();
 
     if (timer != null) _destroyTimer();
 
-    _states.notifyListeners();
+    // 触发事件
+    eventBus.fire(TimerStopEvent(this));
   }
 
   void run() {

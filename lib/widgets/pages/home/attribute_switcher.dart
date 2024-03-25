@@ -6,10 +6,10 @@ import '../../measure_widget.dart';
 
 class AttributeSwitcher extends StatefulWidget {
   const AttributeSwitcher(
-      {super.key, required this.selected, required this.onSelected});
+      {super.key, required this.selected, this.onSelected});
 
   final Phase selected;
-  final void Function(Phase) onSelected;
+  final void Function(Phase)? onSelected;
 
   @override
   State<AttributeSwitcher> createState() => _AttributeSwitcherState();
@@ -48,7 +48,9 @@ class _AttributeSwitcherState extends State<AttributeSwitcher> {
   }
 
   void _onPressed(Phase index) {
-    widget.onSelected(index);
+    if (widget.onSelected != null) {
+      widget.onSelected!(index);
+    }
   }
 
   void _onButtonSizeChange(Phase index, Size size, Offset pos) {
