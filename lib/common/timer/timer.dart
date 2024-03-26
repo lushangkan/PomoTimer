@@ -140,8 +140,8 @@ class AppTimer {
   }
 
   /// 计算当前阶段
-  /// @return 当前阶段, 当前阶段的剩余时间
-  (Phase?, int?)? get getCurrentPhase {
+  /// @return 当前阶段, 当前阶段的剩余时间，当前小循环次数
+  (Phase?, int?, int?)? get getCurrentPhase {
     int focusTimeMs = _states.customFocusTime! * 60 * 1000;
     int shortBreakTimeMs = _states.customShortBreakTime! * 60 * 1000;
     int longBreakTimeMs = _states.customLongBreakTime! * 60 * 1000;
@@ -160,21 +160,21 @@ class AppTimer {
     // 如果剩余时间在一个完整循环之内，计算当前阶段
     if (timeInCurrentCycleMs <= cycleTimeMs) {
       // 计算当前所在的小循环次数（专注 + 小休息）
-      // int smallCyclesCompleted = timeInCurrentCycleMs ~/ (focusTimeMs + shortBreakTimeMs);
+      int smallCyclesCompleted = timeInCurrentCycleMs ~/ (focusTimeMs + shortBreakTimeMs);
 
       // 计算当前小循环中剩余的时间
       int timeInSmallCycleMs = timeInCurrentCycleMs % (focusTimeMs + shortBreakTimeMs);
 
       // 根据剩余时间判断是在专注阶段还是小休息阶段
       if (timeInSmallCycleMs < focusTimeMs) {
-        return (Phase.focus, focusTimeMs - timeInSmallCycleMs);
+        return (Phase.focus, focusTimeMs - timeInSmallCycleMs, smallCyclesCompleted);
       } else {
-        return (Phase.shortBreak, shortBreakTimeMs - (timeInSmallCycleMs - focusTimeMs));
+        return (Phase.shortBreak, shortBreakTimeMs - (timeInSmallCycleMs - focusTimeMs), smallCyclesCompleted);
       }
     } else {
       // 如果剩余时间超过了一个完整循环，则当前处于大休息阶段
       int timeInLongBreakMs = timeInCurrentCycleMs - cycleTimeMs;
-      return (Phase.longBreak, longBreakTimeMs - timeInLongBreakMs);
+      return (Phase.longBreak, longBreakTimeMs - timeInLongBreakMs, interval);
     }
   }
 
@@ -240,14 +240,14 @@ class AppTimer {
       return;
     }
 
-    var (currentPhase, timeRemainingInCurrentPhase) = getCurrentPhase ?? (null, null);
+    var (currentPhase, timeRemainingInCurrentPhase, smallCyclesCompleted) = getCurrentPhase ?? (null, null, null);
 
-    if (currentPhase == null || timeRemainingInCurrentPhase == null) {
+    if (currentPhase == null || timeRemainingInCurrentPhase == null || smallCyclesCompleted == null) {
       return;
     }
 
     if (currentPhase != _lastPhase) {
-      eventBus.fire(TimerPhaseChangeEvent(currentPhase, this));
+      eventBus.fire(TimerPhaseChangeEvent(currentPhase, this, smallCyclesCompleted));
     }
 
     _lastPhase = currentPhase;

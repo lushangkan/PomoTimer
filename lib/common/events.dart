@@ -28,9 +28,10 @@ class TimerPhaseChangeEvent implements TimerEvent {
   static const EventType type = EventType.timerPhaseChange;
 
   final Phase phase;
+  final int smallCyclesCompleted;
   final AppTimer timer;
 
-  TimerPhaseChangeEvent(this.phase, this.timer);
+  TimerPhaseChangeEvent(this.phase, this.timer, this.smallCyclesCompleted);
 }
 
 /// 计时器开始计数事件

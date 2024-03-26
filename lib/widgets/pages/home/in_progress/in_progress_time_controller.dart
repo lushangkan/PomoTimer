@@ -26,6 +26,7 @@ class InProgressTimeControllerState extends TimerControllerState {
 
   Phase? phase;
   int? timeOfCurrentPhase;
+  int? smallCyclesCompleted;
 
   late bool isTimerStop;
 
@@ -47,6 +48,7 @@ class InProgressTimeControllerState extends TimerControllerState {
 
     setState(() {
       phase = event.phase;
+      smallCyclesCompleted = null;
     });
   }
 
@@ -61,6 +63,7 @@ class InProgressTimeControllerState extends TimerControllerState {
     setState(() {
       phase = null;
       timeOfCurrentPhase = null;
+      smallCyclesCompleted = null;
     });
   }
 
@@ -77,9 +80,10 @@ class InProgressTimeControllerState extends TimerControllerState {
 
     // 更新时间
     if (timerStates.timerRunning == true) {
-      var (phase, timeOfCurrentPhase) = timer.getCurrentPhase ?? (null, null);
+      var (phase, timeOfCurrentPhase, smallCyclesCompleted) = timer.getCurrentPhase ?? (null, null, null);
       this.phase = phase!;
       this.timeOfCurrentPhase = timerStates.customTimes[phase]! * 60 * 1000 - timeOfCurrentPhase!;
+      this.smallCyclesCompleted = smallCyclesCompleted;
     }
 
     // 监听事件
@@ -111,6 +115,7 @@ class InProgressTimeControllerState extends TimerControllerState {
         TimeDisplay(
           phase: phase!,
           timeOfCurrentPhase: timeOfCurrentPhase!,
+          smallCyclesCompleted: smallCyclesCompleted!,
         ),
         const SizedBox(height: 60),
       ],
