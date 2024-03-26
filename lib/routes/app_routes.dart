@@ -19,9 +19,9 @@ final routes = GoRouter(
     ],
     redirect: (BuildContext context, GoRouterState state) {
       var timer = context.read<AppStates>().timer;
-      if (timer.isRunning && state.path == '/') {
+      if (timer.isRunning && (state.path == '/' || state.path == null)) {
         return '/in-progress';
-      } else if (!timer.isRunning && state.path == '/in-progress') {
+      } else if (!timer.isRunning && (state.path == '/in-progress' || state.path == null)) {
         return '/';
       }
       return null;

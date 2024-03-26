@@ -27,24 +27,31 @@ class InProgressTimeControllerState extends TimerControllerState {
   Phase? phase;
   int? timeOfCurrentPhase;
 
+  late bool isTimerStop;
+
   late StreamSubscription<TimerPhaseChangeEvent>
       _timerPhaseChangeEventSubscription;
   late StreamSubscription<TimerTickEvent> _timerTickSubscription;
   late StreamSubscription<TimerStopEvent> _timeStopEventSubscription;
 
   void onTimerTick(TimerTickEvent event) {
+    if (isTimerStop) return;
+
     setState(() {
       timeOfCurrentPhase = event.timeOfCurrentPhase;
     });
   }
 
   void onTimerPhaseChanged(TimerPhaseChangeEvent event) {
+    if (isTimerStop) return;
+
     setState(() {
       phase = event.phase;
     });
   }
 
   void onTimerStop(TimerStopEvent event) {
+    isTimerStop = true;
     reset();
 
     context.go('/');
@@ -65,6 +72,7 @@ class InProgressTimeControllerState extends TimerControllerState {
     var appStates = context.read<AppStates>();
     var timer = appStates.timer;
 
+    isTimerStop = false;
     reset();
 
     // 更新时间
@@ -93,10 +101,6 @@ class InProgressTimeControllerState extends TimerControllerState {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    if (phase == null || timeOfCurrentPhase == null) {
-      return const SizedBox();
-    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
