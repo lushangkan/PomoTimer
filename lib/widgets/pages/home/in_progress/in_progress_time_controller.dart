@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
+import 'package:pomotimer/widgets/pages/home/stop_button.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
 import 'package:pomotimer/widgets/pages/total_progress_indicator.dart';
@@ -111,20 +112,29 @@ class InProgressTimeControllerState extends TimerControllerState {
     var timer = appStates.timer;
 
     return Container(
-      constraints: const BoxConstraints(maxWidth: 265),
+      constraints: const BoxConstraints(maxWidth: 265, maxHeight: 550),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(width: 240 , child: TotalProgressIndicator(elapsedTime: timer.elapsedTime!, totalTime: timer.totalTime!)),
-          AttributeSwitcher(
-            selected: phase!,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: 240 , child: TotalProgressIndicator(elapsedTime: timer.elapsedTime!, totalTime: timer.totalTime!)),
+              const SizedBox(height: 22,),
+              AttributeSwitcher(
+                selected: phase!,
+              ),
+            ],
           ),
           TimeDisplay(
             phase: phase!,
             timeOfCurrentPhase: timeOfCurrentPhase!,
             smallCyclesCompleted: smallCyclesCompleted!,
           ),
-          SizedBox(height: 90,)
+          const SizedBox(height: 20,),
+          StopButton(onPressed: () {
+            timer.stopTimer();
+          },)
         ],
       ),
     );
