@@ -55,7 +55,7 @@ class HomeBody extends StatelessWidget {
       constraints: const BoxConstraints.expand(),
       child: Center(
         child: Container(
-            constraints: const BoxConstraints.tightFor(width: 300, height: 600),
+            constraints: const BoxConstraints(maxWidth: 300, maxHeight: 600),
             child: timerController),
       ),
     );

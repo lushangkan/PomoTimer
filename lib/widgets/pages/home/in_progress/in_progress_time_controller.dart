@@ -6,6 +6,7 @@ import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
+import 'package:pomotimer/widgets/pages/total_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../common/enum/attribute.dart';
@@ -106,19 +107,27 @@ class InProgressTimeControllerState extends TimerControllerState {
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        AttributeSwitcher(
-          selected: phase!,
-        ),
-        TimeDisplay(
-          phase: phase!,
-          timeOfCurrentPhase: timeOfCurrentPhase!,
-          smallCyclesCompleted: smallCyclesCompleted!,
-        ),
-        const SizedBox(height: 60),
-      ],
+    var appStates = context.watch<AppStates>();
+    var timer = appStates.timer;
+
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 265),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          SizedBox(width: 240 , child: TotalProgressIndicator(elapsedTime: timer.elapsedTime!, totalTime: timer.totalTime!)),
+          AttributeSwitcher(
+            selected: phase!,
+          ),
+          TimeDisplay(
+            phase: phase!,
+            timeOfCurrentPhase: timeOfCurrentPhase!,
+            smallCyclesCompleted: smallCyclesCompleted!,
+
+          ),
+          SizedBox(height: 90,)
+        ],
+      ),
     );
   }
 }

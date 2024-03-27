@@ -17,6 +17,7 @@ class TimeDisplay extends StatefulWidget {
   final int timeOfCurrentPhase;
   final int smallCyclesCompleted;
 
+
   @override
   State<TimeDisplay> createState() => _TimeDisplayState();
 }
