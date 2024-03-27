@@ -19,12 +19,14 @@ class AttributeSwitcher extends StatefulWidget {
 
 class _AttributeSwitcherState extends State<AttributeSwitcher>
     with SingleTickerProviderStateMixin {
+
   late AnimationController _animationController;
   late Animation<double> _animation;
   final AttributeSwitcherDelegate delegate = AttributeSwitcherDelegate();
 
   // bg大小: height, width
   (double, double) bgSize = (0, 0);
+  bool enableAnimation = false;
 
   @override
   void initState() {
@@ -54,6 +56,12 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
     });
   }
 
+  void setEnableAnimation(bool enable) {
+    setState(() {
+      enableAnimation = enable;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -69,7 +77,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
         BoxyId(
           id: #bg,
           child: AnimatedContainer(
-            duration: duration,
+            duration: enableAnimation ? duration : Duration.zero,
             height: bgSize.$1,
             width: bgSize.$2,
             child: Container(
@@ -147,6 +155,18 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
     children.where((child) => child.id != #bg).forEach((child) {
       child.position(Offset(width, heightCenter! - child.size.height / 2));
       width += child.size.width;
+    });
+
+    var attributeSwitcher =
+      buildContext.findAncestorWidgetOfExactType<AttributeSwitcher>();
+
+    var currentButton = getChild(attributeSwitcher!.selected);
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      state!.setBgSize(currentButton.size.height, currentButton.size.width);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        state!.setEnableAnimation(true);
+      });
     });
 
     return Size(width, height);
