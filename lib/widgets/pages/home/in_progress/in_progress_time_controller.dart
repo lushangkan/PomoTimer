@@ -49,7 +49,7 @@ class InProgressTimeControllerState extends TimerControllerState {
 
     setState(() {
       phase = event.phase;
-      smallCyclesCompleted = null;
+      smallCyclesCompleted = event.smallCyclesCompleted;
     });
   }
 
@@ -123,7 +123,6 @@ class InProgressTimeControllerState extends TimerControllerState {
             phase: phase!,
             timeOfCurrentPhase: timeOfCurrentPhase!,
             smallCyclesCompleted: smallCyclesCompleted!,
-
           ),
           SizedBox(height: 90,)
         ],
