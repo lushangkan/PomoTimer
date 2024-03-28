@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 
-class FastForwardButton extends StatelessWidget {
-  const FastForwardButton({super.key, required this.onPressed});
+abstract class SecondaryControlButton extends StatelessWidget {
+  const SecondaryControlButton({super.key, required this.onPressed, required this.icon});
 
   final void Function() onPressed;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class FastForwardButton extends StatelessWidget {
       onPressed: onPressed,
       style: buttonStyle,
       child: Icon(
-        LucideIcons.fast_forward,
+        icon,
         color: iconColor,
       ),
     );

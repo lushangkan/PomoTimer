@@ -6,7 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
-import 'package:pomotimer/widgets/pages/fast_forward_button.dart';
+import 'package:pomotimer/widgets/pages/home/fast_forward_button.dart';
+import 'package:pomotimer/widgets/pages/home/pause_button.dart';
 import 'package:pomotimer/widgets/pages/home/stop_button.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
@@ -124,6 +125,9 @@ class InProgressTimeControllerState extends TimerControllerState {
       timer.fastForwardToNextPhase();
     }
 
+    void onPressPauseButton() {
+    }
+
     return Container(
       constraints: const BoxConstraints(maxWidth: 265, maxHeight: 580),
       child: Column(
@@ -155,7 +159,7 @@ class InProgressTimeControllerState extends TimerControllerState {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox.square(dimension: 50,),
+                PauseButton(onPressed: onPressPauseButton),
                 StopButton(
                   onPressed: onPressStopButton,
                 ),
