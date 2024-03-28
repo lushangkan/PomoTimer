@@ -201,6 +201,7 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
     if (selectedChild == null ||
         lastSelectedWidget == null ||
         selectedChild?.$1 != selected) {
+
       selectedChild = (selected, getChild(selected));
       lastSelectedWidget = getChild(lastSelected);
 

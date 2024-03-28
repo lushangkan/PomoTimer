@@ -1,13 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/widgets/pages/home/stop_button.dart';
 import 'package:pomotimer/widgets/pages/home/time_display.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
-import 'package:pomotimer/widgets/pages/total_progress_indicator.dart';
+import 'package:pomotimer/widgets/pages/home/total_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../common/enum/attribute.dart';
@@ -24,8 +26,6 @@ class InProgressTimeController extends TimerController {
 }
 
 class InProgressTimeControllerState extends TimerControllerState {
-  Phase selected = Phase.focus;
-
   Phase? phase;
   int? timeOfCurrentPhase;
   int? smallCyclesCompleted;
@@ -82,16 +82,20 @@ class InProgressTimeControllerState extends TimerControllerState {
 
     // 更新时间
     if (timerStates.timerRunning == true) {
-      var (phase, timeOfCurrentPhase, smallCyclesCompleted) = timer.getCurrentPhase ?? (null, null, null);
+      var (phase, timeOfCurrentPhase, smallCyclesCompleted) =
+          timer.getCurrentPhase ?? (null, null, null);
       this.phase = phase!;
-      this.timeOfCurrentPhase = timerStates.customTimes[phase]! * 60 * 1000 - timeOfCurrentPhase!;
+      this.timeOfCurrentPhase =
+          timerStates.customTimes[phase]! * 60 * 1000 - timeOfCurrentPhase!;
       this.smallCyclesCompleted = smallCyclesCompleted;
     }
 
     // 监听事件
-    _timerPhaseChangeEventSubscription = eventBus.on<TimerPhaseChangeEvent>().listen(onTimerPhaseChanged);
+    _timerPhaseChangeEventSubscription =
+        eventBus.on<TimerPhaseChangeEvent>().listen(onTimerPhaseChanged);
     _timerTickSubscription = eventBus.on<TimerTickEvent>().listen(onTimerTick);
-    _timeStopEventSubscription = eventBus.on<TimerStopEvent>().listen(onTimerStop);
+    _timeStopEventSubscription =
+        eventBus.on<TimerStopEvent>().listen(onTimerStop);
   }
 
   @override
@@ -112,18 +116,23 @@ class InProgressTimeControllerState extends TimerControllerState {
     var timer = appStates.timer;
 
     return Container(
-      constraints: const BoxConstraints(maxWidth: 265, maxHeight: 550),
+      constraints: const BoxConstraints(maxWidth: 265, maxHeight: 580),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(width: 240 , child: TotalProgressIndicator(elapsedTime: timer.elapsedTime!, totalTime: timer.totalTime!)),
-              const SizedBox(height: 22,),
               AttributeSwitcher(
                 selected: phase!,
               ),
+              const SizedBox(
+                height: 18,
+              ),
+              SizedBox(
+                  width: 225,
+                  child: TotalProgressIndicator(
+                      elapsedTime: timer.elapsedTime!,
+                      totalTime: timer.totalTime!))
             ],
           ),
           TimeDisplay(
@@ -131,10 +140,14 @@ class InProgressTimeControllerState extends TimerControllerState {
             timeOfCurrentPhase: timeOfCurrentPhase!,
             smallCyclesCompleted: smallCyclesCompleted!,
           ),
-          const SizedBox(height: 20,),
-          StopButton(onPressed: () {
-            timer.stopTimer();
-          },)
+          Container(
+            margin: const EdgeInsets.only(top: 40),
+            child: StopButton(
+              onPressed: () {
+                timer.stopTimer();
+              },
+            ),
+          )
         ],
       ),
     );
