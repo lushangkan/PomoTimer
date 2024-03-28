@@ -18,6 +18,7 @@ import '../../../../common/enum/attribute.dart';
 import '../../../../states/app_states.dart';
 import '../../../../states/timer_states.dart';
 import '../attribute_switcher.dart';
+import '../resume_button.dart';
 
 class InProgressTimeController extends TimerController {
   const InProgressTimeController({super.key});
@@ -115,18 +116,8 @@ class InProgressTimeControllerState extends TimerControllerState {
     super.build(context);
 
     var appStates = context.watch<AppStates>();
+    var timerStates = context.watch<TimerStates>();
     var timer = appStates.timer;
-
-    void onPressStopButton() {
-      timer.stopTimer();
-    }
-
-    void onPressFastForwardButton() {
-      timer.fastForwardToNextPhase();
-    }
-
-    void onPressPauseButton() {
-    }
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 265, maxHeight: 580),
@@ -153,20 +144,60 @@ class InProgressTimeControllerState extends TimerControllerState {
             timeOfCurrentPhase: timeOfCurrentPhase!,
             smallCyclesCompleted: smallCyclesCompleted!,
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 40),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                PauseButton(onPressed: onPressPauseButton),
-                StopButton(
-                  onPressed: onPressStopButton,
-                ),
-                FastForwardButton(onPressed: onPressFastForwardButton,)
-              ],
-            ),
-          )
+          const ControlButtons()
+        ],
+      ),
+    );
+  }
+}
+
+class ControlButtons extends StatelessWidget {
+  const ControlButtons({
+    super.key
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var appStates = context.watch<AppStates>();
+
+    var timer = appStates.timer;
+    var timerStates = context.watch<TimerStates>();
+
+    void onPressStopButton() {
+      timer.stopTimer();
+    }
+
+    void onPressFastForwardButton() {
+      if (timer.isPausing) {
+        return;
+      }
+      timer.fastForwardToNextPhase();
+    }
+
+    void onPressPauseButton() {
+      timer.pause();
+    }
+
+    void onPressResumeButton() {
+      timer.resume();
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(top: 40),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (!timer.isPausing)
+            PauseButton(onPressed: onPressPauseButton)
+          else
+            ResumeButton(onPressed: onPressResumeButton,),
+          StopButton(
+            onPressed: onPressStopButton,
+          ),
+          Opacity(
+              opacity: timer.isPausing ? 0 : 1,
+              child: FastForwardButton(onPressed: onPressFastForwardButton,))
         ],
       ),
     );

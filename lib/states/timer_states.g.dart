@@ -16,13 +16,18 @@ TimerStates _$TimerStatesFromJson(Map<String, dynamic> json) => TimerStates(
       customLongBreakTime: json['customLongBreakTime'] as int?,
       reminderType:
           $enumDecodeNullable(_$ReminderTypeEnumMap, json['reminderType']),
-    )..offsetTime = json['offsetTime'] as int?;
+    )
+      ..offsetTime = json['offsetTime'] as int?
+      ..pausing = json['pausing'] as bool?
+      ..startPauseTime = json['startPauseTime'] as int?;
 
 Map<String, dynamic> _$TimerStatesToJson(TimerStates instance) =>
     <String, dynamic>{
       'timerRunning': instance.timerRunning,
       'startTime': instance.startTime?.toIso8601String(),
       'offsetTime': instance.offsetTime,
+      'pausing': instance.pausing,
+      'startPauseTime': instance.startPauseTime,
       'customFocusTime': instance.customFocusTime,
       'customShortBreakTime': instance.customShortBreakTime,
       'customLongBreakTime': instance.customLongBreakTime,

@@ -21,6 +21,9 @@ class TimerStates extends ChangeNotifier {
   DateTime? startTime; // 开始时间，未运行时为null
   int? offsetTime; // 快进的偏移时间，单位毫秒，未 运行时为null
 
+  bool? pausing;
+  int? startPauseTime;
+
   Map<Phase, int> get customTimes => {
     Phase.focus: customFocusTime!,
     Phase.shortBreak: customShortBreakTime!,
@@ -117,6 +120,9 @@ enum _TimerStates {
   timerRunning(false, false),
   startTime(null, true),
   offsetTime(null, true),
+
+  pausing(false, false),
+  startPauseTime(null, true),
 
   // 由于dart限制，无法直接引用常量类中的值
   customFocusTime(25, false), // 25 分钟

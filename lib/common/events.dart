@@ -64,6 +64,16 @@ class TimerStopEvent implements TimerEvent {
   TimerStopEvent(this.timer);
 }
 
+/// 计时器恢复计时事件
+/// @timer 计时器
+class TimerResumeEvent implements TimerEvent {
+  static const EventType type = EventType.timerResume;
+
+  final AppTimer timer;
+
+  TimerResumeEvent(this.timer);
+}
+
 /// 获取事件类型
 /// @param event 事件
 EventType? getEventType(TimerEvent event) {
@@ -80,6 +90,8 @@ EventType? getEventType(TimerEvent event) {
       return TimerPauseEvent.type;
     case TimerStopEvent:
       return TimerStopEvent.type;
+    case TimerResumeEvent:
+      return TimerResumeEvent.type;
   }
 
   return null;
@@ -90,5 +102,6 @@ enum EventType {
   timerPhaseChange,
   timerStart,
   timerPause,
-  timerStop
+  timerStop,
+  timerResume,
 }

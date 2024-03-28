@@ -16,6 +16,8 @@ class AppTimer {
   AppTimer(this._states) {
     logger.d('AppTimer init');
     logger.t(_states.toJson());
+
+    init();
   }
 
   static const duration = Duration(seconds: 1);
@@ -27,6 +29,10 @@ class AppTimer {
   /// 是否正在运行
   /// @return 是否正在运行
   bool get isRunning => _states.timerRunning == true && _states.startTime != null && _states.offsetTime != null;
+
+  /// 是否正在暂停
+  /// @return 是否正在暂停
+  bool get isPausing => _states.pausing == true && _states.startPauseTime != null;
 
   /// 剩余时间
   /// @return 剩余时间，单位毫秒， 如果相关变量值无效，则返回null
@@ -58,7 +64,7 @@ class AppTimer {
   }
 
   /// 初始化，仅在应用启动时调用
-  void init() async {
+  void init() {
     _checkAndResetTimer();
 
     if (!isRunning) {
@@ -66,7 +72,39 @@ class AppTimer {
       return;
     }
 
-    _startTimerAtNextSecond();
+    _startTimer();
+  }
+
+  /// 暂停计算
+  void pause() {
+    if (!isRunning) {
+      return;
+    }
+
+    _states.pausing = true;
+    _states.startPauseTime = DateTime.now().millisecondsSinceEpoch;
+
+    eventBus.fire(TimerPauseEvent(this));
+
+    _destroyTimer();
+
+    _states.notifyListeners();
+  }
+
+  /// 恢复计算
+  void resume() {
+    if (!isPausing) {
+      return;
+    }
+
+    _states.pausing = false;
+    _states.offsetTime = _states.offsetTime! - (DateTime.now().millisecondsSinceEpoch - _states.startPauseTime!);
+
+    eventBus.fire(TimerResumeEvent(this));
+
+    _startTimer();
+
+    _states.notifyListeners();
   }
 
   /// 快进一段时间
@@ -194,7 +232,7 @@ class AppTimer {
     }
   }
 
-  void _startTimerAtNextSecond() async {
+  void _startTimer() {
     // 立即执行一次
     run();
 
@@ -212,12 +250,14 @@ class AppTimer {
     _states.startTime = DateTime.now();
     _states.offsetTime = 0;
     _states.timerRunning = true;
+    _states.pausing = false;
+    _states.startPauseTime = null;
     _lastPhase = null;
 
     // 触发事件
     eventBus.fire(TimerStartEvent(this));
 
-    _startTimerAtNextSecond();
+    _startTimer();
 
     _states.notifyListeners();
   }
@@ -235,6 +275,8 @@ class AppTimer {
     _states.startTime = null;
     _states.offsetTime = null;
     _states.timerRunning = false;
+    _states.pausing = false;
+    _states.startPauseTime = null;
     _lastPhase = null;
 
     _states.notifyListeners();
