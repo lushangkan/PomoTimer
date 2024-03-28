@@ -46,7 +46,6 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
   void _onPressed(Phase index) {
     if (widget.onSelected != null) {
       widget.onSelected!(index);
-      _animationController.forward(from: 0);
     }
   }
 
@@ -122,6 +121,14 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
         ),
       ],
     );
+  }
+
+  @override
+  void didUpdateWidget(covariant AttributeSwitcher oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selected != widget.selected) {
+      _animationController.forward(from: 0);
+    }
   }
 }
 
