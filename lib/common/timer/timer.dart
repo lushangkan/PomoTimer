@@ -80,6 +80,22 @@ class AppTimer {
     _states.notifyListeners();
   }
 
+  /// 快进到下一个阶段
+  void fastForwardToNextPhase() {
+    if (!isRunning) {
+      return;
+    }
+
+    // 获取当前阶段剩余时间
+    var (_, timeRemainingInCurrentPhase, _) = getCurrentPhase ?? (null, null, null);
+
+    if (timeRemainingInCurrentPhase == null) {
+      return;
+    }
+
+    fastForward(timeRemainingInCurrentPhase);
+  }
+
   /// 设置快进偏移时间
   /// @milliseconds 快进的时间，单位毫秒
   void setOffsetTime(int milliseconds) {
