@@ -33,8 +33,6 @@ class Constants {
     ReminderType.alarm: (context) => S.of(context).reminderAlarm,
   };
 
-
-
   /// 长休息间隔
   static const int longBreakInterval = 4;
 }

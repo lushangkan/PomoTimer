@@ -56,6 +56,10 @@ dependencies:
   drop_shadow: ^0.1.0
   quiver: ^3.2.1
   boxy: ^2.2.0
+  flutter_local_notifications: ^17.0.0
+  flutter_background: ^1.2.0
+  device_info_plus: ^10.0.1
+  alarm: ^3.0.14
 
 dependency_overrides:
   intl: ^0.19.0

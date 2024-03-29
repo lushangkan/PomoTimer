@@ -8,9 +8,13 @@ buildscript {
         maven {
             url 'https://maven.aliyun.com/repository/public'
         }
+        google()
+        mavenCentral()
+        gradlePluginPortal()
     }
 
     dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -23,6 +27,17 @@ allprojects {
         }
         maven {
             url 'https://maven.aliyun.com/repository/jcenter/'
+        }
+    }
+    subprojects {
+        afterEvaluate { project ->
+            if (project.hasProperty('android')) {
+                project.android {
+                    if (namespace == null) {
+                        namespace project.group
+                    }
+                }
+            }
         }
     }
 }
