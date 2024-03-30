@@ -11,15 +11,15 @@ TimerStates _$TimerStatesFromJson(Map<String, dynamic> json) => TimerStates(
       startTime: json['startTime'] == null
           ? null
           : DateTime.parse(json['startTime'] as String),
+      offsetTime: json['offsetTime'] as int?,
+      pausing: json['pausing'] as bool?,
+      startPauseTime: json['startPauseTime'] as int?,
       customFocusTime: json['customFocusTime'] as int?,
       customShortBreakTime: json['customShortBreakTime'] as int?,
       customLongBreakTime: json['customLongBreakTime'] as int?,
       reminderType:
           $enumDecodeNullable(_$ReminderTypeEnumMap, json['reminderType']),
-    )
-      ..offsetTime = json['offsetTime'] as int?
-      ..pausing = json['pausing'] as bool?
-      ..startPauseTime = json['startPauseTime'] as int?;
+    );
 
 Map<String, dynamic> _$TimerStatesToJson(TimerStates instance) =>
     <String, dynamic>{

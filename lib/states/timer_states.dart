@@ -39,6 +39,9 @@ class TimerStates extends ChangeNotifier {
   TimerStates({
     this.timerRunning,
     this.startTime,
+    this.offsetTime,
+    this.pausing,
+    this.startPauseTime,
     this.customFocusTime,
     this.customShortBreakTime,
     this.customLongBreakTime,
