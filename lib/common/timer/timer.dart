@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:pomotimer/common/events.dart';
+import 'package:pomotimer/common/exceptions.dart';
+import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
 
 import '../../states/timer_states.dart';
@@ -245,7 +247,7 @@ class AppTimer {
   }
 
   /// 开始计时
-  void startTimer() {
+  Future<void> startTimer() async {
     // 初始化变量
     _states.startTime = DateTime.now();
     _states.offsetTime = 0;
@@ -253,6 +255,11 @@ class AppTimer {
     _states.pausing = false;
     _states.startPauseTime = null;
     _lastPhase = null;
+
+    // 检测权限
+    if (!permissionHandle.isTimerPermissionGranted) {
+      throw PermissionDeniedException();
+    }
 
     // 触发事件
     eventBus.fire(TimerStartEvent(this));

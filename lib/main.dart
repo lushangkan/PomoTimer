@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logger/logger.dart';
+import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/main.reflectable.dart';
 import 'package:pomotimer/routes/app_routes.dart';
 import 'package:pomotimer/states/app_states.dart';
@@ -23,6 +24,9 @@ void main() async {
   // 初始化State，因为获取储存是异步的，需要在MaterialApp之前初始化
   final TimerStates timerStates = await TimerStates.loadFromStorage();
   final AppStates appStates = AppStates(timerStates);
+
+  // 初始化PermissionHandle
+  await permissionHandle.checkAllPermissionStatus();
 
   runApp(App(timerStates: timerStates, appStates: appStates));
 }
