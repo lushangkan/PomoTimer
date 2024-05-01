@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pomotimer/common/platform_utils.dart';
+import 'package:pomotimer/common/utils/platform_utils.dart';
 
 import '../widgets/button_dialog_inner.dart';
 

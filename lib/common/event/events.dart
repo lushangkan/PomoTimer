@@ -1,7 +1,7 @@
 
 import 'package:pomotimer/common/timer/timer.dart';
 
-import 'enum/attribute.dart';
+import '../enum/attribute.dart';
 
 /// 计时器事件
 abstract interface class TimerEvent {

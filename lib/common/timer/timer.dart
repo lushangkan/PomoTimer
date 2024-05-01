@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:pomotimer/common/alarm/alarm.dart';
 import 'package:pomotimer/common/channel/flutter_method_channel.dart';
-import 'package:pomotimer/common/events.dart';
+import 'package:pomotimer/common/event/events.dart';
 import 'package:pomotimer/common/exceptions.dart';
 import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
@@ -13,7 +13,7 @@ import '../../states/timer_states.dart';
 import '../constants.dart';
 import '../enum/attribute.dart';
 import '../enum/reminder_type.dart';
-import '../event_bus.dart';
+import '../event/event_bus.dart';
 import '../logger.dart';
 
 // TODO: 完善单元测试
