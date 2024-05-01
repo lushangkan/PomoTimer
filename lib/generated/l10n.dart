@@ -50,6 +50,26 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `PomoTimer`
+  String get appName {
+    return Intl.message(
+      'PomoTimer',
+      name: 'appName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `计时器正在后台处理...`
+  String get foregroundNotificationDescription {
+    return Intl.message(
+      '计时器正在后台处理...',
+      name: 'foregroundNotificationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `设置`
   String get settingBtnTooltip {
     return Intl.message(

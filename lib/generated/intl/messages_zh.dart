@@ -22,6 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "appName": MessageLookupByLibrary.simpleMessage("PomoTimer"),
+        "foregroundNotificationDescription":
+            MessageLookupByLibrary.simpleMessage("计时器正在后台处理..."),
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("闹钟提醒"),
         "reminderNone": MessageLookupByLibrary.simpleMessage("无提醒"),
         "reminderNotification": MessageLookupByLibrary.simpleMessage("仅通知"),

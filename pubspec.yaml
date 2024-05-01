@@ -51,15 +51,12 @@ dependencies:
       ref: master
   reflectable: ^4.0.5
   logger: ^2.0.2+1
-#  json_reflectable: ^1.0.1
   json_annotation: ^4.8.1
   drop_shadow: ^0.1.0
   quiver: ^3.2.1
   boxy: ^2.2.0
   flutter_local_notifications: ^17.0.0
-  flutter_background: ^1.2.0
   device_info_plus: ^10.0.1
-  alarm: ^3.0.14
   modal_bottom_sheet: ^3.0.0
 
 dependency_overrides:
@@ -78,7 +75,7 @@ dev_dependencies:
 
   build_runner: ^2.4.8
   json_serializable: ^6.7.1
-  test: 1.24.9
+  test: 1.25.2
 
 
 
@@ -96,6 +93,10 @@ flutter:
 
   assets:
     - assets/fonts/misans/MiSans_License.pdf
+    - assets/icon/app_icon.png
+    - assets/icon/app_icon_foreground.png
+    - assets/media/default_ring.mp3
+    - assets/media/blank.mp3
   fonts:
     - family: MiSans
       fonts:

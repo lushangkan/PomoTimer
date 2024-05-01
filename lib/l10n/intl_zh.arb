@@ -1,5 +1,7 @@
 {
   "@@locale": "zh",
+  "appName": "PomoTimer",
+  "foregroundNotificationDescription": "计时器正在后台处理...",
   "settingBtnTooltip": "设置",
   "reminderNone": "无提醒",
   "reminderNotification": "仅通知",

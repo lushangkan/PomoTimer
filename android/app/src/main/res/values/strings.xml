@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="channel_id">pomotimer_channel</string>
+    <string name="broadcast_channel_name">cn.cutemc.pomotimer.ALARM_RINGS</string>
+    <string name="notification_channel_name">Pomotimer</string>
+    <string name="notification_channel_id">pomotimer_notification_channel</string>
+    <string name="notification_channel_description">Pomotimer Notification Channel</string>
+</resources>

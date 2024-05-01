@@ -35,4 +35,6 @@ class Constants {
 
   /// 长休息间隔
   static const int longBreakInterval = 4;
+
+  static const String pluginChannelId = "pomotimer_channel";
 }

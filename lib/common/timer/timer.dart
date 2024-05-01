@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:math';
 
+import 'package:pomotimer/common/alarm/alarm.dart';
+import 'package:pomotimer/common/channel/flutter_method_channel.dart';
 import 'package:pomotimer/common/events.dart';
 import 'package:pomotimer/common/exceptions.dart';
 import 'package:pomotimer/common/permission_handle.dart';
@@ -28,13 +31,20 @@ class AppTimer {
   Timer? timer;
   Phase? _lastPhase;
 
+  // 已注册闹铃的ID列表
+  final List<int> alarmList = [];
+
   /// 是否正在运行
   /// @return 是否正在运行
-  bool get isRunning => _states.timerRunning == true && _states.startTime != null && _states.offsetTime != null;
+  bool get isRunning =>
+      _states.timerRunning == true &&
+      _states.startTime != null &&
+      _states.offsetTime != null;
 
   /// 是否正在暂停
   /// @return 是否正在暂停
-  bool get isPausing => _states.pausing == true && _states.startPauseTime != null;
+  bool get isPausing =>
+      _states.pausing == true && _states.startPauseTime != null;
 
   /// 剩余时间
   /// @return 剩余时间，单位毫秒， 如果相关变量值无效，则返回null
@@ -47,12 +57,17 @@ class AppTimer {
 
   /// 计算总时间
   /// @return 总时间
-  int? get totalTime => calculateTotalTime(_states.customTimes, Constants.longBreakInterval)! * 60 * 1000;
+  int? get totalTime =>
+      calculateTotalTime(_states.customTimes, Constants.longBreakInterval)! *
+      60 *
+      1000;
 
   /// 计算经过的时间
   /// @return 已经经过的时间，单位毫秒, 如果相关变量值无效，则返回null
   int? get elapsedTime {
-    if (_states.timerRunning != true && _states.startTime == null && _states.offsetTime == null) {
+    if (_states.timerRunning != true &&
+        _states.startTime == null &&
+        _states.offsetTime == null) {
       return null;
     } else if (_states.startTime != null) {
       var now = DateTime.now();
@@ -100,7 +115,8 @@ class AppTimer {
     }
 
     _states.pausing = false;
-    _states.offsetTime = _states.offsetTime! - (DateTime.now().millisecondsSinceEpoch - _states.startPauseTime!);
+    _states.offsetTime = _states.offsetTime! -
+        (DateTime.now().millisecondsSinceEpoch - _states.startPauseTime!);
 
     eventBus.fire(TimerResumeEvent(this));
 
@@ -127,7 +143,8 @@ class AppTimer {
     }
 
     // 获取当前阶段剩余时间
-    var (_, timeRemainingInCurrentPhase, _) = getCurrentPhase ?? (null, null, null);
+    var (_, timeRemainingInCurrentPhase, _) =
+        getCurrentPhase ?? (null, null, null);
 
     if (timeRemainingInCurrentPhase == null) {
       return;
@@ -147,7 +164,9 @@ class AppTimer {
   /// 如果计时器已经完成，则重置计时器
   /// @return 是否已经完成
   bool _checkAndResetTimer() {
-    if (totalTime != null && elapsedTime != null && elapsedTime! >= totalTime!) {
+    if (totalTime != null &&
+        elapsedTime != null &&
+        elapsedTime! >= totalTime!) {
       stopTimer();
       return true;
     }
@@ -205,7 +224,8 @@ class AppTimer {
     const interval = Constants.longBreakInterval;
 
     // 计算每个循环的总时间（4个专注时间 + 3个小休息时间）
-    int cycleTimeMs = focusTimeMs * interval + shortBreakTimeMs * (interval - 1);
+    int cycleTimeMs =
+        focusTimeMs * interval + shortBreakTimeMs * (interval - 1);
 
     // 获取已过时间
     int? timeInCurrentCycleMs = elapsedTime;
@@ -216,22 +236,65 @@ class AppTimer {
     // 如果剩余时间在一个完整循环之内，计算当前阶段
     if (timeInCurrentCycleMs <= cycleTimeMs) {
       // 计算当前所在的小循环次数（专注 + 小休息）
-      int smallCyclesCompleted = timeInCurrentCycleMs ~/ (focusTimeMs + shortBreakTimeMs);
+      int smallCyclesCompleted =
+          timeInCurrentCycleMs ~/ (focusTimeMs + shortBreakTimeMs);
 
       // 计算当前小循环中剩余的时间
-      int timeInSmallCycleMs = timeInCurrentCycleMs % (focusTimeMs + shortBreakTimeMs);
+      int timeInSmallCycleMs =
+          timeInCurrentCycleMs % (focusTimeMs + shortBreakTimeMs);
 
       // 根据剩余时间判断是在专注阶段还是小休息阶段
       if (timeInSmallCycleMs < focusTimeMs) {
-        return (Phase.focus, focusTimeMs - timeInSmallCycleMs, smallCyclesCompleted);
+        return (
+          Phase.focus,
+          focusTimeMs - timeInSmallCycleMs,
+          smallCyclesCompleted
+        );
       } else {
-        return (Phase.shortBreak, shortBreakTimeMs - (timeInSmallCycleMs - focusTimeMs), smallCyclesCompleted);
+        return (
+          Phase.shortBreak,
+          shortBreakTimeMs - (timeInSmallCycleMs - focusTimeMs),
+          smallCyclesCompleted
+        );
       }
     } else {
       // 如果剩余时间超过了一个完整循环，则当前处于大休息阶段
       int timeInLongBreakMs = timeInCurrentCycleMs - cycleTimeMs;
       return (Phase.longBreak, longBreakTimeMs - timeInLongBreakMs, interval);
     }
+  }
+
+  /// 获取所有阶段的信息
+  /// @return 阶段信息列表 List: (阶段序号, 阶段, 总时间毫秒)
+  List<(int, Phase, int)> getPhases() {
+    // 计算每个阶段的时间
+    int focusTimeMs = _states.customFocusTime! * 60 * 1000;
+    int shortBreakTimeMs = _states.customShortBreakTime! * 60 * 1000;
+    int longBreakTimeMs = _states.customLongBreakTime! * 60 * 1000;
+
+    const interval = Constants.longBreakInterval;
+
+    List<(int, Phase, int)> phases = [];
+
+    int time = 0;
+
+    for (var i = 0; i < interval; i++) {
+      // 记录专注阶段
+      time += focusTimeMs;
+      phases.add((i, Phase.focus, time));
+
+      if (i != interval - 1) {
+        // 如果不是最后一个循环，记录短休息阶段
+        time += shortBreakTimeMs;
+        phases.add((i, Phase.shortBreak, time));
+      }
+    }
+
+    // 记录长休息阶段
+    time += longBreakTimeMs;
+    phases.add((interval, Phase.longBreak, time));
+
+    return phases;
   }
 
   void _startTimer() {
@@ -244,6 +307,46 @@ class AppTimer {
 
   void _destroyTimer() {
     timer?.cancel();
+  }
+
+  int _randomAlarmId() {
+    int? result;
+    while (result == null) {
+      var id = Random().nextInt(99999999);
+      if (!alarmList.contains(id)) {
+        result = id;
+      }
+    }
+    return result;
+  }
+
+  Future<void> _registerAlarm() async {
+    // 检测权限
+    if (!permissionHandle.isTimerPermissionGranted) {
+      throw PermissionDeniedException();
+    }
+
+    var phases = getPhases();
+
+    for (var data in phases) {
+      var cycle = data.$1;
+      var phase = data.$2;
+      var time = data.$3;
+
+      var ringTime = DateTime.now().add(Duration(milliseconds: time));
+
+      var alarm = Alarm(
+          id: _randomAlarmId(),
+          timestamp: ringTime.toUtc().millisecondsSinceEpoch,
+          fromAppAsset: true,
+          audioPath: 'media/default_ring.mp3',
+          vibrate: true,
+          loop: true,
+          loopTimes: 5);
+
+      // 注册闹钟
+      FlutterMethodChannel.instance.registerAlarm(alarm);
+    }
   }
 
   /// 开始计时
@@ -267,6 +370,9 @@ class AppTimer {
     _startTimer();
 
     _states.notifyListeners();
+
+    // 注册闹钟
+    _registerAlarm();
   }
 
   // TODO: 暂停
@@ -305,19 +411,24 @@ class AppTimer {
       return;
     }
 
-    var (currentPhase, timeRemainingInCurrentPhase, smallCyclesCompleted) = getCurrentPhase ?? (null, null, null);
+    var (currentPhase, timeRemainingInCurrentPhase, smallCyclesCompleted) =
+        getCurrentPhase ?? (null, null, null);
 
-    if (currentPhase == null || timeRemainingInCurrentPhase == null || smallCyclesCompleted == null) {
+    if (currentPhase == null ||
+        timeRemainingInCurrentPhase == null ||
+        smallCyclesCompleted == null) {
       return;
     }
 
     if (currentPhase != _lastPhase) {
-      eventBus.fire(TimerPhaseChangeEvent(currentPhase, this, smallCyclesCompleted));
+      eventBus.fire(
+          TimerPhaseChangeEvent(currentPhase, this, smallCyclesCompleted));
     }
 
     _lastPhase = currentPhase;
 
-    var timeOfCurrentPhase = _states.customTimes[currentPhase]! * 60 * 1000 - timeRemainingInCurrentPhase;
+    var timeOfCurrentPhase = _states.customTimes[currentPhase]! * 60 * 1000 -
+        timeRemainingInCurrentPhase;
 
     eventBus.fire(TimerTickEvent(elapsedTime!, timeOfCurrentPhase, this));
 
@@ -327,5 +438,4 @@ class AppTimer {
   void dispose() {
     timer?.cancel();
   }
-
 }

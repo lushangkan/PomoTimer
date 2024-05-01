@@ -45,16 +45,11 @@
         <!-- Receiver request by flutter_local_notifications -->
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver" />
 
-        <!-- Service request by flutter_background_service -->
-        <service
-                android:name="id.flutter.flutter_background_service.BackgroundService"
-                android:foregroundServiceType="specialUse">
-            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                      android:value="run_timer"/>
-        </service>
-
-        <!-- Service request by flutter_local_notifications -->
-        <service android:name="com.gdelataillade.alarm.services.NotificationOnKillService" />
+        <receiver android:name=".alarm.AlarmReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="cn.cutemc.pomotimer.ALARM_RINGS"/>
+            </intent-filter>
+        </receiver>
 
         <activity
                 android:name=".MainActivity"

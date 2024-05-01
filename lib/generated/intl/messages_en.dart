@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "appName": MessageLookupByLibrary.simpleMessage("PomoTimer"),
+        "foregroundNotificationDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "The timer is being processed in the background..."),
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("Alarm"),
         "reminderNone": MessageLookupByLibrary.simpleMessage("None"),
         "reminderNotification":

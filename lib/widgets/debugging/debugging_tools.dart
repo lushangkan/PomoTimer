@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:pomotimer/common/alarm/alarm.dart';
+import 'package:pomotimer/common/channel/flutter_method_channel.dart';
 import 'package:provider/provider.dart';
 
 import '../../states/app_states.dart';
@@ -42,6 +44,20 @@ class DebuggingTools extends StatelessWidget {
               onCancel: () {}));
     }
 
+    Future<int?> showAlarmTestDialog() async {
+      return await showDialog<int>(
+          context: context,
+          builder: (context) => AlarmTestDialog(
+              onPressed: (int seconds) {
+                var time = DateTime.now().toUtc().add(Duration(seconds: seconds));
+
+                var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5);
+
+                FlutterMethodChannel.instance.registerAlarm(alarm);
+              },
+              onCancel: () {}));
+    }
+
     return PopupMenuButton(
         icon: Icon(
           LucideIcons.bug,
@@ -58,11 +74,14 @@ class DebuggingTools extends StatelessWidget {
             case DebuggingTypeButton.fastForwardToSpecificTime:
               if (!timer.isRunning) return;
               showFastForwardToSpecificTimeDialog();
+            case DebuggingTypeButton.testAlarm:
+              showAlarmTestDialog();
           }
         },
         itemBuilder: (context) => [
               if (timer.isRunning) const FastForwardToEnd(),
               if (timer.isRunning) const FastForwardToSpecificTime(),
+              const TestAlarm(),
             ]);
   }
 }
@@ -70,6 +89,7 @@ class DebuggingTools extends StatelessWidget {
 enum DebuggingTypeButton {
   fastForwardToStart,
   fastForwardToSpecificTime,
+  testAlarm,
 }
 
 class FastForwardToEnd extends PopupMenuItem {
@@ -188,6 +208,71 @@ class _FastForwardToSpecificTimeDialogState
         textInputAction: TextInputAction.done,
         decoration: const InputDecoration(
           hintText: "要快进到的秒数",
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            widget.onCancel();
+            Navigator.of(context).pop();
+          },
+          child: const Text("取消"),
+        ),
+        TextButton(
+          onPressed: () {
+            widget.onPressed(int.parse(controller.text));
+            Navigator.of(context).pop();
+          },
+          child: const Text("确定"),
+        ),
+      ],
+    );
+  }
+}
+
+class TestAlarm extends PopupMenuItem {
+  const TestAlarm({super.key})
+      : super(
+          child: const Text("测试响铃"),
+          value: DebuggingTypeButton.testAlarm,
+        );
+}
+
+class AlarmTestDialog extends StatefulWidget {
+  const AlarmTestDialog({Key? key, required this.onPressed, required this.onCancel}) : super(key: key);
+
+  final void Function(int) onPressed;
+  final void Function() onCancel;
+
+  @override
+  _AlarmTestDialogState createState() => _AlarmTestDialogState();
+}
+
+class _AlarmTestDialogState extends State<AlarmTestDialog> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("测试响铃"),
+      content: TextField(
+        controller: controller,
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
+        decoration: const InputDecoration(
+          hintText: "请输入启动响铃的延迟（秒）",
         ),
       ),
       actions: [

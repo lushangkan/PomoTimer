@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pomotimer/common/event_bus.dart';
 import 'package:pomotimer/common/events.dart';
+import 'package:pomotimer/common/logger.dart';
 import 'package:pomotimer/widgets/pages/home/fast_forward_button.dart';
 import 'package:pomotimer/widgets/pages/home/pause_button.dart';
 import 'package:pomotimer/widgets/pages/home/stop_button.dart';
@@ -152,9 +153,7 @@ class InProgressTimeControllerState extends TimerControllerState {
 }
 
 class ControlButtons extends StatelessWidget {
-  const ControlButtons({
-    super.key
-  });
+  const ControlButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -191,13 +190,17 @@ class ControlButtons extends StatelessWidget {
           if (!timer.isPausing)
             PauseButton(onPressed: onPressPauseButton)
           else
-            ResumeButton(onPressed: onPressResumeButton,),
+            ResumeButton(
+              onPressed: onPressResumeButton,
+            ),
           StopButton(
             onPressed: onPressStopButton,
           ),
           Opacity(
               opacity: timer.isPausing ? 0 : 1,
-              child: FastForwardButton(onPressed: onPressFastForwardButton,))
+              child: FastForwardButton(
+                onPressed: onPressFastForwardButton,
+              ))
         ],
       ),
     );

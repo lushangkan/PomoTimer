@@ -10,6 +10,7 @@ import 'package:pomotimer/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import 'common/utils/debug_utils.dart';
+import 'common/channel/flutter_method_channel.dart';
 import 'generated/l10n.dart';
 
 void main() async {
@@ -28,7 +29,11 @@ void main() async {
   // 初始化PermissionHandle
   await permissionHandle.checkAllPermissionStatus();
 
+
   runApp(App(timerStates: timerStates, appStates: appStates));
+
+  // 初始化FlutterMethodChannel
+  FlutterMethodChannel.instance.configureChannel();
 }
 
 class App extends StatelessWidget {

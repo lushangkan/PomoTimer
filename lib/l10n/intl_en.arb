@@ -1,5 +1,7 @@
 {
   "@@locale": "en",
+  "appName": "PomoTimer",
+  "foregroundNotificationDescription": "The timer is being processed in the background...",
   "settingBtnTooltip": "Settings",
   "reminderNone": "None",
   "reminderNotification": "Notification",
