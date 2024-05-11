@@ -322,7 +322,7 @@ class AppTimer {
 
   Future<void> _registerAlarm() async {
     // 检测权限
-    if (!permissionHandle.isTimerPermissionGranted) {
+    if (!permissionHandle.isPermissionGranted) {
       throw PermissionDeniedException();
     }
 
@@ -339,7 +339,7 @@ class AppTimer {
           id: _randomAlarmId(),
           timestamp: ringTime.toUtc().millisecondsSinceEpoch,
           fromAppAsset: true,
-          audioPath: 'media/default_ring.mp3',
+          audioPath: 'assets/media/default_ring.mp3',
           vibrate: true,
           loop: true,
           loopTimes: 5);
@@ -360,7 +360,7 @@ class AppTimer {
     _lastPhase = null;
 
     // 检测权限
-    if (!permissionHandle.isTimerPermissionGranted) {
+    if (!permissionHandle.isPermissionGranted) {
       throw PermissionDeniedException();
     }
 

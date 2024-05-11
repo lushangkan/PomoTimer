@@ -2,8 +2,11 @@
 
     <!-- Read storage permission for Android 12 and lower -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <!-- Write storage permission for Android 12 and lower -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
     <!-- Granular media permissions for Android 13 and newer. -->
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
     <!-- Permissions options for the `accessMediaLocation` group -->
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
     <!-- Permissions options for the `ignoreBatteryOptimizations` group -->

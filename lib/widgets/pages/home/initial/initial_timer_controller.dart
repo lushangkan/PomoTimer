@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pomotimer/common/logger.dart';
 import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
@@ -11,7 +10,6 @@ import '../../../../common/enum/attribute.dart';
 import '../../../../common/enum/reminder_type.dart';
 import '../../../../states/app_states.dart';
 import '../../../../states/timer_states.dart';
-import '../../../button_dialog_inner.dart';
 import '../attribute_selector.dart';
 import '../attribute_switcher.dart';
 import '../reminder_type_switcher.dart';
@@ -80,7 +78,7 @@ class _InitialTimerControllerState extends TimerControllerState {
 
     void onPressedStartButton() async {
       // 检查并请求权限
-      if (await permissionHandle.requestTimerPermission(context)) {
+      if (await permissionHandle.requestPermission(context)) {
         timer.setCustomTimes(_tmpCustomTimes);
         timer.setReminderType(_tmpReminderType);
 
@@ -88,6 +86,7 @@ class _InitialTimerControllerState extends TimerControllerState {
 
         context.go('/in-progress');
       } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("您拒绝了权限请求，无法开始计时")));
         logger.d('User denied permission.');
       }
     }

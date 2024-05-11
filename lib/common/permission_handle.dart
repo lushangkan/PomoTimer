@@ -13,26 +13,10 @@ class PermissionHandle {
   static final List<Permission> permissionList = [
     Permission.storage, // 仅Android13以下
     Permission.audio, // 仅Android13以上
-    Permission.accessMediaLocation,
     Permission.ignoreBatteryOptimizations,
     Permission.notification,
     Permission.scheduleExactAlarm,
     Permission.accessNotificationPolicy,
-  ];
-
-  /// 计时权限列表
-  static final List<Permission> timerPermissionList = [
-    Permission.ignoreBatteryOptimizations,
-    Permission.notification,
-    Permission.scheduleExactAlarm,
-    Permission.accessNotificationPolicy,
-  ];
-
-  /// 存储权限列表
-  static final List<Permission> storagePermissionList = [
-    Permission.storage, // 仅Android13以下
-    Permission.audio, // 仅Android13以上
-    Permission.accessMediaLocation,
   ];
 
   /// 权限状态
@@ -65,15 +49,15 @@ class PermissionHandle {
     ) ?? false;
   }
 
-  /// 请求计时权限, 如果未授权, 会弹出权限请求对话框
+  /// 请求权限, 如果未授权, 会弹出权限请求对话框
   /// 如果已经请求过权限, 会直接返回true
   /// @param context 上下文
   /// @param askUser 是否询问用户
   /// @return 是否已授权
-  Future<bool> requestTimerPermission(BuildContext context, {bool askUser = true}) async {
+  Future<bool> requestPermission(BuildContext context, {bool askUser = true}) async {
     // 检查权限
     if (askUser) {
-      if (!permissionHandle.isTimerPermissionGranted) {
+      if (!permissionHandle.isPermissionGranted) {
         // 未授权
         var result = await showPermissionDialog(context);
 
@@ -83,13 +67,19 @@ class PermissionHandle {
       }
     }
 
-    for (var permission in timerPermissionList) {
+    for (var permission in permissionList) {
       var status = await permission.status;
       if (status.isGranted) {
         // 已经授权
         continue;
       }
       // 未授权
+      // 判断安卓版本
+      if (permission == Permission.storage && await _isAndroid13Plus) {
+        continue;
+      } else if (permission == Permission.audio && !(await _isAndroid13Plus)) {
+        continue;
+      }
       // 弹出用户指南
       if (permission == Permission.ignoreBatteryOptimizations) {
         // 弹出权限设置指南，因为一些第三方UI请求该权限后需要用户手动选择
@@ -115,42 +105,10 @@ class PermissionHandle {
     return true;
   }
 
-  /// 请求存储权限
-  Future<bool> requestStoragePermission() async {
-    for (var permission in storagePermissionList) {
-      if (permission == Permission.storage && await _isAndroid13Plus) {
-        continue;
-      } else if (permission == Permission.audio && !(await _isAndroid13Plus)) {
-        continue;
-      }
-      var status = await permission.status;
-      if (status.isGranted) {
-        continue;
-      }
-      var newStatus = await permission.request();
-      if (newStatus.isGranted) {
-        _permissionStatus.update(permission, (value) => newStatus);
-        continue;
-      }
-      return false;
-    }
-    return true;
-  }
-
   /// 计时需要的权限是否已授权
-  bool get isTimerPermissionGranted {
-    for (var permission in timerPermissionList) {
-      if (_permissionStatus[permission] != PermissionStatus.granted) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /// 存储需要的权限是否已授权
-  bool get isStoragePermissionGranted {
-    for (var permission in storagePermissionList) {
-      if (_permissionStatus[permission] != PermissionStatus.granted) {
+  bool get isPermissionGranted {
+    for (var permission in permissionList) {
+      if (_permissionStatus[permission] != PermissionStatus.granted && _permissionStatus[permission] != null) {
         return false;
       }
     }

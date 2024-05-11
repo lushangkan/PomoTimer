@@ -9,8 +9,8 @@ import android.net.Uri
 import android.os.Build
 import cn.cutemc.pomotimer.pomotimer.alarm.Alarm
 import cn.cutemc.pomotimer.pomotimer.alarm.AppAlarmManager
+import cn.cutemc.pomotimer.pomotimer.utils.getFileFromAssets
 import io.flutter.FlutterInjector
-import io.flutter.embedding.engine.loader.FlutterLoader
 import java.io.File
 import java.util.*
 
@@ -22,7 +22,7 @@ object RingtoneController {
     private val timer = Timer()
 
     fun play(alarm: Alarm, context: Context) {
-        val audioUri = getAudioPath(alarm)
+        val audioUri = getAudioPath(context, alarm) ?: throw IllegalArgumentException("Alarm audio path is null")
 
         val audioDuration = getRingtoneDuration(audioUri, context)
 
@@ -36,6 +36,8 @@ object RingtoneController {
                 if (!ringtone.isPlaying) {
                     if (runtimes >= alarm.loopTimes) {
                         AppAlarmManager.stopAlarm(alarm.id)
+                        stop(alarm)
+                        cancel()
                         return
                     }
                     runtimes++
@@ -66,7 +68,7 @@ object RingtoneController {
     }
 
     private fun getRingtone(alarm: Alarm, context: Context): Ringtone {
-        val ringtone = RingtoneManager.getRingtone(context, getAudioPath(alarm))
+        val ringtone = RingtoneManager.getRingtone(context, getAudioPath(context, alarm))
 
         ringtone.audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ALARM)
@@ -76,8 +78,8 @@ object RingtoneController {
         return ringtone
     }
 
-    private fun getAudioPath(alarm: Alarm): Uri {
-        if (alarm.fromAppAsset == true) {
+    private fun getAudioPath(context: Context, alarm: Alarm): Uri? {
+        val path = if (alarm.fromAppAsset == true) {
             // 铃声来自应用资源
             if (alarm.audioPath == null) {
                 throw IllegalArgumentException("Alarm audio path is null")
@@ -86,10 +88,16 @@ object RingtoneController {
             val loader = FlutterInjector.instance().flutterLoader()
             val flutterAssetPath = loader.getLookupKeyForAsset(alarm.audioPath)
 
-            return Uri.parse(flutterAssetPath)
+            flutterAssetPath
         } else {
             // 铃声来自系统文件
-            return Uri.parse(alarm.audioPath)
+            alarm.audioPath
+        } ?: return null
+
+        return if (alarm.fromAppAsset == true) {
+            Uri.fromFile(getFileFromAssets(context, path))
+        } else {
+            Uri.fromFile(File(path))
         }
     }
 

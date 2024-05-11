@@ -50,10 +50,10 @@ class DebuggingTools extends StatelessWidget {
           context: context,
           builder: (context) => AlarmTestDialog(
               onPressed: (int seconds) async {
-                if (await permissionHandle.requestTimerPermission(context)) {
+                if (await permissionHandle.requestPermission(context)) {
                   var time = DateTime.now().toUtc().add(Duration(seconds: seconds));
 
-                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5);
+                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'assets/media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5);
 
                   FlutterMethodChannel.instance.registerAlarm(alarm);
 
@@ -272,6 +272,8 @@ class _AlarmTestDialogState extends State<AlarmTestDialog> {
 
   @override
   Widget build(BuildContext context) {
+    controller.text = "5";
+
     return AlertDialog(
       title: const Text("测试响铃"),
       content: TextField(
@@ -285,15 +287,15 @@ class _AlarmTestDialogState extends State<AlarmTestDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            widget.onCancel();
             Navigator.of(context).pop();
+            widget.onCancel();
           },
           child: const Text("取消"),
         ),
         TextButton(
           onPressed: () {
-            widget.onPressed(int.parse(controller.text));
             Navigator.of(context).pop();
+            widget.onPressed(int.parse(controller.text));
           },
           child: const Text("确定"),
         ),
