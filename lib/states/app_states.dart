@@ -7,5 +7,4 @@ class AppStates extends ChangeNotifier {
   final AppTimer timer;
 
   AppStates(TimerStates timerStates) : timer = AppTimer(timerStates);
-
 }

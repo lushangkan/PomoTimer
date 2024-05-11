@@ -51,8 +51,38 @@ class PermissionHandle {
     }
   }
 
-  /// 请求计时权限
-  Future<bool> requestTimerPermission(BuildContext context) async {
+  Future<bool> showPermissionDialog(BuildContext context,) async {
+    var colorScheme = Theme.of(context).colorScheme;
+
+    return await showBarModalBottomSheet(
+        duration: const Duration(milliseconds: 200),
+        barrierColor: Colors.black54,
+        context: context,
+        backgroundColor: colorScheme.background,
+        builder: (context) {
+          return const ButtonDialogInner(title: '需要权限', content: '启动计时器需要一些权限, 是否同意?',);
+        }
+    ) ?? false;
+  }
+
+  /// 请求计时权限, 如果未授权, 会弹出权限请求对话框
+  /// 如果已经请求过权限, 会直接返回true
+  /// @param context 上下文
+  /// @param askUser 是否询问用户
+  /// @return 是否已授权
+  Future<bool> requestTimerPermission(BuildContext context, {bool askUser = true}) async {
+    // 检查权限
+    if (askUser) {
+      if (!permissionHandle.isTimerPermissionGranted) {
+        // 未授权
+        var result = await showPermissionDialog(context);
+
+        if (result != true) {
+          return false;
+        }
+      }
+    }
+
     for (var permission in timerPermissionList) {
       var status = await permission.status;
       if (status.isGranted) {

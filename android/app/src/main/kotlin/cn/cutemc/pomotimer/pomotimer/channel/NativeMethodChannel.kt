@@ -39,6 +39,7 @@ object NativeMethodChannel : MethodChannel.MethodCallHandler {
 
                 val alarm = Alarm.fromJson(args as String)
                 AppAlarmManager.addAlarm(alarm, MainActivity.appContext)
+                // TODO: 添加重复ID检查
                 result.success(null)
                 return
             }

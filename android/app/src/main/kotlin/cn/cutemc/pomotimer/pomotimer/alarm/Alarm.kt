@@ -1,7 +1,10 @@
 package cn.cutemc.pomotimer.pomotimer.alarm
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
+@Serializable
 data class Alarm(
     val id: Int,
     val timestamp: Long,
@@ -15,15 +18,11 @@ data class Alarm(
 ) {
     companion object {
         fun fromJson(json: String): Alarm {
-            val jackson = jacksonObjectMapper()
-
-            return jackson.readValue(json, Alarm::class.java)
+            return Json.decodeFromString<Alarm>(json)
         }
     }
 
     fun toJson(): String {
-        val jackson = jacksonObjectMapper()
-
-        return jackson.writeValueAsString(this)
+        return Json.encodeToString(this)
     }
 }

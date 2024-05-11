@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:pomotimer/common/alarm/alarm.dart';
 import 'package:pomotimer/common/channel/flutter_method_channel.dart';
+import 'package:pomotimer/common/permission_handle.dart';
 import 'package:provider/provider.dart';
 
 import '../../states/app_states.dart';
@@ -48,12 +49,18 @@ class DebuggingTools extends StatelessWidget {
       return await showDialog<int>(
           context: context,
           builder: (context) => AlarmTestDialog(
-              onPressed: (int seconds) {
-                var time = DateTime.now().toUtc().add(Duration(seconds: seconds));
+              onPressed: (int seconds) async {
+                if (await permissionHandle.requestTimerPermission(context)) {
+                  var time = DateTime.now().toUtc().add(Duration(seconds: seconds));
 
-                var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5);
+                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5);
 
-                FlutterMethodChannel.instance.registerAlarm(alarm);
+                  FlutterMethodChannel.instance.registerAlarm(alarm);
+
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("响铃已注册")));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("您拒绝了权限请求，无法测试响铃")));
+                }
               },
               onCancel: () {}));
     }

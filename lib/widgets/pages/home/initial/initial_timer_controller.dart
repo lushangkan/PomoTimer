@@ -59,19 +59,6 @@ class _InitialTimerControllerState extends TimerControllerState {
     var timer = appStates.timer;
 
     var theme = Theme.of(context);
-    var colorScheme = theme.colorScheme;
-
-    Future<bool> showPermissionDialog() async {
-      return await showBarModalBottomSheet(
-          duration: const Duration(milliseconds: 200),
-          barrierColor: Colors.black54,
-          context: context,
-          backgroundColor: colorScheme.background,
-          builder: (context) {
-            return const ButtonDialogInner(title: '需要权限', content: '启动计时器需要一些权限, 是否同意?',);
-          }
-      ) ?? false;
-    }
 
     void onAttributeSwitcherSelected(Phase value) {
       setState(() {
@@ -92,30 +79,17 @@ class _InitialTimerControllerState extends TimerControllerState {
     }
 
     void onPressedStartButton() async {
-      // 检查权限
-      if (!permissionHandle.isTimerPermissionGranted) {
-        // 未授权
-        var result = await showPermissionDialog();
+      // 检查并请求权限
+      if (await permissionHandle.requestTimerPermission(context)) {
+        timer.setCustomTimes(_tmpCustomTimes);
+        timer.setReminderType(_tmpReminderType);
 
-        if (result == true) {
-          var granted = await permissionHandle.requestTimerPermission(context);
+        timer.startTimer();
 
-          if (!granted) {
-            logger.t('User denied permission');
-            return;
-          }
-        } else {
-          logger.t('User denied permission');
-          return;
-        }
+        context.go('/in-progress');
+      } else {
+        logger.d('User denied permission.');
       }
-
-      timer.setCustomTimes(_tmpCustomTimes);
-      timer.setReminderType(_tmpReminderType);
-
-      timer.startTimer();
-
-      context.go('/in-progress');
     }
 
     return Column(
