@@ -100,7 +100,7 @@ class PermissionHandle {
       if (newStatus.isGranted) {
         _permissionStatus.update(permission, (value) => newStatus);
 
-        if (permission == Permission.notification) {
+        if (permission == Permission.notification && await getAndroidSDKVersion() >= 26 && await isMiui()) {
           // 弹出请求悬浮通知权限，由于miui将此默认关闭
           if (!context.mounted) return false;
           if (await _requestHeadsUpPermission(context)) {

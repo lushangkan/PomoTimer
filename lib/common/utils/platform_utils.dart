@@ -46,6 +46,15 @@ Future<double> getIOSVersion() async {
   return double.parse(iosInfo.systemVersion);
 }
 
+Future<bool> isMiui() async {
+  if (getPlatformType() != PlatformType.android) {
+    return false;
+  }
+
+  var androidInfo = await DeviceInfoPlugin().androidInfo;
+  return androidInfo.manufacturer.toLowerCase() == 'xiaomi';
+}
+
 enum PlatformType {
   android,
   ios,
