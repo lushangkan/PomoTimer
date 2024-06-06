@@ -9,6 +9,7 @@ import 'package:pomotimer/common/exceptions.dart';
 import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
 
+import '../../generated/l10n.dart';
 import '../../states/timer_states.dart';
 import '../constants.dart';
 import '../enum/attribute.dart';
@@ -335,6 +336,20 @@ class AppTimer {
 
       var ringTime = DateTime.now().add(Duration(milliseconds: time));
 
+      String? notificationTitle;
+      String? notificationContent;
+
+      if (phase == Phase.focus) {
+        notificationTitle = S.current.focusNotificationTitle;
+        notificationContent = S.current.focusNotificationContent;
+      } else if (phase == Phase.shortBreak) {
+        notificationTitle = S.current.shortBreakNotificationTitle;
+        notificationContent = S.current.shortBreakNotificationContent;
+      } else if (phase == Phase.longBreak) {
+        notificationTitle = S.current.longBreakNotificationTitle;
+        notificationContent = S.current.longBreakNotificationContent;
+      }
+
       var alarm = Alarm(
           id: _randomAlarmId(),
           timestamp: ringTime.toUtc().millisecondsSinceEpoch,
@@ -343,6 +358,11 @@ class AppTimer {
           vibrate: true,
           loop: true,
           loopTimes: 9999);
+          loopTimes: 20,
+          notificationTitle: notificationTitle,
+          notificationContent: notificationContent,
+      );
+
 
       // 注册闹钟
       FlutterMethodChannel.instance.registerAlarm(alarm);

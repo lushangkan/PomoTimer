@@ -23,15 +23,27 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("PomoTimer"),
+        "focusNotificationContent": MessageLookupByLibrary.simpleMessage(
+            "It’s time to dive back into work with full concentration! 🔥"),
+        "focusNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("Focus Time!"),
         "foregroundNotificationDescription":
             MessageLookupByLibrary.simpleMessage(
                 "The timer is being processed in the background..."),
+        "longBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
+            "You’ve been working hard, now it’s time to unwind and recharge before you go again! 🍹"),
+        "longBreakNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("Relaxation Time!"),
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("Alarm"),
         "reminderNone": MessageLookupByLibrary.simpleMessage("None"),
         "reminderNotification":
             MessageLookupByLibrary.simpleMessage("Notification"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("Vibration"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("Settings"),
+        "shortBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
+            "A quick break will refresh you and get you ready for the next focus session! 🌟"),
+        "shortBreakNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("Short Break!"),
         "startBtn": MessageLookupByLibrary.simpleMessage("Start")
       };
 }

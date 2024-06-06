@@ -23,13 +23,25 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("PomoTimer"),
+        "focusNotificationContent":
+            MessageLookupByLibrary.simpleMessage("专注的时间开始了, 让我们沉浸在工作中吧! 🔥"),
+        "focusNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("集中注意力!"),
         "foregroundNotificationDescription":
             MessageLookupByLibrary.simpleMessage("计时器正在后台处理..."),
+        "longBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
+            "你已经非常努力了，现在是时候放松一下，充充电，再继续前行! 🍹"),
+        "longBreakNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("放松时间!"),
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("闹钟提醒"),
         "reminderNone": MessageLookupByLibrary.simpleMessage("无提醒"),
         "reminderNotification": MessageLookupByLibrary.simpleMessage("仅通知"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("震动提醒"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("设置"),
+        "shortBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
+            "短暂的休息可以让你更有活力，准备好迎接下一个专注时段吧! 🌟"),
+        "shortBreakNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("短暂休息!"),
         "startBtn": MessageLookupByLibrary.simpleMessage("开始")
       };
 }

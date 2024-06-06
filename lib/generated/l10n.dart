@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -125,6 +126,66 @@ class S {
     return Intl.message(
       '开始',
       name: 'startBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `集中注意力!`
+  String get focusNotificationTitle {
+    return Intl.message(
+      '集中注意力!',
+      name: 'focusNotificationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `专注的时间开始了, 让我们沉浸在工作中吧! 🔥`
+  String get focusNotificationContent {
+    return Intl.message(
+      '专注的时间开始了, 让我们沉浸在工作中吧! 🔥',
+      name: 'focusNotificationContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `短暂休息!`
+  String get shortBreakNotificationTitle {
+    return Intl.message(
+      '短暂休息!',
+      name: 'shortBreakNotificationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `短暂的休息可以让你更有活力，准备好迎接下一个专注时段吧! 🌟`
+  String get shortBreakNotificationContent {
+    return Intl.message(
+      '短暂的休息可以让你更有活力，准备好迎接下一个专注时段吧! 🌟',
+      name: 'shortBreakNotificationContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `放松时间!`
+  String get longBreakNotificationTitle {
+    return Intl.message(
+      '放松时间!',
+      name: 'longBreakNotificationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `你已经非常努力了，现在是时候放松一下，充充电，再继续前行! 🍹`
+  String get longBreakNotificationContent {
+    return Intl.message(
+      '你已经非常努力了，现在是时候放松一下，充充电，再继续前行! 🍹',
+      name: 'longBreakNotificationContent',
       desc: '',
       args: [],
     );

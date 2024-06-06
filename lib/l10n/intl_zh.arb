@@ -7,5 +7,11 @@
   "reminderNotification": "仅通知",
   "reminderVibration": "震动提醒",
   "reminderAlarm": "闹钟提醒",
-  "startBtn": "开始"
+  "startBtn": "开始",
+  "focusNotificationTitle": "集中注意力!",
+  "focusNotificationContent": "专注的时间开始了, 让我们沉浸在工作中吧! 🔥",
+  "shortBreakNotificationTitle": "短暂休息!",
+  "shortBreakNotificationContent": "短暂的休息可以让你更有活力，准备好迎接下一个专注时段吧! 🌟",
+  "longBreakNotificationTitle": "放松时间!",
+  "longBreakNotificationContent": "你已经非常努力了，现在是时候放松一下，充充电，再继续前行! 🍹"
 }
