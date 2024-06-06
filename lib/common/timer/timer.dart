@@ -136,9 +136,9 @@ class AppTimer {
   /// @milliseconds 快进的时间，单位毫秒
   void fastForward(int milliseconds) {
     if (_states.offsetTime == null) {
-      _states.offsetTime = milliseconds;
+      setOffsetTime(milliseconds);
     } else {
-      _states.offsetTime = _states.offsetTime! + milliseconds;
+      setOffsetTime(_states.offsetTime! + milliseconds);
     }
     _states.notifyListeners();
   }
@@ -164,6 +164,10 @@ class AppTimer {
   /// @milliseconds 快进的时间，单位毫秒
   void setOffsetTime(int milliseconds) {
     _states.offsetTime = milliseconds;
+
+    _unregisterAllAlarm();
+    _registerAlarm();
+
     _states.notifyListeners();
   }
 
