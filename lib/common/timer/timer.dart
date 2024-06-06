@@ -336,6 +336,7 @@ class AppTimer {
 
       var ringTime = DateTime.now().add(Duration(milliseconds: time));
 
+      int alarmId = _randomAlarmId();
       String? notificationTitle;
       String? notificationContent;
 
@@ -351,18 +352,18 @@ class AppTimer {
       }
 
       var alarm = Alarm(
-          id: _randomAlarmId(),
+          id: alarmId,
           timestamp: ringTime.toUtc().millisecondsSinceEpoch,
           fromAppAsset: true,
           audioPath: 'assets/media/default_ring.mp3',
           vibrate: true,
           loop: true,
-          loopTimes: 9999);
           loopTimes: 20,
           notificationTitle: notificationTitle,
           notificationContent: notificationContent,
       );
 
+      alarmList.add(alarmId);
 
       // 注册闹钟
       FlutterMethodChannel.instance.registerAlarm(alarm);
