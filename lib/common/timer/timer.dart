@@ -85,7 +85,7 @@ class AppTimer {
   void init() {
     _checkAndResetTimer();
 
-    if (!isRunning) {
+    if (!isRunning || isPausing) {
       // 未运行
       return;
     }
@@ -116,7 +116,7 @@ class AppTimer {
 
   /// 暂停计时
   void pause() {
-    if (!isRunning) {
+    if (!isRunning || isPausing) {
       return;
     }
 
@@ -125,7 +125,7 @@ class AppTimer {
 
   /// 恢复计时
   void resume() {
-    if (!isPausing) {
+    if (!isPausing || !isRunning) {
       return;
     }
 
