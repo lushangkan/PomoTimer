@@ -162,7 +162,7 @@ class ControlButtons extends StatelessWidget {
     var timerStates = context.watch<TimerStates>();
 
     void onPressStopButton() {
-      timer.stopTimer();
+      timer.stop();
     }
 
     void onPressFastForwardButton() {

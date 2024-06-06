@@ -82,7 +82,7 @@ class _InitialTimerControllerState extends TimerControllerState {
         timer.setCustomTimes(_tmpCustomTimes);
         timer.setReminderType(_tmpReminderType);
 
-        timer.startTimer();
+        timer.start();
 
         context.go('/in-progress');
       } else {

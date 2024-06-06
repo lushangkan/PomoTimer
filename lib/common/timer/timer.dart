@@ -26,14 +26,14 @@ class AppTimer {
     init();
   }
 
-  static const duration = Duration(seconds: 1);
+  static const _internalTimerDuration = Duration(seconds: 1);
 
   late final TimerStates _states;
-  Timer? timer;
+  Timer? _timer;
   Phase? _lastPhase;
 
   // 已注册闹铃的ID列表
-  final List<int> alarmList = [];
+  final List<int> _alarmList = [];
 
   /// 是否正在运行
   /// @return 是否正在运行
@@ -90,40 +90,46 @@ class AppTimer {
       return;
     }
 
+    // 如果在运行, 启动内部计时器
+    _startInternalTimer();
+  }
+
+  /// 启动计时
+  void start() {
+    if (isRunning) {
+      // 已经运行，返回
+      return;
+    }
+
     _startTimer();
   }
 
-  /// 暂停计算
+  /// 停止计时
+  void stop() {
+    if (!isRunning) {
+      // 未运行，返回
+      return;
+    }
+
+    _stopTimer();
+  }
+
+  /// 暂停计时
   void pause() {
     if (!isRunning) {
       return;
     }
 
-    _states.pausing = true;
-    _states.startPauseTime = DateTime.now().millisecondsSinceEpoch;
-
-    eventBus.fire(TimerPauseEvent(this));
-
-    _destroyTimer();
-
-    _states.notifyListeners();
+    _pauseTimer();
   }
 
-  /// 恢复计算
+  /// 恢复计时
   void resume() {
     if (!isPausing) {
       return;
     }
 
-    _states.pausing = false;
-    _states.offsetTime = _states.offsetTime! -
-        (DateTime.now().millisecondsSinceEpoch - _states.startPauseTime!);
-
-    eventBus.fire(TimerResumeEvent(this));
-
-    _startTimer();
-
-    _states.notifyListeners();
+    _resumeTimer();
   }
 
   /// 快进一段时间
@@ -168,7 +174,7 @@ class AppTimer {
     if (totalTime != null &&
         elapsedTime != null &&
         elapsedTime! >= totalTime!) {
-      stopTimer();
+      _stopTimer();
       return true;
     }
     return false;
@@ -298,23 +304,23 @@ class AppTimer {
     return phases;
   }
 
-  void _startTimer() {
+  void _startInternalTimer() {
     // 立即执行一次
     run();
 
     // 启动定时任务，每秒执行一次
-    timer = Timer.periodic(duration, (_) => run());
+    _timer = Timer.periodic(_internalTimerDuration, (_) => run());
   }
 
-  void _destroyTimer() {
-    timer?.cancel();
+  void _destroyInternalTimer() {
+    _timer?.cancel();
   }
 
   int _randomAlarmId() {
     int? result;
     while (result == null) {
       var id = Random().nextInt(99999999);
-      if (!alarmList.contains(id)) {
+      if (!_alarmList.contains(id)) {
         result = id;
       }
     }
@@ -363,7 +369,7 @@ class AppTimer {
           notificationContent: notificationContent,
       );
 
-      alarmList.add(alarmId);
+      _alarmList.add(alarmId);
 
       // 注册闹钟
       FlutterMethodChannel.instance.registerAlarm(alarm);
@@ -374,11 +380,10 @@ class AppTimer {
     FlutterMethodChannel.instance.unregisterAllAlarms();
   }
 
-  /// 开始计时
-  Future<void> startTimer() async {
+  Future<void> _startTimer() async {
     // 初始化变量
     _states.startTime = DateTime.now();
-    _states.offsetTime = 0;
+    setOffsetTime(0);
     _states.timerRunning = true;
     _states.pausing = false;
     _states.startPauseTime = null;
@@ -392,7 +397,7 @@ class AppTimer {
     // 触发事件
     eventBus.fire(TimerStartEvent(this));
 
-    _startTimer();
+    _startInternalTimer();
 
     _states.notifyListeners();
 
@@ -400,18 +405,10 @@ class AppTimer {
     _registerAlarm();
   }
 
-  // TODO: 暂停
-
-  /// 停止计时
-  void stopTimer() {
-    if (!isRunning) {
-      // 未运行，返回
-      return;
-    }
-
+  void _stopTimer() {
     // 清除变量
     _states.startTime = null;
-    _states.offsetTime = null;
+    resetOffsetTime();
     _states.timerRunning = false;
     _states.pausing = false;
     _states.startPauseTime = null;
@@ -419,7 +416,7 @@ class AppTimer {
 
     _states.notifyListeners();
 
-    if (timer != null) _destroyTimer();
+    if (_timer != null) _destroyInternalTimer();
 
     // 触发事件
     eventBus.fire(TimerStopEvent(this));
@@ -428,6 +425,34 @@ class AppTimer {
     _unregisterAllAlarm();
   }
 
+  void _pauseTimer() {
+    _states.pausing = true;
+    _states.startPauseTime = DateTime.now().millisecondsSinceEpoch;
+
+    eventBus.fire(TimerPauseEvent(this));
+
+    _destroyInternalTimer();
+    // 取消所有闹钟
+    _unregisterAllAlarm();
+
+    _states.notifyListeners();
+  }
+
+  void _resumeTimer() {
+    _states.pausing = false;
+    _states.offsetTime = _states.offsetTime! -
+        (DateTime.now().millisecondsSinceEpoch - _states.startPauseTime!);
+
+    eventBus.fire(TimerResumeEvent(this));
+
+    _startInternalTimer();
+    // 注册闹钟
+    _registerAlarm();
+
+    _states.notifyListeners();
+  }
+
+  /// 内部计时器的周期方法
   void run() {
     Timeline.startSync('run');
 
@@ -464,6 +489,6 @@ class AppTimer {
   }
 
   void dispose() {
-    timer?.cancel();
+    _timer?.cancel();
   }
 }
