@@ -370,6 +370,10 @@ class AppTimer {
     }
   }
 
+  Future<void> _unregisterAllAlarm() async {
+    FlutterMethodChannel.instance.unregisterAllAlarms();
+  }
+
   /// 开始计时
   Future<void> startTimer() async {
     // 初始化变量
@@ -419,6 +423,9 @@ class AppTimer {
 
     // 触发事件
     eventBus.fire(TimerStopEvent(this));
+
+    // 取消所有闹钟
+    _unregisterAllAlarm();
   }
 
   void run() {
