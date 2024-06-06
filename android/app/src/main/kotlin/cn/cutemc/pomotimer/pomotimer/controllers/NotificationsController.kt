@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -16,6 +17,7 @@ import cn.cutemc.pomotimer.pomotimer.MainActivity
 import cn.cutemc.pomotimer.pomotimer.R
 import cn.cutemc.pomotimer.pomotimer.alarm.Alarm
 import kotlin.math.roundToInt
+
 
 object NotificationsController {
 
@@ -47,7 +49,7 @@ object NotificationsController {
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(alarm.notificationTitle)
             .setContentText(alarm.notificationContent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
@@ -95,6 +97,12 @@ object NotificationsController {
         }
     }
 
-
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun requestHeadsUpPermission(context: Context) {
+        val settingsIntent: Intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            .putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
+        context.startActivity(settingsIntent)
+    }
 }

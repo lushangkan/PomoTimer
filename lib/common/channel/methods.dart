@@ -5,6 +5,7 @@ class Methods {
 
   static const String reloadLocale = "reloadLocale";
   static const String registerAlarm = "registerAlarm";
+  static const String requestHeadsUpPermission = "requestHeadsUpPermission";
   static const String unregisterAlarm = "unregisterAlarm";
   static const String unregisterAllAlarms = "unregisterAllAlarms";
   static const String stopAlarm = "stopAlarm";

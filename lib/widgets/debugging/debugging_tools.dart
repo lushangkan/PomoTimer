@@ -53,7 +53,7 @@ class DebuggingTools extends StatelessWidget {
                 if (await permissionHandle.requestPermission(context)) {
                   var time = DateTime.now().toUtc().add(Duration(seconds: seconds));
 
-                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'assets/media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5);
+                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'assets/media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5, notificationTitle: "Test", notificationContent: "Test");
 
                   FlutterMethodChannel.instance.registerAlarm(alarm);
 

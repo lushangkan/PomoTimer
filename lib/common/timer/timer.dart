@@ -342,7 +342,7 @@ class AppTimer {
           audioPath: 'assets/media/default_ring.mp3',
           vibrate: true,
           loop: true,
-          loopTimes: 5);
+          loopTimes: 9999);
 
       // 注册闹钟
       FlutterMethodChannel.instance.registerAlarm(alarm);

@@ -1,15 +1,21 @@
 package cn.cutemc.pomotimer.pomotimer.channel
 
 import android.content.Context
+import android.os.Build
+import androidx.lifecycle.Lifecycle
 import cn.cutemc.pomotimer.pomotimer.MainActivity
 import cn.cutemc.pomotimer.pomotimer.R
 import cn.cutemc.pomotimer.pomotimer.alarm.Alarm
 import cn.cutemc.pomotimer.pomotimer.alarm.AppAlarmManager
+import cn.cutemc.pomotimer.pomotimer.controllers.NotificationsController
 import cn.cutemc.pomotimer.pomotimer.langs.Texts
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.coroutines.resume
 
 object NativeMethodChannel : MethodChannel.MethodCallHandler {
@@ -67,6 +73,29 @@ object NativeMethodChannel : MethodChannel.MethodCallHandler {
                 val id = args as Int
                 AppAlarmManager.stopAlarm(id)
                 result.success(null)
+                return
+            }
+
+            Methods.REQUEST_HEADS_UP_PERMISSION -> {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    result.error("UNSUPPORTED_PLATFORM", "This method is only supported on Android Oreo and above", null)
+                    return
+                }
+
+                NotificationsController.requestHeadsUpPermission(MainActivity.appContext)
+
+                runBlocking {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        withTimeoutOrNull(Long.MAX_VALUE) {
+                            while (!MainActivity.instance.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                                delay(1000)
+                            }
+                        }
+                    }
+
+                    result.success(null)
+                }
+
                 return
             }
 

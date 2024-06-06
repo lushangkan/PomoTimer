@@ -9,5 +9,6 @@ object Methods {
     const val REGISTER_ALARM = "registerAlarm";
     const val UNREGISTER_ALARM = "unregisterAlarm";
     const val UNREGISTER_ALL_ALARMS = "unregisterAllAlarms";
+    const val REQUEST_HEADS_UP_PERMISSION = "requestHeadsUpPermission";
     const val STOP_ALARM = "stopAlarm";
 }

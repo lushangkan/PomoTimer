@@ -1,5 +1,3 @@
 import 'package:logger/logger.dart';
 
-Logger get logger {
-  return Logger();
-}
+Logger get logger => Logger();

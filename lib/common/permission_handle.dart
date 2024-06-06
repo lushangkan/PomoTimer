@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pomotimer/common/channel/flutter_method_channel.dart';
 import 'package:pomotimer/common/utils/platform_utils.dart';
 
 import '../widgets/button_dialog_inner.dart';
@@ -98,6 +99,15 @@ class PermissionHandle {
       var newStatus = await permission.request();
       if (newStatus.isGranted) {
         _permissionStatus.update(permission, (value) => newStatus);
+
+        if (permission == Permission.notification) {
+          // 弹出请求悬浮通知权限，由于miui将此默认关闭
+          if (!context.mounted) return false;
+          if (await _requestHeadsUpPermission(context)) {
+            await FlutterMethodChannel.instance.requestHeadsUpPermission();
+          }
+        }
+
         continue;
       }
       return false;
@@ -129,6 +139,20 @@ class PermissionHandle {
         backgroundColor: colorScheme.background,
         builder: (context) {
           return const ButtonDialogInner(title: '需要权限', content: '计时器需要持续在后台运行, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“无限制”或允许应用在后台运行。', selectMode: false,);
+        }
+    ) ?? false;
+  }
+
+  Future<bool> _requestHeadsUpPermission(BuildContext context) async {
+    var colorScheme = Theme.of(context).colorScheme;
+
+    return await showBarModalBottomSheet(
+        duration: const Duration(milliseconds: 200),
+        barrierColor: Colors.black54,
+        context: context,
+        backgroundColor: colorScheme.background,
+        builder: (context) {
+          return const ButtonDialogInner(title: '需要权限', content: '计时器需要获取通知权限, 以便及时提醒您。\n请允许该应用的悬浮通知权限和锁屏通知权限。', selectMode: false,);
         }
     ) ?? false;
   }

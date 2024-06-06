@@ -44,4 +44,8 @@ class FlutterMethodChannel {
     return await methodChannel.invokeMethod(Methods.stopAlarm);
   }
 
+  Future<void> requestHeadsUpPermission() async {
+    return await methodChannel.invokeMethod(Methods.requestHeadsUpPermission);
+  }
+
 }
