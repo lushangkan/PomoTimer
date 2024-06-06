@@ -19,7 +19,7 @@ class TimerStates extends ChangeNotifier {
 
   bool? timerRunning; // 是否正在执行中
   DateTime? startTime; // 开始时间，未运行时为null
-  int? offsetTime; // 快进的偏移时间，单位毫秒，未 运行时为null
+  int? offsetTime; // 快进的偏移时间，单位毫秒，未运行时为null
 
   bool? pausing;
   int? startPauseTime;

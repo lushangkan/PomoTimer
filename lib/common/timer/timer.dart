@@ -74,11 +74,26 @@ class AppTimer {
       var now = DateTime.now();
       var passedTime = now.difference(_states.startTime!).inMilliseconds;
       if (_states.offsetTime != null) {
-        passedTime += _states.offsetTime!;
+        passedTime += offsetTime!;
       }
       return passedTime;
     }
     return null;
+  }
+
+  /// 获取偏移时间（含暂停时间）
+  /// @return 偏移时间，单位毫秒
+  int? get offsetTime {
+    if (_states.offsetTime == null) {
+      return null;
+    }
+
+    if (_states.startPauseTime == null || !isPausing) {
+      return _states.offsetTime;
+    }
+
+    return _states.offsetTime! -
+        (DateTime.now().millisecondsSinceEpoch - _states.startPauseTime!);
   }
 
   /// 初始化，仅在应用启动时调用
@@ -162,11 +177,14 @@ class AppTimer {
 
   /// 设置快进偏移时间
   /// @milliseconds 快进的时间，单位毫秒
-  void setOffsetTime(int milliseconds) {
+  /// @reregisterAlarm 是否重新注册闹钟
+  void setOffsetTime(int milliseconds, {reregisterAlarm = true}) {
     _states.offsetTime = milliseconds;
 
-    _unregisterAllAlarm();
-    _registerAlarm();
+    if (reregisterAlarm) {
+      _unregisterAllAlarm();
+      _registerAlarm();
+    }
 
     _states.notifyListeners();
   }
@@ -443,9 +461,14 @@ class AppTimer {
   }
 
   void _resumeTimer() {
+    if (offsetTime == null) {
+      throw Exception('Offset time is null');
+    }
+
+    setOffsetTime(offsetTime!, reregisterAlarm: false);
+
     _states.pausing = false;
-    _states.offsetTime = _states.offsetTime! -
-        (DateTime.now().millisecondsSinceEpoch - _states.startPauseTime!);
+    _states.startPauseTime = null;
 
     eventBus.fire(TimerResumeEvent(this));
 
