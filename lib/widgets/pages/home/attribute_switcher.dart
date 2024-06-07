@@ -32,6 +32,8 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
   void initState() {
     super.initState();
 
+    delegate.lastSelected = widget.selected;
+
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200))
       ..addStatusListener((status) {
@@ -224,8 +226,15 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
 
     // 设置bg的位置
     if (tween!.value != bg!.offset.dx) {
-      bg!.position(Offset(tween!.value, heightCenter! - bg!.size.height / 2));
+      if (bg!.size.height != 0) {
+        bg!.position(Offset(tween!.value, heightCenter! - bg!.size.height / 2));
+      } else {
+        bg!.position(Offset(selectedChild!.$2.offset.dx,
+            heightCenter! - selectedChild!.$2.size.height / 2));
+      }
     }
+
+
   }
 }
 
