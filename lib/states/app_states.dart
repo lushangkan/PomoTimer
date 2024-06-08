@@ -6,5 +6,9 @@ import '../common/timer/timer.dart';
 class AppStates extends ChangeNotifier {
   final AppTimer timer;
 
+  AppLifecycleState? appLifecycleState;
+
   AppStates(TimerStates timerStates) : timer = AppTimer(timerStates);
+
+
 }
