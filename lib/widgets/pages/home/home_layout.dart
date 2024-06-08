@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:pomotimer/widgets/pages/home/app_page.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
 
 import '../../../common/utils/debug_utils.dart';
 import '../../../generated/l10n.dart';
 import '../../debugging/debugging_tools.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends AppPage {
   const HomePage({super.key, required this.timerController});
 
   final TimerController timerController;
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends AppPageState<HomePage>  {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -18,7 +24,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: TopBar(theme),
-      body: HomeBody(timerController: timerController,),
+      body: HomeBody(timerController: widget.timerController,),
     );
   }
 }

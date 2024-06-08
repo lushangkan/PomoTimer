@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:pomotimer/common/timer/timer.dart';
 
 import '../enum/attribute.dart';
@@ -6,6 +8,11 @@ import '../enum/attribute.dart';
 /// 计时器事件
 abstract interface class TimerEvent {
   TimerEvent();
+}
+
+/// App事件
+abstract interface class AppEvent {
+  AppEvent();
 }
 
 /// 计时器时间更新事件
@@ -74,6 +81,15 @@ class TimerResumeEvent implements TimerEvent {
   TimerResumeEvent(this.timer);
 }
 
+class AppLifecycleChangeEvent implements AppEvent {
+  static const EventType type = EventType.appLifecycleChange;
+
+  final AppLifecycleState state;
+
+  AppLifecycleChangeEvent(this.state);
+}
+
+
 /// 获取事件类型
 /// @param event 事件
 EventType? getEventType(TimerEvent event) {
@@ -92,6 +108,8 @@ EventType? getEventType(TimerEvent event) {
       return TimerStopEvent.type;
     case TimerResumeEvent:
       return TimerResumeEvent.type;
+    case AppLifecycleChangeEvent:
+      return EventType.appLifecycleChange;
   }
 
   return null;
@@ -104,4 +122,5 @@ enum EventType {
   timerPause,
   timerStop,
   timerResume,
+  appLifecycleChange
 }
