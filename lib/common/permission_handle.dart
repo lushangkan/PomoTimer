@@ -3,7 +3,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pomotimer/common/channel/flutter_method_channel.dart';
 import 'package:pomotimer/common/utils/platform_utils.dart';
+import 'package:provider/provider.dart';
 
+import '../states/app_states.dart';
 import '../widgets/button_dialog_inner.dart';
 
 final PermissionHandle permissionHandle = PermissionHandle();
@@ -56,6 +58,8 @@ class PermissionHandle {
   /// @param askUser 是否询问用户
   /// @return 是否已授权
   Future<bool> requestPermission(BuildContext context, {bool askUser = true}) async {
+    var appStates = context.read<AppStates>();
+
     // 检查权限
     if (askUser) {
       if (!permissionHandle.isPermissionGranted) {
@@ -105,6 +109,17 @@ class PermissionHandle {
           if (!context.mounted) return false;
           if (await _requestHeadsUpPermission(context)) {
             await FlutterMethodChannel.instance.requestHeadsUpPermission();
+            // 等待用户回到应用
+            if (appStates.appLifecycleState == AppLifecycleState.resumed) {
+              while (appStates.appLifecycleState == AppLifecycleState.resumed) {
+                await Future.delayed(const Duration(milliseconds: 100));
+              }
+            }
+            if (appStates.appLifecycleState != AppLifecycleState.resumed) {
+              while (appStates.appLifecycleState != AppLifecycleState.resumed) {
+                await Future.delayed(const Duration(milliseconds: 100));
+              }
+            }
           }
         }
 
