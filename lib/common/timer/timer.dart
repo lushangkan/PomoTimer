@@ -20,6 +20,7 @@ import '../logger.dart';
 // TODO: 完善单元测试
 class AppTimer {
   AppTimer(this._states) {
+  AppTimer(this._states, this._appStates) {
     logger.d('AppTimer init');
     logger.t(_states.toJson());
 
@@ -28,6 +29,7 @@ class AppTimer {
 
   static const _internalTimerDuration = Duration(seconds: 1);
 
+  late final AppStates _appStates;
   late final TimerStates _states;
   Timer? _timer;
   Phase? _lastPhase;
