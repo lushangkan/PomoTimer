@@ -495,9 +495,22 @@ class AppTimer {
         while (_appStates.appLifecycleState != AppLifecycleState.resumed) {
           await Future.delayed(const Duration(milliseconds: 100));
         }
-      }
 
-      logger.d('Back to foreground, stop alarm: #${alarm.id}');
+        logger.d('Back to foreground, stop alarm: #${alarm.id}');
+      } else {
+        // 如果应用在前台，等待触摸App再停止
+        var clicked = false;
+
+        eventBus.on<AppClickedEvent>().listen((event) {
+          clicked = true;
+        });
+
+        while (!clicked) {
+          await Future.delayed(const Duration(milliseconds: 100));
+        }
+
+        logger.d('App clicked, stop alarm: #${alarm.id}');
+      }
 
       // 停止闹钟
       FlutterMethodChannel.instance.stopAlarm(alarm.id);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:pomotimer/widgets/pages/home/app_page.dart';
+import 'package:pomotimer/widgets/pages/home/click_listener.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
 
 import '../../../common/utils/debug_utils.dart';
@@ -21,10 +22,12 @@ class _HomePageState extends AppPageState<HomePage>  {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
-    return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: TopBar(theme),
-      body: HomeBody(timerController: widget.timerController,),
+    return ClickListener(
+      child: Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: TopBar(theme),
+        body: HomeBody(timerController: widget.timerController,),
+      ),
     );
   }
 }

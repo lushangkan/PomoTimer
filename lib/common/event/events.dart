@@ -89,6 +89,12 @@ class AppLifecycleChangeEvent implements AppEvent {
   AppLifecycleChangeEvent(this.state);
 }
 
+class AppClickedEvent implements AppEvent {
+  static const EventType type = EventType.appClicked;
+
+  AppClickedEvent();
+}
+
 
 /// 获取事件类型
 /// @param event 事件
@@ -110,6 +116,8 @@ EventType? getEventType(TimerEvent event) {
       return TimerResumeEvent.type;
     case AppLifecycleChangeEvent:
       return EventType.appLifecycleChange;
+    case AppClickedEvent:
+      return EventType.appClicked;
   }
 
   return null;
@@ -122,5 +130,6 @@ enum EventType {
   timerPause,
   timerStop,
   timerResume,
-  appLifecycleChange
+  appLifecycleChange,
+  appClicked,
 }
