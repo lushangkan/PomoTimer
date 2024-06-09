@@ -517,6 +517,13 @@ class AppTimer {
     }();
   }
 
+  void onClickNotification(Alarm alarm) {
+    logger.d('Notification stop button clicked: #${alarm.id}');
+
+    // 停止闹钟
+    FlutterMethodChannel.instance.stopAlarm(alarm.id);
+  }
+
   /// 内部计时器的周期方法
   void run() {
     Timeline.startSync('run');
