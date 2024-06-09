@@ -6,7 +6,6 @@ import android.media.MediaMetadataRetriever
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
 import cn.cutemc.pomotimer.pomotimer.alarm.Alarm
 import cn.cutemc.pomotimer.pomotimer.alarm.AppAlarmManager
 import cn.cutemc.pomotimer.pomotimer.utils.getFileFromAssets
@@ -31,8 +30,12 @@ object RingtoneController {
         val task = object : TimerTask() {
 
             var runtimes = 0
+            var canceled = false
 
             override fun run() {
+                if (canceled) {
+                    return
+                }
                 if (!ringtone.isPlaying) {
                     if (runtimes >= alarm.loopTimes) {
                         AppAlarmManager.stopAlarm(alarm.id)
@@ -43,6 +46,11 @@ object RingtoneController {
                     runtimes++
                     ringtone.play()
                 }
+            }
+
+            override fun cancel(): Boolean {
+                canceled = true
+                return super.cancel()
             }
         }
 
@@ -55,10 +63,7 @@ object RingtoneController {
         val ringtoneData = ringtones.find { it.alarm.id == id } ?: return
 
         ringtoneData.ringtone.stop()
-
-        if (Build.VERSION.SDK_INT < 28) {
-            ringtoneData.task?.cancel()
-        }
+        ringtoneData.task?.cancel()
 
         ringtones.remove(ringtoneData)
     }
