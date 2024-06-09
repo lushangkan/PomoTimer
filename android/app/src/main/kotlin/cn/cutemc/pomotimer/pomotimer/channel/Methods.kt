@@ -4,6 +4,7 @@ object Methods {
     const val GET_LOCAL_APP_NAME = "getLocalAppName";
     const val GET_FOREGROUND_NOTIFICATION_DESCRIPTION = "getForegroundNotificationDescription";
     const val ALARM_CALLBACK = "alarmCallback";
+    const val CLICK_NOTIFICATION_CALLBACK = "clickNotificationCallback";
 
     const val RELOAD_LOCALE = "reloadLocale";
     const val REGISTER_ALARM = "registerAlarm";

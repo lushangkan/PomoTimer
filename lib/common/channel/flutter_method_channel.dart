@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:pomotimer/common/channel/methods.dart';
+import 'package:pomotimer/common/logger.dart';
 import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/generated/l10n.dart';
 
@@ -24,6 +25,8 @@ class FlutterMethodChannel {
         return S.current.foregroundNotificationDescription;
       case Methods.alarmCallback:
         AppTimer.instance.onAlarmRinging(Alarm.fromJsonString(call.arguments));
+      case Methods.clickNotificationCallback:
+        logger.i("clickNotificationCallback: ${call.arguments}");
     }
   }
 

@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,9 @@ import androidx.core.app.NotificationManagerCompat
 import cn.cutemc.pomotimer.pomotimer.MainActivity
 import cn.cutemc.pomotimer.pomotimer.R
 import cn.cutemc.pomotimer.pomotimer.alarm.Alarm
+import cn.cutemc.pomotimer.pomotimer.channel.Methods
+import cn.cutemc.pomotimer.pomotimer.channel.NativeMethodChannel
+import kotlinx.coroutines.*
 import kotlin.math.roundToInt
 
 
@@ -46,10 +50,18 @@ object NotificationsController {
         notification[id] = alarm
 
         val intent = Intent(context, MainActivity::class.java)
-
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
+        val notificationClickIntent = Intent(context, NotificationClickReceiver::class.java).apply {
+            action = "cn.cutemc.pomotimer.NOTIFICATION_CLICK"
+            putExtra("alarm", alarm.toJson())
+        }
+
+        val notificationClickPendingIntent = PendingIntent.getBroadcast(context, 0, notificationClickIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
         val notificationBuild = NotificationCompat.Builder(context, channelId)
+            .addAction(0, "停止", notificationClickPendingIntent) // TODO: 从语言文件获取title
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(alarm.notificationTitle)
             .setContentText(alarm.notificationContent)
@@ -108,5 +120,14 @@ object NotificationsController {
             .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
             .putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
         context.startActivity(settingsIntent)
+    }
+}
+
+class NotificationClickReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        val alarm = Alarm.fromJson(intent?.getStringExtra("alarm") ?: throw IllegalArgumentException("Alarm is null"))
+        MainScope().launch {
+            NativeMethodChannel.invokeMethod(Methods.CLICK_NOTIFICATION_CALLBACK, alarm.toJson())
+        }
     }
 }

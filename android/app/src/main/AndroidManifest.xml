@@ -58,6 +58,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".controllers.NotificationClickReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="cn.cutemc.pomotimer.NOTIFICATION_CLICK"/>
+            </intent-filter>
+        </receiver>
+
         <activity
                 android:name=".MainActivity"
                 android:exported="true"
