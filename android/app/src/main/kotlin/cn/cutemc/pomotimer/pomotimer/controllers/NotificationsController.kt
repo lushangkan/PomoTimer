@@ -41,6 +41,10 @@ object NotificationsController {
             return
         }
 
+        val id = randomNotificationId()
+
+        notification[id] = alarm
+
         val intent = Intent(context, MainActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
@@ -54,7 +58,7 @@ object NotificationsController {
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
 
-        NotificationManagerCompat.from(context).notify(randomNotificationId(), notificationBuild.build())
+        NotificationManagerCompat.from(context).notify(id, notificationBuild.build())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
