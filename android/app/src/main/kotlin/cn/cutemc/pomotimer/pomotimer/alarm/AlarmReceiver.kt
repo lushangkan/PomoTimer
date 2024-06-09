@@ -3,18 +3,11 @@ package cn.cutemc.pomotimer.pomotimer.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
-import android.media.Ringtone
-import android.media.RingtoneManager
-import android.net.Uri
-import android.os.Build
-import android.os.Vibrator
-import android.os.VibratorManager
-import cn.cutemc.pomotimer.pomotimer.MainActivity
+import cn.cutemc.pomotimer.pomotimer.channel.Methods
+import cn.cutemc.pomotimer.pomotimer.channel.NativeMethodChannel
 import cn.cutemc.pomotimer.pomotimer.controllers.NotificationsController
 import cn.cutemc.pomotimer.pomotimer.controllers.RingtoneController
 import cn.cutemc.pomotimer.pomotimer.controllers.VibratorController
-import io.flutter.embedding.engine.loader.FlutterLoader
 import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -26,6 +19,8 @@ class AlarmReceiver : BroadcastReceiver() {
         val alarmJson = intent.getStringExtra("alarm") ?: return
 
         val alarm = Alarm.fromJson(alarmJson)
+
+        NativeMethodChannel.methodChannel.invokeMethod(Methods.ALARM_CALLBACK, alarm.toJson())
 
         if (alarm.audioPath != null) {
             RingtoneController.play(alarm, context)

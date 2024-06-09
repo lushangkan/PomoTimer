@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:pomotimer/common/channel/methods.dart';
+import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/generated/l10n.dart';
 
 import '../alarm/alarm.dart';
@@ -21,6 +22,8 @@ class FlutterMethodChannel {
         return S.current.appName;
       case Methods.getForegroundNotificationDescription:
         return S.current.foregroundNotificationDescription;
+      case Methods.alarmCallback:
+        AppTimer.instance.onAlarmRinging(Alarm.fromJsonString(call.arguments));
     }
   }
 
@@ -40,8 +43,8 @@ class FlutterMethodChannel {
     return await methodChannel.invokeMethod(Methods.unregisterAllAlarms);
   }
 
-  Future<void> stopAlarm() async {
-    return await methodChannel.invokeMethod(Methods.stopAlarm);
+  Future<void> stopAlarm(int alarmId) async {
+    return await methodChannel.invokeMethod(Methods.stopAlarm, alarmId);
   }
 
   Future<void> requestHeadsUpPermission() async {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:pomotimer/common/alarm/alarm.dart';
 import 'package:pomotimer/common/channel/flutter_method_channel.dart';
@@ -8,6 +9,7 @@ import 'package:pomotimer/common/event/events.dart';
 import 'package:pomotimer/common/exceptions.dart';
 import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
+import 'package:pomotimer/states/app_states.dart';
 
 import '../../generated/l10n.dart';
 import '../../states/timer_states.dart';
@@ -19,13 +21,16 @@ import '../logger.dart';
 
 // TODO: 完善单元测试
 class AppTimer {
-  AppTimer(this._states) {
   AppTimer(this._states, this._appStates) {
+    instance = this;
+
     logger.d('AppTimer init');
     logger.t(_states.toJson());
 
     init();
   }
+
+  static late final AppTimer instance;
 
   static const _internalTimerDuration = Duration(seconds: 1);
 
@@ -479,6 +484,24 @@ class AppTimer {
     _registerAlarm();
 
     _states.notifyListeners();
+  }
+
+  void onAlarmRinging(Alarm alarm) {
+    logger.d('Alarm ringing: #${alarm.id}');
+
+    () async {
+      // 如果应用不在前台，等待应用恢复
+      if (_appStates.appLifecycleState != AppLifecycleState.resumed) {
+        while (_appStates.appLifecycleState != AppLifecycleState.resumed) {
+          await Future.delayed(const Duration(milliseconds: 100));
+        }
+      }
+
+      logger.d('Back to foreground, stop alarm: #${alarm.id}');
+
+      // 停止闹钟
+      FlutterMethodChannel.instance.stopAlarm(alarm.id);
+    }();
   }
 
   /// 内部计时器的周期方法

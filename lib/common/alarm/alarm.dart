@@ -29,6 +29,7 @@ class Alarm {
   });
 
   factory Alarm.fromJson(Map<String, dynamic> json) => _$AlarmFromJson(json);
+  factory Alarm.fromJsonString(String json) => _$AlarmFromJson(jsonDecode(json));
   Map<String, dynamic> toJson() => _$AlarmToJson(this);
   String toJsonText() => jsonEncode(toJson());
 }
