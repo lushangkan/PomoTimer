@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "You’ve been working hard, now it’s time to unwind and recharge before you go again! 🍹"),
         "longBreakNotificationTitle":
             MessageLookupByLibrary.simpleMessage("Relaxation Time!"),
+        "notificationStopButton": MessageLookupByLibrary.simpleMessage("Stop"),
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("Alarm"),
         "reminderNone": MessageLookupByLibrary.simpleMessage("None"),
         "reminderNotification":

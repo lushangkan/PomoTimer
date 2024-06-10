@@ -13,5 +13,6 @@
   "shortBreakNotificationTitle": "Short Break!",
   "shortBreakNotificationContent": "A quick break will refresh you and get you ready for the next focus session! 🌟",
   "longBreakNotificationTitle": "Relaxation Time!",
-  "longBreakNotificationContent": "You’ve been working hard, now it’s time to unwind and recharge before you go again! 🍹"
+  "longBreakNotificationContent": "You’ve been working hard, now it’s time to unwind and recharge before you go again! 🍹",
+  "notificationStopButton": "Stop"
 }

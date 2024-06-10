@@ -3,6 +3,7 @@ package cn.cutemc.pomotimer.pomotimer.channel
 object Methods {
     const val GET_LOCAL_APP_NAME = "getLocalAppName";
     const val GET_FOREGROUND_NOTIFICATION_DESCRIPTION = "getForegroundNotificationDescription";
+    const val GET_NOTIFICATION_STOP_BUTTON_TEXT = "getNotificationStopButtonText";
     const val ALARM_CALLBACK = "alarmCallback";
     const val CLICK_NOTIFICATION_CALLBACK = "clickNotificationCallback";
 

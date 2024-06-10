@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "你已经非常努力了，现在是时候放松一下，充充电，再继续前行! 🍹"),
         "longBreakNotificationTitle":
             MessageLookupByLibrary.simpleMessage("放松时间!"),
+        "notificationStopButton": MessageLookupByLibrary.simpleMessage("停止"),
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("闹钟提醒"),
         "reminderNone": MessageLookupByLibrary.simpleMessage("无提醒"),
         "reminderNotification": MessageLookupByLibrary.simpleMessage("仅通知"),

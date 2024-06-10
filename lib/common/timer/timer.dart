@@ -489,11 +489,11 @@ class AppTimer {
   void onAlarmRinging(Alarm alarm) {
     logger.d('Alarm ringing: #${alarm.id}');
 
-    () async {
+    unawaited(() async {
       // 如果应用不在前台，等待应用恢复
       if (_appStates.appLifecycleState != AppLifecycleState.resumed) {
         while (_appStates.appLifecycleState != AppLifecycleState.resumed) {
-          await Future.delayed(const Duration(milliseconds: 100));
+          await Future.delayed(const Duration(milliseconds: 1000));
         }
 
         logger.d('Back to foreground, stop alarm: #${alarm.id}');
@@ -506,7 +506,7 @@ class AppTimer {
         });
 
         while (!clicked) {
-          await Future.delayed(const Duration(milliseconds: 100));
+          await Future.delayed(const Duration(milliseconds: 1000));
         }
 
         logger.d('App clicked, stop alarm: #${alarm.id}');
@@ -514,7 +514,7 @@ class AppTimer {
 
       // 停止闹钟
       FlutterMethodChannel.instance.stopAlarm(alarm.id);
-    }();
+    }.call());
   }
 
   void onClickNotification(Alarm alarm) {

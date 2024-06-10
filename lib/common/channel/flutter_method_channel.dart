@@ -18,10 +18,13 @@ class FlutterMethodChannel {
 
   Future<dynamic> methodHandler(MethodCall call) async {
     switch (call.method) {
+      // 将逻辑拆分为方法
       case Methods.getLocalAppName:
         return S.current.appName;
       case Methods.getForegroundNotificationDescription:
         return S.current.foregroundNotificationDescription;
+      case Methods.getNotificationStopButtonText:
+        return S.current.notificationStopButton;
       case Methods.alarmCallback:
         AppTimer.instance.onAlarmRinging(Alarm.fromJsonString(call.arguments));
       case Methods.clickNotificationCallback:

@@ -49,28 +49,34 @@ object NotificationsController {
 
         notification[id] = alarm
 
-        val intent = Intent(context, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        MainScope().launch {
+            val intent = Intent(context, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        val notificationClickIntent = Intent(context, NotificationClickReceiver::class.java).apply {
-            action = "cn.cutemc.pomotimer.NOTIFICATION_CLICK"
-            putExtra("alarm", alarm.toJson())
+            val notificationClickIntent = Intent(context, NotificationClickReceiver::class.java).apply {
+                action = "cn.cutemc.pomotimer.NOTIFICATION_CLICK"
+                putExtra("alarm", alarm.toJson())
+            }
+
+            val notificationClickPendingIntent = PendingIntent.getBroadcast(context, 0, notificationClickIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+            val actionButtonText =
+                (NativeMethodChannel.invokeMethod(Methods.GET_NOTIFICATION_STOP_BUTTON_TEXT, null) ?: throw IllegalArgumentException("Action button text is null")) as String
+
+            val notificationBuild = NotificationCompat.Builder(context, channelId)
+                .addAction(0, actionButtonText, notificationClickPendingIntent)
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentTitle(alarm.notificationTitle)
+                .setContentText(alarm.notificationContent)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+
+            NotificationManagerCompat.from(context).notify(id, notificationBuild.build())
         }
 
-        val notificationClickPendingIntent = PendingIntent.getBroadcast(context, 0, notificationClickIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-
-        val notificationBuild = NotificationCompat.Builder(context, channelId)
-            .addAction(0, "停止", notificationClickPendingIntent) // TODO: 从语言文件获取title
-            .setSmallIcon(R.drawable.ic_notification_icon)
-            .setContentTitle(alarm.notificationTitle)
-            .setContentText(alarm.notificationContent)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .setCategory(NotificationCompat.CATEGORY_ALARM)
-
-        NotificationManagerCompat.from(context).notify(id, notificationBuild.build())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

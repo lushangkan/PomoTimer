@@ -190,6 +190,16 @@ class S {
       args: [],
     );
   }
+
+  /// `停止`
+  String get notificationStopButton {
+    return Intl.message(
+      '停止',
+      name: 'notificationStopButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
