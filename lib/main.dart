@@ -9,8 +9,8 @@ import 'package:pomotimer/states/timer_states.dart';
 import 'package:pomotimer/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
-import 'common/utils/debug_utils.dart';
 import 'common/channel/flutter_method_channel.dart';
+import 'common/utils/debug_utils.dart';
 import 'generated/l10n.dart';
 
 void main() async {
@@ -33,7 +33,7 @@ void main() async {
   runApp(App(timerStates: timerStates, appStates: appStates));
 
   // 初始化FlutterMethodChannel
-  FlutterMethodChannel.instance.configureChannel();
+  FlutterMethodChannel();
 }
 
 class App extends StatelessWidget {

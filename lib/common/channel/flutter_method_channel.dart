@@ -7,9 +7,26 @@ import '../alarm/alarm.dart';
 import '../constants.dart';
 
 class FlutterMethodChannel {
+
+  FlutterMethodChannel() {
+    instance = this;
+
+    configureChannel();
+
+    methods = {
+      Methods.getLocalAppName: _onGetLocalAppNameCalled,
+      Methods.getForegroundNotificationDescription: _onGetForegroundNotificationDescriptionCalled,
+      Methods.getNotificationStopButtonText: _onGetNotificationStopButtonTextCalled,
+      Methods.alarmCallback: _onAlarmCallbackCalled,
+      Methods.clickNotificationCallback: _onClickNotificationCallbackCalled,
+    };
+  }
+
   late MethodChannel methodChannel;
 
-  static final FlutterMethodChannel instance = FlutterMethodChannel();
+  static late final FlutterMethodChannel instance;
+
+  late Map methods;
 
   void configureChannel() {
     methodChannel = const MethodChannel(Constants.pluginChannelId);
