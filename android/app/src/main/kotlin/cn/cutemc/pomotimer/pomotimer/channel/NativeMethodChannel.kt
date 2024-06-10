@@ -103,8 +103,7 @@ object NativeMethodChannel : MethodChannel.MethodCallHandler {
         result.notImplemented()
     }
 
-    // TODO: 将Method调用拆分为方法
-    suspend fun invokeMethod(method: String, arguments: Any?): Any? {
+    private suspend fun invokeMethod(method: String, arguments: Any?): Any? {
         return suspendCancellableCoroutine { cont ->
             val resultHandle = object : MethodChannel.Result {
                 override fun success(result: Any?) {
@@ -129,4 +128,21 @@ object NativeMethodChannel : MethodChannel.MethodCallHandler {
             methodChannel.invokeMethod(method, arguments, resultHandle)
         }
     }
+
+    suspend fun getNotificationStopButtonText(): String {
+        return (invokeMethod(Methods.GET_NOTIFICATION_STOP_BUTTON_TEXT, null) ?: throw IllegalArgumentException("Action button text is null")) as String
+    }
+
+    suspend fun clickNotificationCallback(alarmJson: String) {
+        invokeMethod(Methods.CLICK_NOTIFICATION_CALLBACK, alarmJson)
+    }
+
+    suspend fun getLocalAppName(): String {
+        return (invokeMethod(Methods.GET_LOCAL_APP_NAME, null) ?: throw IllegalArgumentException("App name is null")) as String
+    }
+
+    suspend fun getForegroundNotificationDescription(): String {
+        return (invokeMethod(Methods.GET_FOREGROUND_NOTIFICATION_DESCRIPTION, null) ?: throw IllegalArgumentException("Foreground notification description is null")) as String
+    }
+
 }

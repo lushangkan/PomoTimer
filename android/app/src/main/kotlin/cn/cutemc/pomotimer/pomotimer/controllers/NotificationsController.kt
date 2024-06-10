@@ -17,7 +17,6 @@ import androidx.core.app.NotificationManagerCompat
 import cn.cutemc.pomotimer.pomotimer.MainActivity
 import cn.cutemc.pomotimer.pomotimer.R
 import cn.cutemc.pomotimer.pomotimer.alarm.Alarm
-import cn.cutemc.pomotimer.pomotimer.channel.Methods
 import cn.cutemc.pomotimer.pomotimer.channel.NativeMethodChannel
 import kotlinx.coroutines.*
 import kotlin.math.roundToInt
@@ -61,8 +60,7 @@ object NotificationsController {
             val notificationClickPendingIntent = PendingIntent.getBroadcast(context, 0, notificationClickIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
-            val actionButtonText =
-                (NativeMethodChannel.invokeMethod(Methods.GET_NOTIFICATION_STOP_BUTTON_TEXT, null) ?: throw IllegalArgumentException("Action button text is null")) as String
+            val actionButtonText = NativeMethodChannel.getNotificationStopButtonText()
 
             val notificationBuild = NotificationCompat.Builder(context, channelId)
                 .addAction(0, actionButtonText, notificationClickPendingIntent)
@@ -133,7 +131,7 @@ class NotificationClickReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val alarm = Alarm.fromJson(intent?.getStringExtra("alarm") ?: throw IllegalArgumentException("Alarm is null"))
         MainScope().launch {
-            NativeMethodChannel.invokeMethod(Methods.CLICK_NOTIFICATION_CALLBACK, alarm.toJson())
+            NativeMethodChannel.clickNotificationCallback(alarm.toJson())
         }
     }
 }
