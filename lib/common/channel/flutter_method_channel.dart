@@ -5,6 +5,7 @@ import 'package:pomotimer/generated/l10n.dart';
 
 import '../alarm/alarm.dart';
 import '../constants.dart';
+import '../exceptions/MethodNotFoundException.dart';
 
 class FlutterMethodChannel {
 
@@ -34,20 +35,33 @@ class FlutterMethodChannel {
   }
 
   Future<dynamic> methodHandler(MethodCall call) async {
-    switch (call.method) {
-      // 将逻辑拆分为方法
-      case Methods.getLocalAppName:
-        return S.current.appName;
-      case Methods.getForegroundNotificationDescription:
-        return S.current.foregroundNotificationDescription;
-      case Methods.getNotificationStopButtonText:
-        return S.current.notificationStopButton;
-      case Methods.alarmCallback:
-        AppTimer.instance.onAlarmRinging(Alarm.fromJsonString(call.arguments));
-      case Methods.clickNotificationCallback:
-        AppTimer.instance.onClickNotification(Alarm.fromJsonString(call.arguments));
+    if (methods.containsKey(call.method)) {
+      return await methods[call.method]();
+    } else {
+      throw MethodNotFoundException('Method ${call.method} not found');
     }
   }
+  
+  Future<String> _onGetLocalAppNameCalled() async {
+    return S.current.appName;
+  }
+
+  Future<String> _onGetForegroundNotificationDescriptionCalled() async {
+    return S.current.foregroundNotificationDescription;
+  }
+
+  Future<String> _onGetNotificationStopButtonTextCalled() async {
+    return S.current.notificationStopButton;
+  }
+
+  Future<void> _onAlarmCallbackCalled(String alarmJson) async {
+    AppTimer.instance.onAlarmRinging(Alarm.fromJsonString(alarmJson));
+  }
+
+  Future<void> _onClickNotificationCallbackCalled(String alarmJson) async {
+    AppTimer.instance.onClickNotification(Alarm.fromJsonString(alarmJson));
+  }
+
 
   Future<void> reloadLocale() async {
     methodChannel.invokeMethod(Methods.reloadLocale);
