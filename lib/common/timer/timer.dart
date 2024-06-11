@@ -443,6 +443,9 @@ class AppTimer {
     _states.startPauseTime = null;
     _lastPhase = null;
 
+    // 如果CustomTime小于最小时间，则重置
+    setCustomTimes(Constants.defaultTime);
+
     _states.notifyListeners();
 
     if (_timer != null) _destroyInternalTimer();

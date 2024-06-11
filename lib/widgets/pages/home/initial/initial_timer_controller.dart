@@ -79,6 +79,10 @@ class _InitialTimerControllerState extends TimerControllerState {
     void onPressedStartButton() async {
       // 检查并请求权限
       if (await permissionHandle.requestPermission(context)) {
+        if (!context.mounted) {
+          return;
+        }
+
         timer.setCustomTimes(_tmpCustomTimes);
         timer.setReminderType(_tmpReminderType);
 
@@ -86,6 +90,10 @@ class _InitialTimerControllerState extends TimerControllerState {
 
         context.go('/in-progress');
       } else {
+        if (!context.mounted) {
+          return;
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("您拒绝了权限请求，无法开始计时")));
         logger.d('User denied permission.');
       }

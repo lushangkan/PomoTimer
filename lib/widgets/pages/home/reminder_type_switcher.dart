@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pomotimer/common/constants.dart';
 import 'package:pomotimer/common/enum/reminder_type.dart';
-import 'package:provider/provider.dart';
-
-import '../../../states/timer_states.dart';
 
 class ReminderTypeSwitcher extends StatelessWidget {
   const ReminderTypeSwitcher({super.key, required this.reminderType, required this.onSelected});
@@ -13,8 +10,6 @@ class ReminderTypeSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TimerStates timerStates = context.watch<TimerStates>();
-
     var theme = Theme.of(context);
     var colorScheme = theme.colorScheme;
 
