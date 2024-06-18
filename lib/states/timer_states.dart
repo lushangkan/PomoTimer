@@ -72,18 +72,8 @@ class TimerStates extends ChangeNotifier {
 
   String toJsonText() => jsonEncode(toJson());
 
-  void _saveToStorage() async {
-    logger.d('Saving main states to storage');
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString('timer_states', toJsonText());
-  }
-
-  static Future<TimerStates> loadFromStorage() async {
+  factory TimerStates.loadFromStorage(SharedPreferences prefs) {
     logger.d('Loading main states from storage');
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var jsonText = prefs.getString('timer_states');
 
@@ -105,6 +95,14 @@ class TimerStates extends ChangeNotifier {
     }
 
     return TimerStates.fromJson(json);
+  }
+
+  void _saveToStorage() async {
+    logger.d('Saving main states to storage');
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('timer_states', toJsonText());
   }
 
   @override

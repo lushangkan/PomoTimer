@@ -8,6 +8,7 @@ import 'package:pomotimer/states/app_states.dart';
 import 'package:pomotimer/states/timer_states.dart';
 import 'package:pomotimer/themes/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/channel/flutter_method_channel.dart';
 import 'common/utils/debug_utils.dart';
@@ -23,7 +24,8 @@ void main() async {
   initializeReflectable();
 
   // 初始化State，因为获取储存是异步的，需要在MaterialApp之前初始化
-  final TimerStates timerStates = await TimerStates.loadFromStorage();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final TimerStates timerStates = TimerStates.loadFromStorage(prefs);
   final AppStates appStates = AppStates(timerStates);
 
   // 初始化PermissionHandle
