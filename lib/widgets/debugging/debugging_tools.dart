@@ -8,7 +8,7 @@ import 'package:pomotimer/common/permission_handle.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/enum/attribute.dart';
-import '../../states/app_states.dart';
+import '../../common/timer/timer.dart';
 import '../../states/timer_states.dart';
 import '../pages/home/reminder_type_switcher.dart';
 
@@ -20,9 +20,8 @@ class DebuggingTools extends StatelessWidget {
     var theme = Theme.of(context);
     var colorScheme = theme.colorScheme;
 
-    var appStates = context.watch<AppStates>();
     var timerStates = context.watch<TimerStates>();
-    var timer = appStates.timer;
+    var timer = AppTimer.instance;
 
     Future<int?> showFastForwardToEndDialog() async {
       return await showDialog<int>(
@@ -382,7 +381,6 @@ class _CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
   @override
   Widget build(BuildContext context) {
     var timerStates = context.watch<TimerStates>();
-    var timer = context.watch<AppStates>().timer;
 
     focusController.text = "1";
     shortBreakController.text = "1";

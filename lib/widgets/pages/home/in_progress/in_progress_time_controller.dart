@@ -15,7 +15,7 @@ import 'package:pomotimer/widgets/pages/home/total_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../common/enum/attribute.dart';
-import '../../../../states/app_states.dart';
+import '../../../../common/timer/timer.dart';
 import '../../../../states/timer_states.dart';
 import '../attribute_switcher.dart';
 import '../resume_button.dart';
@@ -77,8 +77,7 @@ class InProgressTimeControllerState extends TimerControllerState {
     super.initState();
 
     var timerStates = context.read<TimerStates>();
-    var appStates = context.read<AppStates>();
-    var timer = appStates.timer;
+    var timer = AppTimer.instance;
 
     isTimerStop = false;
     reset();
@@ -115,9 +114,7 @@ class InProgressTimeControllerState extends TimerControllerState {
   Widget build(BuildContext context) {
     super.build(context);
 
-    var appStates = context.watch<AppStates>();
-    var timerStates = context.watch<TimerStates>();
-    var timer = appStates.timer;
+    var timer = AppTimer.instance;
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 265, maxHeight: 580),
@@ -156,10 +153,7 @@ class ControlButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appStates = context.watch<AppStates>();
-
-    var timer = appStates.timer;
-    var timerStates = context.watch<TimerStates>();
+    var timer = AppTimer.instance;
 
     void onPressStopButton() {
       timer.stop();

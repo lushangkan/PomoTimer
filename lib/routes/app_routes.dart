@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pomotimer/states/app_states.dart';
+import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/widgets/pages/home/in_progress/in_progress_home_page.dart';
 import 'package:pomotimer/widgets/pages/home/initial/initial_home_page.dart';
-import 'package:provider/provider.dart';
 
 final routes = GoRouter(
     routes: [
@@ -18,7 +17,7 @@ final routes = GoRouter(
               )),
     ],
     redirect: (BuildContext context, GoRouterState state) {
-      var timer = context.read<AppStates>().timer;
+      var timer = AppTimer.instance;
       if (timer.isRunning && (state.path == '/' || state.path == null)) {
         return '/in-progress';
       } else if (!timer.isRunning && (state.path == '/in-progress' || state.path == null)) {

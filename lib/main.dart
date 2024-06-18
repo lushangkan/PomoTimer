@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logger/logger.dart';
 import 'package:pomotimer/common/permission_handle.dart';
+import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/main.reflectable.dart';
 import 'package:pomotimer/routes/app_routes.dart';
 import 'package:pomotimer/states/app_states.dart';
@@ -26,11 +27,13 @@ void main() async {
   // 初始化State，因为获取储存是异步的，需要在MaterialApp之前初始化
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final TimerStates timerStates = TimerStates.loadFromStorage(prefs);
-  final AppStates appStates = AppStates(timerStates);
+  final AppStates appStates = AppStates();
 
   // 初始化PermissionHandle
   await permissionHandle.checkAllPermissionStatus();
 
+  // 初始化Timer
+  AppTimer(timerStates, appStates);
 
   runApp(App(timerStates: timerStates, appStates: appStates));
 
@@ -50,8 +53,8 @@ class App extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: timerStates),
-        ChangeNotifierProvider.value(value: appStates)
+        ChangeNotifierProvider<TimerStates>.value(value: timerStates),
+        ChangeNotifierProvider<AppStates>.value(value: appStates),
       ],
       child: MaterialApp.router(
         title: 'PomoTimer',

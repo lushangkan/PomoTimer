@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pomotimer/common/utils/timer_utils.dart';
-import 'package:provider/provider.dart';
 
 import '../../../common/enum/attribute.dart';
 import '../../../common/utils/app_utils.dart';
-import '../../../states/app_states.dart';
-import '../../../states/timer_states.dart';
+
 
 class TotalTimeDisplay extends StatelessWidget {
   const TotalTimeDisplay({super.key, required this.customTimes, required this.longBreakInterval});
@@ -18,10 +16,6 @@ class TotalTimeDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
-
-    var timerStates = context.watch<TimerStates>();
-    var appStates = context.watch<AppStates>();
-    var timer = appStates.timer;
 
     var timeTextStyle = theme.textTheme.bodyLarge!.copyWith(
       fontWeight: FontWeight.w400,

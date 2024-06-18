@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../../common/constants.dart';
 import '../../../../common/enum/attribute.dart';
 import '../../../../common/enum/reminder_type.dart';
-import '../../../../states/app_states.dart';
+import '../../../../common/timer/timer.dart';
 import '../../../../states/timer_states.dart';
 import '../attribute_selector.dart';
 import '../attribute_switcher.dart';
@@ -51,10 +51,7 @@ class _InitialTimerControllerState extends TimerControllerState {
   Widget build(BuildContext context) {
     super.build(context);
 
-    // 从State复制customTimes
-    var timerStates = context.read<TimerStates>();
-    var appStates = context.read<AppStates>();
-    var timer = appStates.timer;
+    var timer = AppTimer.instance;
 
     var theme = Theme.of(context);
 
