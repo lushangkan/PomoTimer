@@ -2,9 +2,9 @@
 // https://github.com/dart-lang/reflectable.
 
 import 'dart:core';
+
 import 'package:pomotimer/common/reflector.dart' as prefix0;
 import 'package:pomotimer/states/timer_states.dart' as prefix1;
-
 // ignore_for_file: camel_case_types
 // ignore_for_file: implementation_imports
 // ignore_for_file: prefer_adjacent_string_concatenation
@@ -13,8 +13,8 @@ import 'package:pomotimer/states/timer_states.dart' as prefix1;
 // ignore_for_file: unused_import
 
 import 'package:reflectable/mirrors.dart' as m;
-import 'package:reflectable/src/reflectable_builder_based.dart' as r;
 import 'package:reflectable/reflectable.dart' as r show Reflectable;
+import 'package:reflectable/src/reflectable_builder_based.dart' as r;
 
 final _data = <r.Reflectable, r.ReflectorData>{
   const prefix0.Reflector(): r.ReflectorData(
@@ -173,7 +173,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
       ])
 };
 
-final _memberSymbolMap = null;
+const _memberSymbolMap = null;
 
 void initializeReflectable() {
   r.data = _data;

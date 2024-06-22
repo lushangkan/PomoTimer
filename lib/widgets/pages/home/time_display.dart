@@ -46,7 +46,7 @@ class _TimeDisplayState extends State<TimeDisplay> {
 
 class _TimeDisplayInner extends StatelessWidget {
   const _TimeDisplayInner(
-      {super.key, required this.timeOfCurrentPhase, required this.phase, required this.smallCyclesCompleted});
+      {required this.timeOfCurrentPhase, required this.phase, required this.smallCyclesCompleted});
 
   final int timeOfCurrentPhase;
   final Phase phase;

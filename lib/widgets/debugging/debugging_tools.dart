@@ -60,8 +60,13 @@ class DebuggingTools extends StatelessWidget {
 
                   FlutterMethodChannel.instance.registerAlarm(alarm);
 
+                  if (!context.mounted) return;
+
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("响铃已注册")));
                 } else {
+
+                  if (!context.mounted) return;
+
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("您拒绝了权限请求，无法测试响铃")));
                 }
               },
@@ -285,10 +290,10 @@ class AlarmTestDialog extends StatefulWidget {
   final void Function() onCancel;
 
   @override
-  _AlarmTestDialogState createState() => _AlarmTestDialogState();
+  AlarmTestDialogState createState() => AlarmTestDialogState();
 }
 
-class _AlarmTestDialogState extends State<AlarmTestDialog> {
+class AlarmTestDialogState extends State<AlarmTestDialog> {
   late TextEditingController controller;
 
   @override
@@ -352,10 +357,10 @@ class CustomTimerTimeDialog extends StatefulWidget {
   final void Function() onCancel;
 
   @override
-  _CustomTimerTimeDialogState createState() => _CustomTimerTimeDialogState();
+  CustomTimerTimeDialogState createState() => CustomTimerTimeDialogState();
 }
 
-class _CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
+class CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
   late TextEditingController focusController;
   late TextEditingController shortBreakController;
   late TextEditingController longBreakController;

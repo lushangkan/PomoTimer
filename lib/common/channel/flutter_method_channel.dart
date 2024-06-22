@@ -5,7 +5,7 @@ import 'package:pomotimer/generated/l10n.dart';
 
 import '../alarm/alarm.dart';
 import '../constants.dart';
-import '../exceptions/MethodNotFoundException.dart';
+import '../exceptions/native_exception.dart';
 
 class FlutterMethodChannel {
 

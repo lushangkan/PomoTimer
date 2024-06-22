@@ -32,8 +32,8 @@ class AppCircularSlider extends StatefulWidget {
   State createState() => _AppCircularSliderState();
 }
 
-class _AppCircularSliderState extends State<AppCircularSlider> with SingleTickerProviderStateMixin{
-
+class _AppCircularSliderState extends State<AppCircularSlider>
+    with SingleTickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _animationController;
 
@@ -41,16 +41,20 @@ class _AppCircularSliderState extends State<AppCircularSlider> with SingleTicker
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: widget.animationDuration), );
-    CurvedAnimation curve = CurvedAnimation(parent: _animationController, curve: Curves.elasticOut);
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: widget.animationDuration),
+    );
+    CurvedAnimation curve =
+        CurvedAnimation(parent: _animationController, curve: Curves.elasticOut);
     _animation = Tween<double>(begin: 0, end: 6).animate(curve);
     playAnimation();
   }
-  
+
   @override
   void didUpdateWidget(covariant AppCircularSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     if (oldWidget.selectMode != widget.selectMode) {
       playAnimation();
     }
@@ -72,26 +76,27 @@ class _AppCircularSliderState extends State<AppCircularSlider> with SingleTicker
     double innerSize = widget.sliderSize - widget.progressBarWidth * 2;
 
     return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return SleekCircularSlider(
-            min: widget.min,
-            max: widget.max,
-            initialValue: widget.value,
-            innerWidget: (double value) => _AppCircularSliderInner(
-                size: innerSize,
-                child: widget.innerWidget != null ? widget.innerWidget!(value) : null),
-            appearance: _AppCircularSliderAppearance(
-              animationEnabled: widget.animationEnabled,
-              sliderSize: widget.sliderSize,
-              progressWidth: widget.progressBarWidth,
-              colorScheme: colorScheme,
-              selectMode: widget.selectMode,
-              handlerSize: _animation.value,
-            ),
-            onChange: widget.onChange);
-      }
-    );
+        animation: _animation,
+        builder: (context, child) {
+          return SleekCircularSlider(
+              min: widget.min,
+              max: widget.max,
+              initialValue: widget.value,
+              innerWidget: (double value) => _AppCircularSliderInner(
+                  size: innerSize,
+                  child: widget.innerWidget != null
+                      ? widget.innerWidget!(value)
+                      : null),
+              appearance: _AppCircularSliderAppearance(
+                animationEnabled: widget.animationEnabled,
+                sliderSize: widget.sliderSize,
+                progressWidth: widget.progressBarWidth,
+                colorScheme: colorScheme,
+                selectMode: widget.selectMode,
+                handlerSize: _animation.value,
+              ),
+              onChange: widget.onChange);
+        });
   }
 
   @override
@@ -117,7 +122,6 @@ class _AppCircularSliderInner extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(9999),
           boxShadow: [
             BoxShadow(
@@ -153,12 +157,12 @@ class _AppCircularSliderInner extends StatelessWidget {
 
 class _AppCircularSliderAppearance extends CircularSliderAppearance {
   _AppCircularSliderAppearance(
-      {required this.sliderSize,
-      required this.progressWidth,
-      required this.colorScheme,
-      required this.animationEnabled,
-        required this.handlerSize,
-      required this.selectMode})
+      {required sliderSize,
+      required progressWidth,
+      required colorScheme,
+      required animationEnabled,
+      required handlerSize,
+      required selectMode})
       : super(
           size: sliderSize,
           customWidths: CustomSliderWidths(
@@ -188,11 +192,4 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
           animationEnabled: animationEnabled,
           animDurationMultiplier: 1.05,
         );
-
-  final double sliderSize;
-  final double progressWidth;
-  final ColorScheme colorScheme;
-  final bool animationEnabled;
-  final double handlerSize;
-  final bool selectMode;
 }

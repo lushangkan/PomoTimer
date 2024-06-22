@@ -138,7 +138,7 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
   //TODO: 无用的设为私人
   Phase lastSelected = Phase.focus;
   BoxyChild? bg;
-  _AttributeSwitcherState? state;
+  _AttributeSwitcherState? _state;
 
   (Phase, BoxyChild)? selectedChild;
   BoxyChild? lastSelectedWidget;
@@ -172,9 +172,9 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
     var currentButton = getChild(attributeSwitcher!.selected);
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      state!.setBgSize(currentButton.size.height, currentButton.size.width);
+      _state!.setBgSize(currentButton.size.height, currentButton.size.width);
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        state!.setEnableAnimation(true);
+        _state!.setEnableAnimation(true);
       });
     });
 
@@ -194,10 +194,10 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
     var selected = attributeSwitcher!.selected;
 
     // 获取_AttributeSwitcherState
-    state ??= buildContext.findAncestorStateOfType<_AttributeSwitcherState>();
+    _state ??= buildContext.findAncestorStateOfType<_AttributeSwitcherState>();
 
     // 获取animation相关
-    var (animation, _) = (state!._animation, state!._animationController);
+    var (animation, _) = (_state!._animation, _state!._animationController);
 
     // 如果选择了另一个按钮，那么就更新lastSelectedWidget和selectedChild还有tween
     if (selectedChild == null ||
@@ -216,10 +216,10 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
     }
 
     // 如果当前选择的按钮大小和bg大小不一样，那么就更新bg的大小
-    if (state!.bgSize.$1 != selectedChild!.$2.size.height ||
-        state!.bgSize.$2 != selectedChild!.$2.size.width) {
+    if (_state!.bgSize.$1 != selectedChild!.$2.size.height ||
+        _state!.bgSize.$2 != selectedChild!.$2.size.width) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        state!.setBgSize(
+        _state!.setBgSize(
             selectedChild!.$2.size.height, selectedChild!.$2.size.width);
       });
     }

@@ -1,4 +1,5 @@
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/foundation.dart';
 
 var eventBus = EventBus(sync: true);
 
@@ -16,5 +17,7 @@ void main() {
 
   eventBus.fire(TestEvent('hello'));
 
-  print(msg); // hello
+  if (kDebugMode) {
+    print(msg);
+  } // hello
 }

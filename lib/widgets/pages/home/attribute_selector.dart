@@ -16,8 +16,6 @@ class AttributeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-
     var timerStates = context.watch<TimerStates>();
 
     const double sliderSize = 238;
