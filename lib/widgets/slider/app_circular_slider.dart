@@ -144,7 +144,14 @@ class _AppCircularSliderInner extends StatelessWidget {
           width: size - 26,
           height: size - 26,
           decoration: BoxDecoration(
-              color: colorScheme.surface,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  colorScheme.surfaceContainerLow,
+                  colorScheme.surfaceContainerLowest
+                ],
+              ),
               borderRadius: BorderRadius.circular(9999)),
           child: Center(
             child: child,
