@@ -1,10 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:pomotimer/widgets/pages/home/app_page.dart';
 import 'package:pomotimer/widgets/pages/home/click_listener.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
 
-import '../../../common/utils/debug_utils.dart';
 import '../../../generated/l10n.dart';
 import '../../debugging/debugging_tools.dart';
 
@@ -37,7 +37,7 @@ class TopBar extends AppBar {
       : super(
             backgroundColor: Colors.transparent,
             actions: [
-              if (isDebugMode) Container(padding: const EdgeInsets.only(right: 15),child: const DebuggingTools()),
+              if (kDebugMode) Container(padding: const EdgeInsets.only(right: 15),child: const DebuggingTools()),
             ],
             leading: Container(
               margin: const EdgeInsets.only(left: 15),
