@@ -17,7 +17,7 @@ class ReminderTypeSwitcher extends StatelessWidget {
 
     return Container(
         decoration: BoxDecoration(
-          color: colorScheme.surface,
+          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(9999),
         ),
         child: PopupMenuButton(

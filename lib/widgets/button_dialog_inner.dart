@@ -39,13 +39,13 @@ class ButtonDialogInner extends StatelessWidget {
     );
 
     var cancelButtonTheme = FilledButton.styleFrom(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: colorScheme.surfaceContainer,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(9999),
       ),
       textStyle: AppTextStyle.generateWithTextStyle(theme.textTheme.bodyLarge!.copyWith(
         fontWeight: FontWeight.w400,
-        color: colorScheme.onSurface,
+        color: colorScheme.onSurfaceVariant,
       )),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
     );

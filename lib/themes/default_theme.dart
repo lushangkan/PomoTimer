@@ -62,8 +62,8 @@ final _defColorSchemeLight = ColorScheme.fromSeed(
   onErrorContainer: fromCssColor('#333333'),
   background: fromCssColor('#F5F0E4'),
   onBackground: fromCssColor('#5c5c5c'),
-  surface: fromCssColor('#ebe6da'),
-  onSurface: fromCssColor('#5c5c5c'),
+  surfaceContainer: fromCssColor('#ebe6da'),
+  onSurfaceVariant: fromCssColor('#5c5c5c'),
 );
 
 final _defColorSchemeDark = ColorScheme.fromSeed(
@@ -87,6 +87,6 @@ final _defColorSchemeDark = ColorScheme.fromSeed(
   onErrorContainer: fromCssColor('#FFFFFF'),
   background: fromCssColor('#1A1A1A'),
   onBackground: fromCssColor('#5c5c5c'),
-  surface: fromCssColor('#404040'),
-  onSurface: fromCssColor('#e0e0e0'),
+  surfaceContainer: fromCssColor('#404040'),
+  onSurfaceVariant: fromCssColor('#e0e0e0'),
 );

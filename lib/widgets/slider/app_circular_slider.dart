@@ -121,7 +121,7 @@ class _AppCircularSliderInner extends StatelessWidget {
           borderRadius: BorderRadius.circular(9999),
           boxShadow: [
             BoxShadow(
-              color: colorScheme.surface.withOpacity(0.2),
+              color: colorScheme.surfaceContainer.withOpacity(0.2),
               blurRadius: 10,
               spreadRadius: 5,
             )
@@ -169,7 +169,7 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
           ),
           customColors: CustomSliderColors(
             // 背景颜色
-            trackColor: colorScheme.surface,
+            trackColor: colorScheme.surfaceContainer,
             // 进度条颜色
             progressBarColors: [
               colorScheme.primary,
