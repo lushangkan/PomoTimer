@@ -13,7 +13,7 @@ class ReminderTypeSwitcher extends StatelessWidget {
     var theme = Theme.of(context);
     var colorScheme = theme.colorScheme;
 
-    var iconColor = colorScheme.onBackground;
+    var iconColor = colorScheme.onSurface;
 
     return Container(
         decoration: BoxDecoration(
@@ -44,7 +44,7 @@ class ReminderTypeSwitcher extends StatelessWidget {
                     ),
                   ))
               .toList(),
-          color: colorScheme.background,
+          color: colorScheme.surface,
         ));
   }
 }

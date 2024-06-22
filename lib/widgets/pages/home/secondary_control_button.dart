@@ -9,7 +9,7 @@ abstract class SecondaryControlButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var iconColor = theme.colorScheme.onBackground;
+    var iconColor = theme.colorScheme.onSurface;
 
     var buttonStyle = TextButton.styleFrom(
       shape: const CircleBorder(),

@@ -119,7 +119,7 @@ class _InitialTimerControllerState extends TimerControllerState {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: VerticalDivider(
-                  color: theme.colorScheme.onBackground.withOpacity(0.3),
+                  color: theme.colorScheme.onSurface.withOpacity(0.3),
                   width: 1,
                 ),
               ),

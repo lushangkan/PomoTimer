@@ -45,7 +45,7 @@ class TopBar extends AppBar {
                 iconSize: 25,
                 tooltip: S.current.settingBtnTooltip,
                 icon: Icon(LucideIcons.settings,
-                    color: theme.colorScheme.onBackground),
+                    color: theme.colorScheme.onSurface),
                 onPressed: () {
                   // TODO 跳转到设置
                 },

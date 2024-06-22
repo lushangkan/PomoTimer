@@ -18,7 +18,7 @@ final defThemeLight = ThemeData(
     buttonTheme: buttonTheme,
     popupMenuTheme: PopupMenuThemeData(
       position: PopupMenuPosition.under,
-      color: _defColorSchemeLight.background,
+      color: _defColorSchemeLight.surface,
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -35,7 +35,7 @@ final defThemeDark = ThemeData(
     buttonTheme: buttonTheme,
     popupMenuTheme: PopupMenuThemeData(
       position: PopupMenuPosition.under,
-      color: _defColorSchemeDark.background,
+      color: _defColorSchemeDark.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -60,8 +60,8 @@ final _defColorSchemeLight = ColorScheme.fromSeed(
   onError: fromCssColor('#FFFFFF'),
   errorContainer: fromCssColor('#FFE8E1'),
   onErrorContainer: fromCssColor('#333333'),
-  background: fromCssColor('#F5F0E4'),
-  onBackground: fromCssColor('#5c5c5c'),
+  surface: fromCssColor('#F5F0E4'),
+  onSurface: fromCssColor('#5c5c5c'),
   surfaceContainer: fromCssColor('#ebe6da'),
   onSurfaceVariant: fromCssColor('#5c5c5c'),
 );
@@ -85,8 +85,8 @@ final _defColorSchemeDark = ColorScheme.fromSeed(
   onError: fromCssColor('#1A1A1A'),
   errorContainer: fromCssColor('#AF001A'),
   onErrorContainer: fromCssColor('#FFFFFF'),
-  background: fromCssColor('#1A1A1A'),
-  onBackground: fromCssColor('#5c5c5c'),
-  surfaceContainer: fromCssColor('#404040'),
-  onSurfaceVariant: fromCssColor('#e0e0e0'),
+  surface: fromCssColor('#1A1A1A'),
+  onSurface: fromCssColor('#5c5c5c'),
+  surfaceContainer: fromCssColor('#ebe6da'),
+  onSurfaceVariant: fromCssColor('#5c5c5c'),
 );

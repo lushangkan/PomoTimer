@@ -102,7 +102,7 @@ class _AppCircularSliderState extends State<AppCircularSlider> with SingleTicker
 }
 
 class _AppCircularSliderInner extends StatelessWidget {
-  const _AppCircularSliderInner({super.key, required this.size, this.child});
+  const _AppCircularSliderInner({required this.size, this.child});
 
   final double size;
   final Widget? child;
@@ -140,7 +140,7 @@ class _AppCircularSliderInner extends StatelessWidget {
           width: size - 26,
           height: size - 26,
           decoration: BoxDecoration(
-              color: colorScheme.background,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(9999)),
           child: Center(
             child: child,
@@ -178,7 +178,7 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
             gradientStartAngle: 270,
             gradientEndAngle: 270 + 180,
             dynamicGradient: false,
-            dotColor: colorScheme.background,
+            dotColor: colorScheme.surface,
             shadowColor: colorScheme.primary.withOpacity(0.25),
             shadowMaxOpacity: 0.19,
             shadowStep: 1.2,

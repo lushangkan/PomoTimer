@@ -96,7 +96,7 @@ class DebuggingTools extends StatelessWidget {
     return PopupMenuButton(
         icon: Icon(
           LucideIcons.bug,
-          color: colorScheme.onBackground,
+          color: colorScheme.onSurface,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
