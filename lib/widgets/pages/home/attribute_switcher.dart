@@ -279,7 +279,7 @@ class AttributeSplitter extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
+        color: colorScheme.surfaceContainerHigh,
         shape: BoxShape.circle,
       ),
       height: 4,
