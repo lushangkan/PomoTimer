@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 /// 获取平台类型
 /// @return PlatformType
 PlatformType getPlatformType() {
-  if (Platform.isAndroid) {
+  if (kIsWeb) {
+    return PlatformType.web;
+  } else if (Platform.isAndroid) {
     return PlatformType.android;
   } else if (Platform.isIOS) {
     return PlatformType.ios;
@@ -17,8 +19,6 @@ PlatformType getPlatformType() {
     return PlatformType.linux;
   } else if (Platform.isFuchsia) {
     return PlatformType.fuchsia;
-  } else if (kIsWeb) {
-    return PlatformType.web;
   } else {
     return PlatformType.unknown;
   }
