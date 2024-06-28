@@ -125,7 +125,7 @@ class _AppCircularSliderInner extends StatelessWidget {
           borderRadius: BorderRadius.circular(9999),
           boxShadow: [
             BoxShadow(
-              color: colorScheme.surfaceContainer.withOpacity(0.2),
+              color: colorScheme.surface.withOpacity(0.2),
               blurRadius: 10,
               spreadRadius: 5,
             )
