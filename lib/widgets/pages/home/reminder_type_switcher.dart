@@ -44,7 +44,6 @@ class ReminderTypeSwitcher extends StatelessWidget {
                     ),
                   ))
               .toList(),
-          color: colorScheme.surface,
         ));
   }
 }
