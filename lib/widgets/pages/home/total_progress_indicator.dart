@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class TotalProgressIndicator extends StatelessWidget {
   const TotalProgressIndicator({super.key, required this.elapsedTime, required this.totalTime});
 
@@ -10,10 +11,17 @@ class TotalProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
 
-    return LinearProgressIndicator(
-      value: elapsedTime / totalTime,
-      backgroundColor: colorScheme.surfaceContainer,
-      borderRadius: BorderRadius.circular(8),
+    return SizedBox(
+      height: 300,
+      width: 8,
+      child: RotatedBox(
+        quarterTurns: 3,
+        child: LinearProgressIndicator(
+          value: elapsedTime / totalTime,
+          backgroundColor: colorScheme.surfaceContainer,
+          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(9999), bottomRight: Radius.circular(9999)),
+        ),
+      ),
     );
   }
 }

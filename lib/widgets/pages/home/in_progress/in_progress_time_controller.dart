@@ -117,31 +117,32 @@ class InProgressTimeControllerState extends TimerControllerState {
     var timer = AppTimer.instance;
 
     return Container(
-      constraints: const BoxConstraints(maxWidth: 265, maxHeight: 580),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      width: double.infinity,
+      child: Stack(
+        alignment: Alignment.centerLeft,
         children: [
-          Column(
-            children: [
-              AttributeSwitcher(
-                selected: phase!,
+          TotalProgressIndicator(
+              elapsedTime: timer.elapsedTime!,
+              totalTime: timer.totalTime!),
+          Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 265, maxHeight: 580),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  AttributeSwitcher(
+                    selected: phase!,
+                  ),
+                  TimeDisplay(
+                    phase: phase!,
+                    timeOfCurrentPhase: timeOfCurrentPhase!,
+                    smallCyclesCompleted: smallCyclesCompleted!,
+                  ),
+                  const ControlButtons()
+                ],
               ),
-              const SizedBox(
-                height: 18,
-              ),
-              SizedBox(
-                  width: 225,
-                  child: TotalProgressIndicator(
-                      elapsedTime: timer.elapsedTime!,
-                      totalTime: timer.totalTime!))
-            ],
-          ),
-          TimeDisplay(
-            phase: phase!,
-            timeOfCurrentPhase: timeOfCurrentPhase!,
-            smallCyclesCompleted: smallCyclesCompleted!,
-          ),
-          const ControlButtons()
+            ),
+          )
         ],
       ),
     );
