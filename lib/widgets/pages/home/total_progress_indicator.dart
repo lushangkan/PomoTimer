@@ -8,8 +8,11 @@ class TotalProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return LinearProgressIndicator(
       value: elapsedTime / totalTime,
+      backgroundColor: colorScheme.surfaceContainer,
       borderRadius: BorderRadius.circular(8),
     );
   }
