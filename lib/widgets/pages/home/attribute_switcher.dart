@@ -256,7 +256,7 @@ class AttributeBtn extends StatelessWidget {
           maxHeight: double.infinity,
           minHeight: 0,
           maxWidth: double.infinity,
-          minWidth: 70,
+          minWidth: 75,
         ),
         child: TextButton(
             onPressed: onPressed,
