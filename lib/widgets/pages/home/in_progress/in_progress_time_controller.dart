@@ -155,6 +155,7 @@ class ControlButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var timer = AppTimer.instance;
+    context.watch<TimerStates>();
 
     void onPressStopButton() {
       timer.stop();
