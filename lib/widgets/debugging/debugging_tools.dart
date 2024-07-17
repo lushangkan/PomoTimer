@@ -56,7 +56,7 @@ class DebuggingTools extends StatelessWidget {
                 if (await permissionHandle.requestPermission(context)) {
                   var time = DateTime.now().toUtc().add(Duration(seconds: seconds));
 
-                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'assets/media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 50, notificationTitle: "Test", notificationContent: "Test");
+                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'assets/media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5, notificationTitle: "Test", notificationContent: "Test");
 
                   FlutterMethodChannel.instance.registerAlarm(alarm);
 
@@ -284,7 +284,7 @@ class TestAlarm extends PopupMenuItem {
 }
 
 class AlarmTestDialog extends StatefulWidget {
-  const AlarmTestDialog({Key? key, required this.onPressed, required this.onCancel}) : super(key: key);
+  const AlarmTestDialog({super.key, required this.onPressed, required this.onCancel});
 
   final void Function(int) onPressed;
   final void Function() onCancel;
@@ -351,7 +351,7 @@ class CustomTimerTime extends PopupMenuItem {
 }
 
 class CustomTimerTimeDialog extends StatefulWidget {
-  const CustomTimerTimeDialog({Key? key, required this.onPressed, required this.onCancel}) : super(key: key);
+  const CustomTimerTimeDialog({super.key, required this.onPressed, required this.onCancel});
 
   final void Function(int, int, int, ReminderType) onPressed;
   final void Function() onCancel;
