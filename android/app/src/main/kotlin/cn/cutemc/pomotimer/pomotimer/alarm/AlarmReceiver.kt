@@ -8,6 +8,10 @@ import cn.cutemc.pomotimer.pomotimer.channel.NativeMethodChannel
 import cn.cutemc.pomotimer.pomotimer.controllers.NotificationsController
 import cn.cutemc.pomotimer.pomotimer.controllers.RingtoneController
 import cn.cutemc.pomotimer.pomotimer.controllers.VibratorController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -20,7 +24,9 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val alarm = Alarm.fromJson(alarmJson)
 
-        NativeMethodChannel.methodChannel.invokeMethod(Methods.ALARM_CALLBACK, alarm.toJson())
+        MainScope().launch {
+            NativeMethodChannel.alarmCallBack(alarm.toJson())
+        }
 
         if (alarm.audioPath != null) {
             RingtoneController.play(alarm, context)

@@ -137,6 +137,10 @@ object NativeMethodChannel : MethodChannel.MethodCallHandler {
         invokeMethod(Methods.CLICK_NOTIFICATION_CALLBACK, alarmJson)
     }
 
+    suspend fun alarmCallBack(alarmJson: String) {
+        invokeMethod(Methods.ALARM_CALLBACK, alarmJson)
+    }
+
     suspend fun getLocalAppName(): String {
         return (invokeMethod(Methods.GET_LOCAL_APP_NAME, null) ?: throw IllegalArgumentException("App name is null")) as String
     }

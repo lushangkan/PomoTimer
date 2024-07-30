@@ -32,6 +32,7 @@ class AppTimer {
 
   static late final AppTimer instance;
 
+  // Timer运行间隔时间
   static const _internalTimerDuration = Duration(seconds: 1);
 
   late final AppStates _appStates;
@@ -412,7 +413,7 @@ class AppTimer {
   Future<void> _startTimer() async {
     // 初始化变量
     _states.startTime = DateTime.now();
-    setOffsetTime(0);
+    setOffsetTime(reregisterAlarm: false, 0);
     _states.timerRunning = true;
     _states.pausing = false;
     _states.startPauseTime = null;

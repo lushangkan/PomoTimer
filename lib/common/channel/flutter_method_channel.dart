@@ -36,30 +36,30 @@ class FlutterMethodChannel {
 
   Future<dynamic> methodHandler(MethodCall call) async {
     if (methods.containsKey(call.method)) {
-      return await methods[call.method]();
+      return await methods[call.method](call);
     } else {
       throw MethodNotFoundException('Method ${call.method} not found');
     }
   }
   
-  Future<String> _onGetLocalAppNameCalled() async {
+  Future<String> _onGetLocalAppNameCalled(MethodCall call) async {
     return S.current.appName;
   }
 
-  Future<String> _onGetForegroundNotificationDescriptionCalled() async {
+  Future<String> _onGetForegroundNotificationDescriptionCalled(MethodCall call) async {
     return S.current.foregroundNotificationDescription;
   }
 
-  Future<String> _onGetNotificationStopButtonTextCalled() async {
+  Future<String> _onGetNotificationStopButtonTextCalled(MethodCall call) async {
     return S.current.notificationStopButton;
   }
 
-  Future<void> _onAlarmCallbackCalled(String alarmJson) async {
-    AppTimer.instance.onAlarmRinging(Alarm.fromJsonString(alarmJson));
+  Future<void> _onAlarmCallbackCalled(MethodCall call) async {
+    AppTimer.instance.onAlarmRinging(Alarm.fromJsonString(call.arguments));
   }
 
-  Future<void> _onClickNotificationCallbackCalled(String alarmJson) async {
-    AppTimer.instance.onClickNotification(Alarm.fromJsonString(alarmJson));
+  Future<void> _onClickNotificationCallbackCalled(MethodCall call) async {
+    AppTimer.instance.onClickNotification(Alarm.fromJsonString(call.arguments));
   }
 
 
