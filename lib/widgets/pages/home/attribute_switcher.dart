@@ -157,7 +157,12 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
 
     // 获取最大的高度
     for (var child in children) {
-      child.layout(constraints);
+      var childConstraints = BoxConstraints(
+        maxWidth: constraints.maxWidth,
+        minWidth: 0,
+      );
+
+      child.layout(childConstraints);
 
       height = max(height.toDouble(), child.size.height);
     }
@@ -178,6 +183,7 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _state!.setBgSize(currentButton.size.height, currentButton.size.width);
+
       // 等待bgsize更新完再开启动画
       SchedulerBinding.instance.addPostFrameCallback((_) {
         if (context.mounted) _state!.setEnableAnimation(true);
