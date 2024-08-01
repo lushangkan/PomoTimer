@@ -39,9 +39,10 @@ class AppTransitionPage extends CustomTransitionPage {
     required LocalKey super.key,
     required super.child,
   }) : super(
+    transitionDuration: const Duration(milliseconds: 200),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return FadeTransition(
-        opacity: CurveTween(curve: Curves.easeOutCirc).animate(animation),
+        opacity: CurveTween(curve: Curves.easeOut).animate(animation),
         child: child,
       );
     },

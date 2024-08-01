@@ -28,7 +28,7 @@ class InProgressTimeController extends TimerController {
       InProgressTimeControllerState();
 }
 
-class InProgressTimeControllerState extends TimerControllerState {
+class InProgressTimeControllerState extends TimerControllerState  {
   Phase? phase;
   int? timeOfCurrentPhase;
   int? smallCyclesCompleted;
