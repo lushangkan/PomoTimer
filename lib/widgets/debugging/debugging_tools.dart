@@ -54,20 +54,33 @@ class DebuggingTools extends StatelessWidget {
           builder: (context) => AlarmTestDialog(
               onPressed: (int seconds) async {
                 if (await permissionHandle.requestPermission(context)) {
-                  var time = DateTime.now().toUtc().add(Duration(seconds: seconds));
+                  var time =
+                      DateTime.now().toUtc().add(Duration(seconds: seconds));
 
-                  var alarm = Alarm(id: 252, timestamp: time.millisecondsSinceEpoch, vibrate: true, audioPath: 'assets/media/default_ring.mp3', fromAppAsset: true, loop: true, loopTimes: 5, notificationTitle: "Test", notificationContent: "Test");
+                  var alarm = Alarm(
+                      id: 252,
+                      timestamp: time.millisecondsSinceEpoch,
+                      vibrate: true,
+                      notification: true,
+                      isAlarm: true,
+                      audioPath: 'assets/media/default_ring.mp3',
+                      fromAppAsset: true,
+                      loop: true,
+                      loopTimes: 5,
+                      notificationTitle: "Test",
+                      notificationContent: "Test");
 
                   FlutterMethodChannel.instance.registerAlarm(alarm);
 
                   if (!context.mounted) return;
 
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("响铃已注册")));
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(const SnackBar(content: Text("响铃已注册")));
                 } else {
-
                   if (!context.mounted) return;
 
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("您拒绝了权限请求，无法测试响铃")));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("您拒绝了权限请求，无法测试响铃")));
                 }
               },
               onCancel: () {}));
@@ -93,8 +106,6 @@ class DebuggingTools extends StatelessWidget {
 
                 context.go('/in-progress');
               },
-
-
               onCancel: () {}));
     }
 
@@ -284,7 +295,8 @@ class TestAlarm extends PopupMenuItem {
 }
 
 class AlarmTestDialog extends StatefulWidget {
-  const AlarmTestDialog({super.key, required this.onPressed, required this.onCancel});
+  const AlarmTestDialog(
+      {super.key, required this.onPressed, required this.onCancel});
 
   final void Function(int) onPressed;
   final void Function() onCancel;
@@ -345,13 +357,14 @@ class AlarmTestDialogState extends State<AlarmTestDialog> {
 class CustomTimerTime extends PopupMenuItem {
   const CustomTimerTime({super.key})
       : super(
-    child: const Text("自定义时间"),
-    value: DebuggingTypeButton.customTimerTime,
-  );
+          child: const Text("自定义时间"),
+          value: DebuggingTypeButton.customTimerTime,
+        );
 }
 
 class CustomTimerTimeDialog extends StatefulWidget {
-  const CustomTimerTimeDialog({super.key, required this.onPressed, required this.onCancel});
+  const CustomTimerTimeDialog(
+      {super.key, required this.onPressed, required this.onCancel});
 
   final void Function(int, int, int, ReminderType) onPressed;
   final void Function() onCancel;
@@ -364,8 +377,6 @@ class CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
   late TextEditingController focusController;
   late TextEditingController shortBreakController;
   late TextEditingController longBreakController;
-
-  late ReminderType tmpReminderType;
 
   @override
   void initState() {
@@ -391,14 +402,11 @@ class CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
     shortBreakController.text = "1";
     longBreakController.text = "1";
 
-    tmpReminderType = timerStates.reminderType ?? ReminderType.alarm;
-
     var contentTextStyles = Theme.of(context).textTheme.bodyMedium;
 
     void onReminderTypeSwitcherSelected(ReminderType value) {
-      setState(() {
-        tmpReminderType = value;
-      });
+      timerStates.reminderType = value;
+      timerStates.notifyListeners();
     }
 
     return AlertDialog(
@@ -410,7 +418,10 @@ class CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("请输入自定义Timer的时间(分钟)", style: contentTextStyles,),
+            Text(
+              "请输入自定义Timer的时间(分钟)",
+              style: contentTextStyles,
+            ),
             SizedBox(
               width: 400,
               child: Row(
@@ -456,7 +467,11 @@ class CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
                       ),
                     ),
                   ),
-                  ReminderTypeSwitcher(reminderType: tmpReminderType, onSelected: onReminderTypeSwitcherSelected,),
+                  ReminderTypeSwitcher(
+                    reminderType:
+                        timerStates.reminderType ?? ReminderType.alarm,
+                    onSelected: onReminderTypeSwitcherSelected,
+                  ),
                 ],
               ),
             ),
@@ -474,7 +489,11 @@ class CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
-            widget.onPressed(int.parse(focusController.text), int.parse(shortBreakController.text), int.parse(longBreakController.text), tmpReminderType);
+            widget.onPressed(
+                int.parse(focusController.text),
+                int.parse(shortBreakController.text),
+                int.parse(longBreakController.text),
+                timerStates.reminderType ?? ReminderType.alarm);
           },
           child: const Text("开始"),
         ),
@@ -482,4 +501,3 @@ class CustomTimerTimeDialogState extends State<CustomTimerTimeDialog> {
     );
   }
 }
-

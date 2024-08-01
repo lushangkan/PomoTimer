@@ -52,18 +52,7 @@ object NotificationsController {
             val intent = Intent(context, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-            val notificationClickIntent = Intent(context, NotificationClickReceiver::class.java).apply {
-                action = "cn.cutemc.pomotimer.NOTIFICATION_CLICK"
-                putExtra("alarm", alarm.toJson())
-            }
-
-            val notificationClickPendingIntent = PendingIntent.getBroadcast(context, 0, notificationClickIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-
-            val actionButtonText = NativeMethodChannel.getNotificationStopButtonText()
-
             val notificationBuild = NotificationCompat.Builder(context, channelId)
-                .addAction(0, actionButtonText, notificationClickPendingIntent)
                 .setSmallIcon(R.drawable.ic_notification_icon)
                 .setContentTitle(alarm.notificationTitle)
                 .setContentText(alarm.notificationContent)
@@ -71,6 +60,20 @@ object NotificationsController {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
+
+            if (alarm.isAlarm || alarm.vibrate) {
+                val notificationClickIntent = Intent(context, NotificationClickReceiver::class.java).apply {
+                    action = "cn.cutemc.pomotimer.NOTIFICATION_CLICK"
+                    putExtra("alarm", alarm.toJson())
+                }
+
+                val notificationClickPendingIntent = PendingIntent.getBroadcast(context, 0, notificationClickIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                val actionButtonText = NativeMethodChannel.getNotificationStopButtonText()
+
+                notificationBuild.addAction(0, actionButtonText, notificationClickPendingIntent)
+            }
 
             NotificationManagerCompat.from(context).notify(id, notificationBuild.build())
         }

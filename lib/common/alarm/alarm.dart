@@ -11,6 +11,8 @@ class Alarm {
   final String? audioPath;
   final bool? fromAppAsset;
   final bool vibrate;
+  final bool notification;
+  final bool isAlarm;
   final bool loop;
   final int loopTimes;
   final String? notificationTitle;
@@ -22,6 +24,8 @@ class Alarm {
     this.audioPath,
     this.fromAppAsset,
     required this.vibrate,
+    required this.notification,
+    required this.isAlarm,
     required this.loop,
     required this.loopTimes,
     this.notificationTitle,

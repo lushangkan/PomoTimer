@@ -358,6 +358,10 @@ class AppTimer {
   }
 
   Future<void> _registerAlarm() async {
+    if (_states.reminderType == ReminderType.none) {
+      return;
+    }
+
     // 检测权限
     if (!permissionHandle.isPermissionGranted) {
       throw PermissionDeniedException();
@@ -387,12 +391,39 @@ class AppTimer {
         notificationContent = S.current.longBreakNotificationContent;
       }
 
+      bool vibrate;
+      bool notification;
+      bool isAlarm;
+
+      switch (_states.reminderType) {
+        case null:
+          throw Exception('Reminder type is null');
+        case ReminderType.none:
+          vibrate = false;
+          notification = false;
+          isAlarm = false;
+        case ReminderType.notification:
+          vibrate = false;
+          notification = true;
+          isAlarm = false;
+        case ReminderType.vibration:
+          vibrate = true;
+          notification = true;
+          isAlarm = false;
+        case ReminderType.alarm:
+          vibrate = true;
+          notification = true;
+          isAlarm = true;
+      }
+
       var alarm = Alarm(
           id: alarmId,
           timestamp: ringTime.toUtc().millisecondsSinceEpoch,
           fromAppAsset: true,
           audioPath: 'assets/media/default_ring.mp3',
-          vibrate: true,
+          vibrate: vibrate,
+          notification: notification,
+          isAlarm: isAlarm,
           loop: true,
           loopTimes: 20,
           notificationTitle: notificationTitle,

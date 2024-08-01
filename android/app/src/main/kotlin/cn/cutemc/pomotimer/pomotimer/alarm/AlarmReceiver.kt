@@ -28,7 +28,7 @@ class AlarmReceiver : BroadcastReceiver() {
             NativeMethodChannel.alarmCallBack(alarm.toJson())
         }
 
-        if (alarm.audioPath != null) {
+        if (alarm.audioPath != null && alarm.isAlarm) {
             RingtoneController.play(alarm, context)
         }
 
@@ -36,6 +36,8 @@ class AlarmReceiver : BroadcastReceiver() {
             VibratorController.start(alarm, context)
         }
 
-        NotificationsController.postAlarmNotification(alarm, context)
+        if (alarm.notification) { // 这行不用,因为如果通知都没有就不会注册闹钟
+            NotificationsController.postAlarmNotification(alarm, context)
+        }
     }
 }

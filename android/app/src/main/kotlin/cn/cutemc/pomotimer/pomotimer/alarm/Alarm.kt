@@ -11,6 +11,8 @@ data class Alarm(
     val audioPath: String?,
     val fromAppAsset: Boolean?,
     val vibrate: Boolean,
+    val notification: Boolean,
+    val isAlarm: Boolean,
     val loop: Boolean,
     val loopTimes: Int,
     val notificationTitle: String?,
