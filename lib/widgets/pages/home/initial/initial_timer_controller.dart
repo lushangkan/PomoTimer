@@ -101,14 +101,20 @@ class _InitialTimerControllerState extends TimerControllerState {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          AttributeSwitcher(
-            selected: selected,
-            onSelected: onAttributeSwitcherSelected,
+          Hero(
+            tag: 'attribute_switcher',
+            child: AttributeSwitcher(
+              selected: selected,
+              onSelected: onAttributeSwitcherSelected,
+            ),
           ),
-          AttributeSelector(
-            selected: selected,
-            customTimes: _tmpCustomTimes,
-            onSelected: onAttributeSelectorSelected,
+          Hero(
+            tag: "time",
+            child: AttributeSelector(
+              selected: selected,
+              customTimes: _tmpCustomTimes,
+              onSelected: onAttributeSelectorSelected,
+            ),
           ),
           SizedBox(
             height: 60,
@@ -131,8 +137,11 @@ class _InitialTimerControllerState extends TimerControllerState {
               ],
             ),
           ),
-          StartButton(
-            onPressed: onPressedStartButton,
+          Hero(
+            tag: 'control_button',
+            child: StartButton(
+              onPressed: onPressedStartButton,
+            ),
           )
         ],
       ),

@@ -8,13 +8,10 @@ final routes = GoRouter(
     routes: [
       GoRoute(
           path: '/',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: InitialHomePage())),
+          builder: (context, state) => const InitialHomePage()),
       GoRoute(
           path: '/in-progress',
-          pageBuilder: (context, state) => const NoTransitionPage(
-                child: InProgressHomePage(),
-              )),
+          builder: (context, state) => const InProgressHomePage()),
     ],
     redirect: (BuildContext context, GoRouterState state) {
       var timer = AppTimer.instance;

@@ -22,7 +22,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
 
   late AnimationController _animationController;
   late Animation<double> _animation;
-  final AttributeSwitcherDelegate delegate = AttributeSwitcherDelegate();
+  late AttributeSwitcherDelegate delegate;
 
   // bg大小: height, width
   (double, double) bgSize = (0, 0);
@@ -31,6 +31,8 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
   @override
   void initState() {
     super.initState();
+
+    delegate = AttributeSwitcherDelegate(this, context);
 
     delegate.lastSelected = widget.selected;
 
@@ -135,6 +137,8 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
 }
 
 class AttributeSwitcherDelegate extends BoxyDelegate {
+  AttributeSwitcherDelegate(this._state, this.context);
+
   //TODO: 无用的设为私人
   Phase lastSelected = Phase.focus;
   BoxyChild? bg;
@@ -144,6 +148,7 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
   BoxyChild? lastSelectedWidget;
   Animation? tween;
   double? heightCenter;
+  BuildContext context;
 
   @override
   Size layout() {
@@ -173,8 +178,9 @@ class AttributeSwitcherDelegate extends BoxyDelegate {
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _state!.setBgSize(currentButton.size.height, currentButton.size.width);
+      // 等待bgsize更新完再开启动画
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        _state!.setEnableAnimation(true);
+        if (context.mounted) _state!.setEnableAnimation(true);
       });
     });
 

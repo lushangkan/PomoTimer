@@ -9,7 +9,7 @@ import '../../../common/enum/attribute.dart';
 import '../../../common/utils/app_utils.dart';
 import '../../../states/timer_states.dart';
 
-class TimeDisplay extends StatefulWidget {
+class TimeDisplay extends StatelessWidget {
   const TimeDisplay(
       {super.key, required this.phase, required this.timeOfCurrentPhase, required this.smallCyclesCompleted});
 
@@ -19,27 +19,22 @@ class TimeDisplay extends StatefulWidget {
 
 
   @override
-  State<TimeDisplay> createState() => _TimeDisplayState();
-}
-
-class _TimeDisplayState extends State<TimeDisplay> {
-  @override
   Widget build(BuildContext context) {
     var timerStates = context.watch<TimerStates>();
 
     const double min = 0;
     var max =
-        ((timerStates.customTimes[widget.phase] ?? 0) * 60 * 1000).toDouble();
+    ((timerStates.customTimes[phase] ?? 0) * 60 * 1000).toDouble();
 
     return AppCircularSlider(
-        value: widget.timeOfCurrentPhase.toDouble(),
+        value: timeOfCurrentPhase.toDouble(),
         min: min,
         max: max,
         animationEnabled: timerStates.timerRunning == false, // TODO: 待提Issue，如果运行时启用动画，运行半小时后会卡顿，每3秒一帧
         innerWidget: (_) => _TimeDisplayInner(
-            timeOfCurrentPhase: widget.timeOfCurrentPhase,
-            phase: widget.phase,
-            smallCyclesCompleted: widget.smallCyclesCompleted,
+          timeOfCurrentPhase: timeOfCurrentPhase,
+          phase: phase,
+          smallCyclesCompleted: smallCyclesCompleted,
         ));
   }
 }

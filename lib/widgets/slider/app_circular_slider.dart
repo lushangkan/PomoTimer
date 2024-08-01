@@ -101,8 +101,9 @@ class _AppCircularSliderState extends State<AppCircularSlider>
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+
+    super.dispose();
   }
 }
 

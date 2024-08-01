@@ -33,13 +33,14 @@ class StartButton extends StatelessWidget {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),
-            minimumSize: const Size(70, 63),
+            minimumSize: const Size(80, 63),
 
             backgroundColor: buttonColor,
           ),
           onPressed: onPressed,
           child: Text(
             S.current.startBtn,
+            softWrap: false,
             style: textStyle,
           )),
     );

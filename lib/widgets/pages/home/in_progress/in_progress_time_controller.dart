@@ -61,7 +61,7 @@ class InProgressTimeControllerState extends TimerControllerState {
     isTimerStop = true;
     reset();
 
-    context.go('/');
+    if (mounted) context.go('/');
   }
 
   void reset() {
@@ -122,7 +122,7 @@ class InProgressTimeControllerState extends TimerControllerState {
         alignment: Alignment.centerLeft,
         children: [
           TotalProgressIndicator(
-              elapsedTime: timer.elapsedTime!,
+              elapsedTime: timer.elapsedTime ?? 0,
               totalTime: timer.totalTime!),
           Center(
             child: Container(
@@ -130,13 +130,19 @@ class InProgressTimeControllerState extends TimerControllerState {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  AttributeSwitcher(
-                    selected: phase!,
+                  Hero(
+                    tag: 'attribute_switcher',
+                    child: AttributeSwitcher(
+                      selected: phase ?? Phase.focus,
+                    ),
                   ),
-                  TimeDisplay(
-                    phase: phase!,
-                    timeOfCurrentPhase: timeOfCurrentPhase!,
-                    smallCyclesCompleted: smallCyclesCompleted!,
+                  Hero(
+                    tag: 'time',
+                    child: TimeDisplay(
+                      phase: phase ?? Phase.focus,
+                      timeOfCurrentPhase: timeOfCurrentPhase ?? 0,
+                      smallCyclesCompleted: smallCyclesCompleted ?? 0,
+                    ),
                   ),
                   const ControlButtons()
                 ],
@@ -188,8 +194,11 @@ class ControlButtons extends StatelessWidget {
             ResumeButton(
               onPressed: onPressResumeButton,
             ),
-          StopButton(
-            onPressed: onPressStopButton,
+          Hero(
+            tag: 'control_button',
+            child: StopButton(
+              onPressed: onPressStopButton,
+            ),
           ),
           Opacity(
               opacity: timer.isPausing ? 0 : 1,
