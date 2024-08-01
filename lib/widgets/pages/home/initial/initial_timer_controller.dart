@@ -101,12 +101,9 @@ class _InitialTimerControllerState extends TimerControllerState {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Hero(
-            tag: 'attribute_switcher',
-            child: AttributeSwitcher(
-              selected: selected,
-              onSelected: onAttributeSwitcherSelected,
-            ),
+          AttributeSwitcher(
+            selected: selected,
+            onSelected: onAttributeSwitcherSelected,
           ),
           Hero(
             tag: "time",

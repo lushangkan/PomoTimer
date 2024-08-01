@@ -130,11 +130,8 @@ class InProgressTimeControllerState extends TimerControllerState {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Hero(
-                    tag: 'attribute_switcher',
-                    child: AttributeSwitcher(
-                      selected: phase ?? Phase.focus,
-                    ),
+                  AttributeSwitcher(
+                    selected: phase ?? Phase.focus,
                   ),
                   Hero(
                     tag: 'time',
