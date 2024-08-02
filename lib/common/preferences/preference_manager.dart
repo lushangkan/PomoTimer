@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceManager {
 
-  late PreferenceManager instance;
+  static late PreferenceManager instance;
   late final SharedPreferences prefs;
 
   PreferenceManager() {
@@ -77,5 +77,12 @@ class PreferenceManager {
   set autoNext(bool autoNext) {
     _setBool(Preferences.autoNext, autoNext);
   }
+
+  int get themeMode => prefs.getInt(Preferences.themeMode) ?? 0;
+  String? get language => prefs.getString(Preferences.language);
+  String? get themeName => prefs.getString(Preferences.themeName);
+  String? get ringtonePath => prefs.getString(Preferences.ringtonePath);
+  bool get autoNext => prefs.getBool(Preferences.autoNext) ?? false;
+
 
 }

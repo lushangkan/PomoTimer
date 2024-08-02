@@ -55,6 +55,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     AppTheme appTheme = AppTheme();
 
+    Locale? locale;
+
+    if (PreferenceManager.instance.language != null) {
+      locale = Locale(PreferenceManager.instance.language!);
+    }
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TimerStates>.value(value: timerStates),
@@ -78,11 +84,12 @@ class App extends StatelessWidget {
         ],
         supportedLocales: S.delegate.supportedLocales,
         // TODO: 用户自定义语言
-        locale: null,
+        locale: locale,
 
         debugShowCheckedModeBanner: false,
       ),
     );
   }
 }
+
 

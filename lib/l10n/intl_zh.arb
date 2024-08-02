@@ -22,6 +22,7 @@
   "settingThemeTitle": "主题",
   "settingAutoNextTitle": "自动开始下一次番茄",
   "settingRingtoneTitle": "铃声",
-  "settingAboutTitle": "关于"
+  "settingAboutTitle": "关于",
+  "settingRequestRestart": "设置成功，重启应用生效"
 
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../generated/l10n.dart';
+import '../generated/l10n.dart';
 
 class Settings {
   static const String language = 'language';

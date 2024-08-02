@@ -43,6 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("自动开始下一次番茄"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("设置"),
         "settingLanguageTitle": MessageLookupByLibrary.simpleMessage("语言"),
+        "settingRequestRestart":
+            MessageLookupByLibrary.simpleMessage("设置成功，重启应用生效"),
         "settingRingtoneTitle": MessageLookupByLibrary.simpleMessage("铃声"),
         "settingThemeTitle": MessageLookupByLibrary.simpleMessage("主题"),
         "settingTitle": MessageLookupByLibrary.simpleMessage("设置"),

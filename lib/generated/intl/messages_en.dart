@@ -46,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("Settings"),
         "settingLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Language"),
+        "settingRequestRestart": MessageLookupByLibrary.simpleMessage(
+            "Restart the application to apply the changes."),
         "settingRingtoneTitle":
             MessageLookupByLibrary.simpleMessage("Ringtone"),
         "settingThemeTitle": MessageLookupByLibrary.simpleMessage("Theme"),

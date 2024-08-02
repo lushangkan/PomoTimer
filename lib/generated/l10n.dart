@@ -259,6 +259,16 @@ class S {
       args: [],
     );
   }
+
+  /// `设置成功，重启应用生效`
+  String get settingRequestRestart {
+    return Intl.message(
+      '设置成功，重启应用生效',
+      name: 'settingRequestRestart',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
