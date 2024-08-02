@@ -63,9 +63,16 @@ class _TimeDisplayInner extends StatelessWidget {
       fontSize: 11,
     ));
 
-    String languageCode = getAppLocal(context)!;
+    String? languageCode = getAppLocal(context);
 
-    var timeText = DateFormat.ms(languageCode).format(time);
+    String timeText;
+
+    if (languageCode == null) {
+      timeText = DateFormat.ms().format(time);
+    } else {
+      timeText = DateFormat.ms(languageCode).format(time);
+    }
+
 
     return Container(
       alignment: Alignment.center,

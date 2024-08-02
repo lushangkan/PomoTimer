@@ -78,7 +78,7 @@ class App extends StatelessWidget {
         ],
         supportedLocales: S.delegate.supportedLocales,
         // TODO: 用户自定义语言
-        locale: const Locale('zh'),
+        locale: null,
 
         debugShowCheckedModeBanner: false,
       ),

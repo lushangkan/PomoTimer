@@ -29,9 +29,15 @@ class TotalTimeDisplay extends StatelessWidget {
 
     var totalTime = (calculateTotalTime(customTimes, longBreakInterval) ?? 0) * 60 * 1000;
 
-    String languageCode = getAppLocal(context)!;
+    String? languageCode = getAppLocal(context);
 
-    var timeText = DateFormat.jms(languageCode).format(DateTime.fromMillisecondsSinceEpoch(totalTime , isUtc: true));
+    String timeText;
+
+    if (languageCode == null) {
+      timeText = DateFormat.Hms().format(DateTime.fromMillisecondsSinceEpoch(totalTime , isUtc: true));
+    } else {
+      timeText = DateFormat.Hms(languageCode).format(DateTime.fromMillisecondsSinceEpoch(totalTime , isUtc: true));
+    }
 
     return Center(
       child: Container(
