@@ -29,6 +29,9 @@ class SettingBody extends StatelessWidget {
       Settings.theme: () {
         print('Theme');
       },
+      Settings.darkMode: () {
+        print('DarkMode');
+      },
       Settings.autoNext: (bool value) {
         print('AutoNext: $value');
       },

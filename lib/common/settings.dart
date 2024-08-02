@@ -5,6 +5,7 @@ import '../generated/l10n.dart';
 class Settings {
   static const String language = 'language';
   static const String theme = 'theme';
+  static const String darkMode = 'darkMode';
   static const String autoNext = 'autoNext';
   static const String ringtone = 'ringtone';
   static const String about = 'about';
@@ -13,6 +14,10 @@ class Settings {
     language: Setting(
         icon: CupertinoIcons.globe,
         title: S.current.settingLanguageTitle,
+        isSwitch: false),
+    darkMode: Setting(
+        icon: CupertinoIcons.moon,
+        title: S.current.settingDarkModeTitle,
         isSwitch: false),
     theme: Setting(
         icon: CupertinoIcons.paintbrush,

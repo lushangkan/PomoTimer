@@ -230,6 +230,16 @@ class S {
     );
   }
 
+  /// `深色模式`
+  String get settingDarkModeTitle {
+    return Intl.message(
+      '深色模式',
+      name: 'settingDarkModeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `自动开始下一次番茄`
   String get settingAutoNextTitle {
     return Intl.message(

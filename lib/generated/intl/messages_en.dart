@@ -44,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingAutoNextTitle":
             MessageLookupByLibrary.simpleMessage("Auto Start Next Pomodoro"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingDarkModeTitle":
+            MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "settingLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Language"),
         "settingRequestRestart": MessageLookupByLibrary.simpleMessage(

@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingAutoNextTitle":
             MessageLookupByLibrary.simpleMessage("自动开始下一次番茄"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("设置"),
+        "settingDarkModeTitle": MessageLookupByLibrary.simpleMessage("深色模式"),
         "settingLanguageTitle": MessageLookupByLibrary.simpleMessage("语言"),
         "settingRequestRestart":
             MessageLookupByLibrary.simpleMessage("设置成功，重启应用生效"),
