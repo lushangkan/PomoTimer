@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logger/logger.dart';
 import 'package:pomotimer/common/permission_handle.dart';
+import 'package:pomotimer/common/preferences/preference_manager.dart';
 import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/main.reflectable.dart';
 import 'package:pomotimer/routes/app_routes.dart';
@@ -23,6 +24,9 @@ void main() async {
   }
 
   initializeReflectable();
+
+  // 初始化PreferenceManager
+  PreferenceManager();
 
   // 初始化State，因为获取储存是异步的，需要在MaterialApp之前初始化
   SharedPreferences prefs = await SharedPreferences.getInstance();
