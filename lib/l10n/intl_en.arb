@@ -8,11 +8,19 @@
   "reminderVibration": "Vibration",
   "reminderAlarm": "Alarm",
   "startBtn": "Start",
+
   "focusNotificationTitle": "Focus Time!",
   "focusNotificationContent": "It’s time to dive back into work with full concentration! 🔥",
   "shortBreakNotificationTitle": "Short Break!",
   "shortBreakNotificationContent": "A quick break will refresh you and get you ready for the next focus session! 🌟",
   "longBreakNotificationTitle": "Relaxation Time!",
   "longBreakNotificationContent": "You’ve been working hard, now it’s time to unwind and recharge before you go again! 🍹",
-  "notificationStopButton": "Stop"
+  "notificationStopButton": "Stop",
+
+  "settingTitle": "Settings",
+  "settingLanguageTitle": "Language",
+  "settingThemeTitle": "Theme",
+  "settingAutoNextTitle": "Auto Start Next Pomodoro",
+  "settingRingtoneTitle": "Ringtone",
+  "settingAboutTitle": "About"
 }

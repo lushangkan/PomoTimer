@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -196,6 +195,66 @@ class S {
     return Intl.message(
       '停止',
       name: 'notificationStopButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `设置`
+  String get settingTitle {
+    return Intl.message(
+      '设置',
+      name: 'settingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `语言`
+  String get settingLanguageTitle {
+    return Intl.message(
+      '语言',
+      name: 'settingLanguageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `主题`
+  String get settingThemeTitle {
+    return Intl.message(
+      '主题',
+      name: 'settingThemeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `自动开始下一次番茄`
+  String get settingAutoNextTitle {
+    return Intl.message(
+      '自动开始下一次番茄',
+      name: 'settingAutoNextTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `铃声`
+  String get settingRingtoneTitle {
+    return Intl.message(
+      '铃声',
+      name: 'settingRingtoneTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `关于`
+  String get settingAboutTitle {
+    return Intl.message(
+      '关于',
+      name: 'settingAboutTitle',
       desc: '',
       args: [],
     );

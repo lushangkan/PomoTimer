@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:pomotimer/widgets/pages/home/app_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pomotimer/routes/app_routes.dart';
+import 'package:pomotimer/widgets/pages/app_page.dart';
 import 'package:pomotimer/widgets/pages/home/click_listener.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
 
@@ -25,7 +27,7 @@ class _HomePageState extends AppPageState<HomePage>  {
     return ClickListener(
       child: Scaffold(
         backgroundColor: theme.colorScheme.surface,
-        appBar: TopBar(theme),
+        appBar: TopBar(theme, context),
         body: HomeBody(timerController: widget.timerController,),
       ),
     );
@@ -33,7 +35,7 @@ class _HomePageState extends AppPageState<HomePage>  {
 }
 
 class TopBar extends AppBar {
-  TopBar(ThemeData theme, {super.key})
+  TopBar(ThemeData theme, BuildContext context, {super.key})
       : super(
             backgroundColor: Colors.transparent,
             actions: [
@@ -47,7 +49,7 @@ class TopBar extends AppBar {
                 icon: Icon(LucideIcons.settings,
                     color: theme.colorScheme.onSurface),
                 onPressed: () {
-                  // TODO 跳转到设置
+                  context.go('/setting');
                 },
               ),
             ));

@@ -40,7 +40,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminderNotification":
             MessageLookupByLibrary.simpleMessage("Notification"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("Vibration"),
+        "settingAboutTitle": MessageLookupByLibrary.simpleMessage("About"),
+        "settingAutoNextTitle":
+            MessageLookupByLibrary.simpleMessage("Auto Start Next Pomodoro"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingLanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Language"),
+        "settingRingtoneTitle":
+            MessageLookupByLibrary.simpleMessage("Ringtone"),
+        "settingThemeTitle": MessageLookupByLibrary.simpleMessage("Theme"),
+        "settingTitle": MessageLookupByLibrary.simpleMessage("Settings"),
         "shortBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
             "A quick break will refresh you and get you ready for the next focus session! 🌟"),
         "shortBreakNotificationTitle":

@@ -38,7 +38,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminderNone": MessageLookupByLibrary.simpleMessage("无提醒"),
         "reminderNotification": MessageLookupByLibrary.simpleMessage("仅通知"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("震动提醒"),
+        "settingAboutTitle": MessageLookupByLibrary.simpleMessage("关于"),
+        "settingAutoNextTitle":
+            MessageLookupByLibrary.simpleMessage("自动开始下一次番茄"),
         "settingBtnTooltip": MessageLookupByLibrary.simpleMessage("设置"),
+        "settingLanguageTitle": MessageLookupByLibrary.simpleMessage("语言"),
+        "settingRingtoneTitle": MessageLookupByLibrary.simpleMessage("铃声"),
+        "settingThemeTitle": MessageLookupByLibrary.simpleMessage("主题"),
+        "settingTitle": MessageLookupByLibrary.simpleMessage("设置"),
         "shortBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
             "短暂的休息可以让你更有活力，准备好迎接下一个专注时段吧! 🌟"),
         "shortBreakNotificationTitle":
