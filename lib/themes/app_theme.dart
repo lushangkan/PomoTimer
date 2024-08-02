@@ -29,10 +29,28 @@ class AppTheme {
     }
 
     if (!isDark) {
-        return FlexThemeData.light(scheme: getFlexSchemeTheme(theme), fontFamily: 'MiSans');
+        return FlexThemeData.light(scheme: getFlexSchemeTheme(theme), fontFamily: 'MiSans').copyWith(
+            popupMenuTheme: PopupMenuThemeData(
+              position: PopupMenuPosition.under,
+              color: FlexThemeData.light(scheme: getFlexSchemeTheme(theme)).colorScheme.surfaceContainer,
+              shadowColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+        );
     }
 
-    return FlexThemeData.dark(scheme: getFlexSchemeTheme(theme), fontFamily: 'MiSans');
+    return FlexThemeData.dark(scheme: getFlexSchemeTheme(theme), fontFamily: 'MiSans').copyWith(
+        popupMenuTheme: PopupMenuThemeData(
+          position: PopupMenuPosition.under,
+          color: FlexThemeData.dark(scheme: getFlexSchemeTheme(theme)).colorScheme.surfaceContainer,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+    );
   }
 
 }

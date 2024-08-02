@@ -61,6 +61,27 @@ class App extends StatelessWidget {
       locale = Locale(PreferenceManager.instance.language!);
     }
 
+    ThemeMode? themeMode;
+
+    if (PreferenceManager.instance.themeMode == 1) {
+      themeMode = ThemeMode.light;
+    } else if (PreferenceManager.instance.themeMode == 2) {
+      themeMode = ThemeMode.dark;
+    } else {
+      themeMode = ThemeMode.system;
+    }
+
+    ThemeData themeData;
+    ThemeData darkThemeData;
+
+    if (PreferenceManager.instance.themeName == null) {
+      themeData = appTheme.getThemeData('default', false);
+      darkThemeData = appTheme.getThemeData('default', true);
+    } else {
+      themeData = appTheme.getThemeData(PreferenceManager.instance.themeName!, false);
+      darkThemeData = appTheme.getThemeData(PreferenceManager.instance.themeName!, true);
+    }
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TimerStates>.value(value: timerStates),
@@ -70,10 +91,9 @@ class App extends StatelessWidget {
         title: 'PomoTimer',
         routerConfig: routes,
         // TODO: 用户自定义主题
-        theme: appTheme.getThemeData('default', false),
-        darkTheme: appTheme.getThemeData('default', true),
-        // TODO: 调试完后切换回system
-        themeMode: ThemeMode.light,
+        theme: themeData,
+        darkTheme: darkThemeData,
+        themeMode: themeMode,
 
         // i18n
         localizationsDelegates: const [
@@ -83,7 +103,6 @@ class App extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        // TODO: 用户自定义语言
         locale: locale,
 
         debugShowCheckedModeBanner: false,

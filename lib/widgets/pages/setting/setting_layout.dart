@@ -38,7 +38,7 @@ class TopBar extends AppBar {
               margin: const EdgeInsets.only(left: 15),
               child: IconButton(
                 iconSize: 25,
-                icon: const Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back, color: theme.colorScheme.onSurface,),
                 onPressed: () {
                   context.go('/');
                 },

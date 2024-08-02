@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pomotimer/main.dart';
+import 'package:pomotimer/themes/default_theme.dart';
 import '../../../common/preferences/preference_manager.dart';
 import '../../../common/Settings.dart';
 import '../../../generated/l10n.dart';
@@ -13,24 +15,24 @@ class SettingBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void showLanguageDialog() {
+    void showSettingDialog(Widget widget) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return const LanguageDialog();
+          return widget;
         },
       );
     }
 
     var handler = {
       Settings.language: () {
-        showLanguageDialog();
+        showSettingDialog(const LanguageDialog());
       },
       Settings.theme: () {
-        print('Theme');
+        showSettingDialog(const ThemeDialog());
       },
       Settings.darkMode: () {
-        print('DarkMode');
+        showSettingDialog(const DarkModeDialog());
       },
       Settings.autoNext: (bool value) {
         print('AutoNext: $value');
@@ -168,7 +170,6 @@ class LanguageDialog extends StatelessWidget {
         S.load(Locale(language));
         text = S.current.settingRequestRestart;
       }
-
       ScaffoldMessenger.of(context).showSnackBar(RestartAppSnackBar(text));
       Navigator.pop(context);
     }
@@ -179,18 +180,21 @@ class LanguageDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
+            selected: PreferenceManager.instance.language == null,
             title: const Text('跟随系统'),
             onTap: () {
               setLanguage(null);
             },
           ),
           ListTile(
+            selected: PreferenceManager.instance.language == 'zh',
             title: const Text('简体中文'),
             onTap: () {
               setLanguage('zh');
             },
           ),
           ListTile(
+            selected: PreferenceManager.instance.language == 'en',
             title: const Text('English'),
             onTap: () {
               setLanguage('en');
@@ -216,4 +220,133 @@ class RestartAppSnackBar extends SnackBar {
           content: Text(content),
           duration: const Duration(seconds: 2),
         );
+}
+
+class DarkModeDialog extends StatelessWidget {
+  // 始终关闭, 始终开启, 跟随系统
+  const DarkModeDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    void setDarkMode(int darkMode) {
+      if (PreferenceManager.instance.themeMode == darkMode) {
+        Navigator.pop(context);
+        return;
+      }
+
+      PreferenceManager.instance.themeMode = darkMode;
+
+      ScaffoldMessenger.of(context).showSnackBar(RestartAppSnackBar(S.current.settingRequestRestart));
+      Navigator.pop(context);
+    }
+
+    return AlertDialog(
+      title: const Text('选择主题'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            selected: PreferenceManager.instance.themeMode == 1,
+            title: const Text('始终关闭'),
+            onTap: () {
+              setDarkMode(1);
+            },
+          ),
+          ListTile(
+            selected: PreferenceManager.instance.themeMode == 2,
+            title: const Text('始终开启'),
+            onTap: () {
+              setDarkMode(2);
+            },
+          ),
+          ListTile(
+            selected: PreferenceManager.instance.themeMode == 0,
+            title: const Text('跟随系统'),
+            onTap: () {
+              setDarkMode(0);
+            },
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('取消'),
+        ),
+      ],
+    );
+  }
+}
+
+class ThemeDialog extends StatelessWidget {
+  const ThemeDialog({super.key});
+
+  String toUnderscore(String name) {
+    final exp = RegExp('(?<=[a-z])[A-Z]');
+    return name.replaceAllMapped(exp, (m) => '_${m.group(0)}').toLowerCase();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var children = FlexScheme.values.map((scheme) {
+      return ListTile(
+        selected: PreferenceManager.instance.themeName == scheme.name,
+        leading: Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              color: FlexColorScheme.light(scheme: scheme).primary,
+              borderRadius: BorderRadius.circular(2),
+            )
+        ),
+        title: Text(toUnderscore(scheme.name)),
+        onTap: () {
+          PreferenceManager.instance.themeName = scheme.name;
+
+          ScaffoldMessenger.of(context).showSnackBar(RestartAppSnackBar(S.current.settingRequestRestart));
+          Navigator.pop(context);
+        },
+      );
+    }).toList();
+
+    children.insert(0, ListTile(
+      selected: PreferenceManager.instance.themeName == null,
+      leading: Container(
+          width: 20,
+          height: 20,
+          decoration: BoxDecoration(
+            color: defThemeLight.colorScheme.primary,
+            borderRadius: BorderRadius.circular(2),
+          )
+      ),
+      title: const Text('默认'),
+      onTap: () {
+        PreferenceManager.instance.themeName = null;
+
+        ScaffoldMessenger.of(context).showSnackBar(RestartAppSnackBar(S.current.settingRequestRestart));
+        Navigator.pop(context);
+      },
+    ));
+
+    return AlertDialog(
+      title: const Text('选择主题'),
+      content: SizedBox(
+        height: 600,
+        width: 300,
+        child: ListView(
+          children: children
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('取消'),
+        ),
+      ],
+    );
+  }
 }
