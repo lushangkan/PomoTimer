@@ -420,13 +420,13 @@ class AppTimer {
       var alarm = Alarm(
           id: alarmId,
           timestamp: ringTime.toUtc().millisecondsSinceEpoch,
-          fromAppAsset: true,
+          fromAppAsset: PreferenceManager.instance.ringtonePath == null,
           audioPath: PreferenceManager.instance.ringtonePath ?? 'assets/media/default_ring.mp3',
           vibrate: vibrate,
           notification: notification,
           isAlarm: isAlarm,
           loop: true,
-          loopTimes: 20,
+          loopTimes: 5,
           notificationTitle: notificationTitle,
           notificationContent: notificationContent,
       );
