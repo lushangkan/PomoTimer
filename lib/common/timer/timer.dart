@@ -18,6 +18,7 @@ import '../enum/attribute.dart';
 import '../enum/reminder_type.dart';
 import '../event/event_bus.dart';
 import '../logger.dart';
+import '../preferences/preference_manager.dart';
 
 // TODO: 完善单元测试
 class AppTimer {
@@ -420,7 +421,7 @@ class AppTimer {
           id: alarmId,
           timestamp: ringTime.toUtc().millisecondsSinceEpoch,
           fromAppAsset: true,
-          audioPath: 'assets/media/default_ring.mp3',
+          audioPath: PreferenceManager.instance.ringtonePath ?? 'assets/media/default_ring.mp3',
           vibrate: vibrate,
           notification: notification,
           isAlarm: isAlarm,
