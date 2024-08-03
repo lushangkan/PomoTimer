@@ -49,7 +49,7 @@ class TopBar extends AppBar {
                 icon: Icon(LucideIcons.settings,
                     color: theme.colorScheme.onSurface),
                 onPressed: () {
-                  context.go('/setting');
+                  context.push('/setting');
                 },
               ),
             ));

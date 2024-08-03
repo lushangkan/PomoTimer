@@ -33,7 +33,6 @@
     <application
             android:label="PomoTimer"
             android:name="${applicationName}"
-            android:enableOnBackInvokedCallback="true"
             android:icon="@mipmap/ic_launcher">
 
         <meta-data

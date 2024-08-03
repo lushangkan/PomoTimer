@@ -15,7 +15,8 @@ final routes = GoRouter(
               key: state.pageKey,
               child: const InitialHomePage(),
             );
-          }),
+          },
+      ),
       GoRoute(
           path: '/in-progress',
           pageBuilder: (context, state) {
@@ -23,12 +24,14 @@ final routes = GoRouter(
               key: state.pageKey,
               child: const InProgressHomePage(),
             );
-          }),
+          },
+      ),
       GoRoute(
           path: '/setting',
           builder: (context, state) {
             return const SettingPage();
-          })
+          },
+      )
     ],
     redirect: (BuildContext context, GoRouterState state) {
       if (state.matchedLocation == '/setting') {

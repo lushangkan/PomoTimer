@@ -22,10 +22,10 @@ class _SettingPageState extends AppPageState<SettingPage> {
 
     return ClickListener(
         child: Scaffold(
-      backgroundColor: themeColor,
-      appBar: TopBar(Theme.of(context), context),
-      body: const SettingBody(),
-    ));
+              backgroundColor: themeColor,
+              appBar: TopBar(Theme.of(context), context),
+              body: const SettingBody(),
+            ));
   }
 }
 
