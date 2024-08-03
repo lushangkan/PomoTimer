@@ -10,8 +10,23 @@ import '../../../common/Settings.dart';
 import '../../../generated/l10n.dart';
 
 
-class SettingBody extends StatelessWidget {
+class SettingBody extends StatefulWidget {
   const SettingBody({super.key});
+
+  @override
+  State<SettingBody> createState() => _SettingBodyState();
+}
+
+class _SettingBodyState extends State<SettingBody> {
+
+  late bool autoNext;
+
+  @override
+  void initState() {
+    super.initState();
+
+    autoNext = PreferenceManager.instance.autoNext;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +37,13 @@ class SettingBody extends StatelessWidget {
           return widget;
         },
       );
+    }
+
+    void autoNextChanged(bool value) {
+      setState(() {
+        autoNext = value;
+      });
+      PreferenceManager.instance.autoNext = value;
     }
 
     var handler = {
@@ -35,7 +57,7 @@ class SettingBody extends StatelessWidget {
         showSettingDialog(const DarkModeDialog());
       },
       Settings.autoNext: (bool value) {
-        print('AutoNext: $value');
+        autoNextChanged(value);
       },
       Settings.ringtone: () {
         print('Ringtone');
@@ -57,11 +79,11 @@ class SettingBody extends StatelessWidget {
                 var key = entry.key;
                 var setting = entry.value;
 
-                if (setting.isSwitch) {
+                if (setting.isSwitch && key == Settings.autoNext) {
                   return PreferenceSwitchTile(
                     icon: setting.icon,
                     title: setting.title,
-                    switchValue: false,
+                    switchValue: autoNext,
                     onSwitchChanged: (String key, bool value) {
                       return (bool value) {
                         handler[key]!(value);
