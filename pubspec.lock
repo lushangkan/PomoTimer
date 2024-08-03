@@ -442,6 +442,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  has_audio:
+    dependency: "direct main"
+    description:
+      name: has_audio
+      sha256: d5b9d661899a5fc8653284d86dd75d124525d826b20030b783199d1d9b21cdf6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   http_multi_server:
     dependency: transitive
     description:

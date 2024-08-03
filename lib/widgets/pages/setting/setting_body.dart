@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:has_audio/has_audio.dart';
 import 'package:intl/intl.dart';
 import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/timer/timer.dart';
@@ -77,6 +78,18 @@ class _SettingBodyState extends State<SettingBody> {
       }
 
       File file = File(result.files.single.path!);
+
+      bool hasAudio = await HasAudio.check(file.path);
+
+      if (!hasAudio) {
+        // SnackBar提示用户
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('文件不含有音频'),
+          duration: Duration(seconds: 2),
+        ));
+        return;
+      }
 
       PreferenceManager.instance.ringtonePath = file.path;
     }
