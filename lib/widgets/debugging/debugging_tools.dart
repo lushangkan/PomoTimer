@@ -53,7 +53,7 @@ class DebuggingTools extends StatelessWidget {
           context: context,
           builder: (context) => AlarmTestDialog(
               onPressed: (int seconds) async {
-                if (await permissionHandle.requestPermission(context)) {
+                if (await PermissionHandle.instance.requestPermission(context)) {
                   var time =
                       DateTime.now().toUtc().add(Duration(seconds: seconds));
 

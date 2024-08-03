@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pomotimer/common/permission_handle.dart';
+import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/main.dart';
 import 'package:pomotimer/themes/default_theme.dart';
 import '../../../common/preferences/preference_manager.dart';
@@ -46,6 +49,38 @@ class _SettingBodyState extends State<SettingBody> {
       PreferenceManager.instance.autoNext = value;
     }
 
+    void onRingtoneTapFromStorage() async {
+      if (!(await PermissionHandle.instance.isStoragePermissionGranted)) {
+        var result = await PermissionHandle.instance.requestStoragePermission(context);
+
+        if (!result) {
+          // SnackBar提示用户
+          if (!context.mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('未授予权限'),
+            duration: Duration(seconds: 2),
+          ));
+          return;
+        }
+      }
+
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result == null) {
+        // SnackBar提示用户
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('未选择文件'),
+          duration: Duration(seconds: 2),
+        ));
+        return;
+      }
+
+      File file = File(result.files.single.path!);
+
+      PreferenceManager.instance.ringtonePath = file.path;
+    }
+
     var handler = {
       Settings.language: () {
         showSettingDialog(const LanguageDialog());
@@ -60,7 +95,7 @@ class _SettingBodyState extends State<SettingBody> {
         autoNextChanged(value);
       },
       Settings.ringtone: () {
-        print('Ringtone');
+        showSettingDialog(RingtoneDialog(onTapFromStorage: onRingtoneTapFromStorage,));
       },
       Settings.about: () {
         print('About');
@@ -360,6 +395,58 @@ class ThemeDialog extends StatelessWidget {
         child: ListView(
           children: children
         ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('取消'),
+        ),
+      ],
+    );
+  }
+}
+
+class RingtoneDialog extends StatelessWidget {
+  const RingtoneDialog({super.key, required this.onTapFromStorage});
+
+  final Function() onTapFromStorage;
+
+  @override
+  Widget build(BuildContext context) {
+    AppTimer timer = AppTimer.instance;
+
+    return AlertDialog(
+      title: const Text('选择铃声'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            selected: PreferenceManager.instance.ringtonePath == null,
+            title: const Text('默认'),
+            onTap: () {
+              if (PreferenceManager.instance.ringtonePath == null) {
+                Navigator.pop(context);
+                return;
+              }
+
+              PreferenceManager.instance.ringtonePath = null;
+              timer.ringtoneChanged();
+
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            selected: PreferenceManager.instance.ringtonePath != null,
+            title: const Text('从存储中选择'),
+            onTap: () {
+              Navigator.pop(context);
+
+              onTapFromStorage();
+            },
+          ),
+        ],
       ),
       actions: [
         TextButton(

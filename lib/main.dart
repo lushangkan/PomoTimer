@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logger/logger.dart';
-import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/preferences/preference_manager.dart';
 import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/main.reflectable.dart';
@@ -14,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/channel/flutter_method_channel.dart';
+import 'common/permission_handle.dart';
 import 'generated/l10n.dart';
 
 void main() async {
@@ -34,7 +34,7 @@ void main() async {
   final AppStates appStates = AppStates();
 
   // 初始化PermissionHandle
-  await permissionHandle.checkAllPermissionStatus();
+  await PermissionHandle.instance.checkAllPermissionStatus();
 
   // 初始化Timer
   AppTimer(timerStates, appStates);

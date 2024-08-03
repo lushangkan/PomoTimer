@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 import '../states/app_states.dart';
 import '../widgets/button_dialog_inner.dart';
 
-final PermissionHandle permissionHandle = PermissionHandle();
-
 class PermissionHandle {
+
+  static final PermissionHandle instance = PermissionHandle();
 
   /// 权限列表
   static final List<Permission> permissionList = [
@@ -47,7 +47,21 @@ class PermissionHandle {
         context: context,
         backgroundColor: colorScheme.surface,
         builder: (context) {
-          return const ButtonDialogInner(title: '需要权限', content: '启动计时器需要一些权限, 是否同意?',);
+          return const ButtonDialogInner(title: '需要权限', content: '启动计时器需要一些权限, 是否继续?',);
+        }
+    ) ?? false;
+  }
+
+  Future<bool> showStoragePermissionDialog(BuildContext context,) async {
+    var colorScheme = Theme.of(context).colorScheme;
+
+    return await showBarModalBottomSheet(
+        duration: const Duration(milliseconds: 200),
+        barrierColor: Colors.black54,
+        context: context,
+        backgroundColor: colorScheme.surface,
+        builder: (context) {
+          return const ButtonDialogInner(title: '需要权限', content: '选择铃声需要访问存储的权限, 是否继续?',);
         }
     ) ?? false;
   }
@@ -62,7 +76,7 @@ class PermissionHandle {
 
     // 检查权限
     if (askUser) {
-      if (!permissionHandle.isPermissionGranted) {
+      if (!PermissionHandle.instance.isPermissionGranted) {
         // 未授权
         var result = await showPermissionDialog(context);
 
@@ -130,6 +144,46 @@ class PermissionHandle {
     return true;
   }
 
+  Future<bool> requestStoragePermission(BuildContext context) async {
+    // 检查是否已经授权
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      return true;
+    }
+
+    // 弹出权限请求对话框
+    if (!context.mounted) return false;
+    var result = await showStoragePermissionDialog(context);
+
+    if (result != true) {
+      return false;
+    }
+
+    // 请求存储权限
+    // 判断安卓版本
+    PermissionStatus? newStatus;
+
+    if (await _isAndroid13Plus) {
+      newStatus = await Permission.audio.request();
+
+      if (newStatus.isGranted) {
+        _permissionStatus.update(Permission.audio, (value) => newStatus);
+
+        return true;
+      }
+    } else if (!(await _isAndroid13Plus)) {
+      newStatus = await Permission.storage.request();
+
+      if (newStatus.isGranted) {
+        _permissionStatus.update(Permission.storage, (value) => newStatus);
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   /// 计时需要的权限是否已授权
   bool get isPermissionGranted {
     for (var permission in permissionList) {
@@ -138,6 +192,15 @@ class PermissionHandle {
       }
     }
     return true;
+  }
+
+  /// 读取文件的权限是否已授权
+  Future<bool> get isStoragePermissionGranted async {
+    if (await _isAndroid13Plus) {
+      return _permissionStatus[Permission.audio] == PermissionStatus.granted;
+    } else {
+      return _permissionStatus[Permission.storage] == PermissionStatus.granted;
+    }
   }
 
   Future<bool> get _isAndroid13Plus async {

@@ -363,7 +363,7 @@ class AppTimer {
     }
 
     // 检测权限
-    if (!permissionHandle.isPermissionGranted) {
+    if (!PermissionHandle.instance.isPermissionGranted) {
       throw PermissionDeniedException();
     }
 
@@ -441,6 +441,15 @@ class AppTimer {
     FlutterMethodChannel.instance.unregisterAllAlarms();
   }
 
+  Future<void> ringtoneChanged() async {
+    if (_states.reminderType != ReminderType.alarm || !isRunning) {
+      return;
+    }
+
+    _unregisterAllAlarm();
+    _registerAlarm();
+  }
+
   Future<void> _startTimer() async {
     // 初始化变量
     _states.startTime = DateTime.now();
@@ -451,7 +460,7 @@ class AppTimer {
     _lastPhase = null;
 
     // 检测权限
-    if (!permissionHandle.isPermissionGranted) {
+    if (!PermissionHandle.instance.isPermissionGranted) {
       throw PermissionDeniedException();
     }
 

@@ -75,7 +75,7 @@ class _InitialTimerControllerState extends TimerControllerState {
 
     void onPressedStartButton() async {
       // 检查并请求权限
-      if (await permissionHandle.requestPermission(context)) {
+      if (await PermissionHandle.instance.requestPermission(context)) {
         if (!context.mounted) {
           return;
         }
