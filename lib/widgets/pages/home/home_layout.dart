@@ -26,7 +26,7 @@ class _HomePageState extends AppPageState<HomePage>  {
 
     return ClickListener(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.surface,
+        backgroundColor: theme.scaffoldBackgroundColor,
         appBar: TopBar(theme, context),
         body: HomeBody(timerController: widget.timerController,),
       ),

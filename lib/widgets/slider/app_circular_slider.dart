@@ -167,7 +167,7 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
   _AppCircularSliderAppearance(
       {required sliderSize,
       required progressWidth,
-      required colorScheme,
+      required ColorScheme colorScheme,
       required animationEnabled,
       required handlerSize,
       required selectMode})
@@ -181,7 +181,7 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
           ),
           customColors: CustomSliderColors(
             // 背景颜色
-            trackColor: colorScheme.surfaceContainer,
+            trackColor: colorScheme.surfaceVariant,
             // 进度条颜色
             progressBarColors: [
               colorScheme.primary,
@@ -191,7 +191,7 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
             gradientEndAngle: 270 + 180,
             dynamicGradient: false,
             dotColor: colorScheme.surface,
-            shadowColor: colorScheme.primary.withOpacity(0.25),
+            shadowColor: colorScheme.surface.withOpacity(0.01),
             shadowMaxOpacity: 0.19,
             shadowStep: 1.2,
           ),
