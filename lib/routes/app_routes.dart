@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pomotimer/common/timer/timer.dart';
+import 'package:pomotimer/widgets/pages/about/about_layout.dart';
 import 'package:pomotimer/widgets/pages/home/in_progress/in_progress_home_page.dart';
 import 'package:pomotimer/widgets/pages/home/initial/initial_home_page.dart';
 
@@ -9,32 +10,37 @@ import '../widgets/pages/setting/setting_layout.dart';
 final routes = GoRouter(
     routes: [
       GoRoute(
-          path: '/',
-          pageBuilder: (context, state) {
-            return AppTransitionPage(
-              key: state.pageKey,
-              child: const InitialHomePage(),
-            );
-          },
+        path: '/',
+        pageBuilder: (context, state) {
+          return AppTransitionPage(
+            key: state.pageKey,
+            child: const InitialHomePage(),
+          );
+        },
       ),
       GoRoute(
-          path: '/in-progress',
-          pageBuilder: (context, state) {
-            return AppTransitionPage(
-              key: state.pageKey,
-              child: const InProgressHomePage(),
-            );
-          },
+        path: '/in-progress',
+        pageBuilder: (context, state) {
+          return AppTransitionPage(
+            key: state.pageKey,
+            child: const InProgressHomePage(),
+          );
+        },
       ),
       GoRoute(
-          path: '/setting',
+        path: '/setting',
+        builder: (context, state) {
+          return const SettingPage();
+        },
+      ),
+      GoRoute(
+          path: '/about',
           builder: (context, state) {
-            return const SettingPage();
-          },
-      )
+            return const AboutPage();
+          })
     ],
     redirect: (BuildContext context, GoRouterState state) {
-      if (state.matchedLocation == '/setting') {
+      if (state.matchedLocation == '/setting' || state.matchedLocation == '/about') {
         return null;
       }
 

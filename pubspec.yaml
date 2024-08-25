@@ -60,6 +60,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   file_picker: ^8.0.6
   has_audio: ^0.0.6
+  flutter_svg: ^2.0.10+1
 
 dependency_overrides:
   intl: ^0.19.0
@@ -95,10 +96,11 @@ flutter:
 
   assets:
     - assets/fonts/misans/MiSans_License.pdf
-#    - assets/icon/app_icon.png
-#    - assets/icon/app_icon_foreground.png
+
     - assets/media/default_ring.mp3
     - assets/media/blank.mp3
+
+    - assets/media/image/logo.png
   fonts:
     - family: MiSans
       fonts:

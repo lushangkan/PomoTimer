@@ -62,7 +62,7 @@ final _defColorSchemeLight = ColorScheme.fromSeed(
   onErrorContainer: fromCssColor('#333333'),
   surface: fromCssColor('#F5F0E4'),
   onSurface: fromCssColor('#5c5c5c'),
-  surfaceContainer: fromCssColor('#ebe6da'),
+  surfaceContainer: fromCssColor('#FFEEDD'),
   surfaceContainerLow: fromCssColor('#f7f5f0'),
   surfaceContainerLowest: fromCssColor('#fdfcfb'),
   surfaceContainerHigh: fromCssColor('#a99461'),
