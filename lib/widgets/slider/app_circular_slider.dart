@@ -181,7 +181,7 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
           ),
           customColors: CustomSliderColors(
             // 背景颜色
-            trackColor: colorScheme.surfaceVariant,
+            trackColor: colorScheme.surfaceContainer,
             // 进度条颜色
             progressBarColors: [
               colorScheme.primary,
