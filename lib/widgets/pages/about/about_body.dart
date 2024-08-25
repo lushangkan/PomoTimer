@@ -18,6 +18,7 @@ class AboutBody extends StatelessWidget {
           Head(),
           SizedBox(height: 50,),
           DeveloperInfo(),
+          Acknowledgments(),
         ],
       );
   }
@@ -158,7 +159,65 @@ class DeveloperInfo extends StatelessWidget {
         ),
       ),
     );
-        
+  }
+}
+
+class Acknowledgments extends StatelessWidget {
+  const Acknowledgments({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var themeColor = Theme.of(context).colorScheme;
+
+    var titleText = AppTextStyle.generate(
+        color: themeColor.onSurfaceVariant,
+        fontSize: 16,
+        fontWeight: FontWeight.w500
+    );
+
+    var contentText = AppTextStyle.generate(
+        color: themeColor.onSurfaceVariant,
+        fontSize: 15,
+        fontWeight: FontWeight.w300
+    );
+
+    var lagerTitleText = AppTextStyle.generate(
+        color: themeColor.onSurfaceVariant,
+        fontSize: 18,
+        fontWeight: FontWeight.w500
+    );
+
+    return SizedBox(
+      width: 323,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Row(children: [
+              Text("鸣谢", style: lagerTitleText,),
+            ],),
+          ),
+          Container(
+            width: 323,
+            height: 60,
+            decoration: BoxDecoration(
+              color: themeColor.surfaceContainer,
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20, left: 26),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                Text("imsale", style: titleText,),
+                const SizedBox(width: 5,),
+                Text("提供Logo设计指导", style: contentText,),
+              ],)
+            ),
+          ),
+        ],
+      ),
+    );
   }
   
 }

@@ -16,6 +16,7 @@ final defThemeLight = ThemeData(
     splashColor: fromCssColor('#ebe6da'),
     hoverColor: fromCssColor('#ebe6da'),
     buttonTheme: buttonTheme,
+    scaffoldBackgroundColor: fromCssColor("#FDF7F2"),
     popupMenuTheme: PopupMenuThemeData(
       position: PopupMenuPosition.under,
       color: _defColorSchemeLight.surfaceContainer,
