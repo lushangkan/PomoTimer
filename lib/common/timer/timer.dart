@@ -381,47 +381,51 @@ class AppTimer {
 
       var ringTime = DateTime.now().add(Duration(milliseconds: time));
 
-      int alarmId = _randomAlarmId();
-      String? notificationTitle;
-      String? notificationContent;
+      int? result;
 
-      if (phase == Phase.focus) {
-        notificationTitle = S.current.focusNotificationTitle;
-        notificationContent = S.current.focusNotificationContent;
-      } else if (phase == Phase.shortBreak) {
-        notificationTitle = S.current.shortBreakNotificationTitle;
-        notificationContent = S.current.shortBreakNotificationContent;
-      } else if (phase == Phase.longBreak) {
-        notificationTitle = S.current.longBreakNotificationTitle;
-        notificationContent = S.current.longBreakNotificationContent;
-      }
+      // 当id重复时重新注册
+      while (result == 0) {
+        int alarmId = _randomAlarmId();
+        String? notificationTitle;
+        String? notificationContent;
 
-      bool vibrate;
-      bool notification;
-      bool isAlarm;
+        if (phase == Phase.focus) {
+          notificationTitle = S.current.focusNotificationTitle;
+          notificationContent = S.current.focusNotificationContent;
+        } else if (phase == Phase.shortBreak) {
+          notificationTitle = S.current.shortBreakNotificationTitle;
+          notificationContent = S.current.shortBreakNotificationContent;
+        } else if (phase == Phase.longBreak) {
+          notificationTitle = S.current.longBreakNotificationTitle;
+          notificationContent = S.current.longBreakNotificationContent;
+        }
 
-      switch (_states.reminderType) {
-        case null:
-          throw Exception('Reminder type is null');
-        case ReminderType.none:
-          vibrate = false;
-          notification = false;
-          isAlarm = false;
-        case ReminderType.notification:
-          vibrate = false;
-          notification = true;
-          isAlarm = false;
-        case ReminderType.vibration:
-          vibrate = true;
-          notification = true;
-          isAlarm = false;
-        case ReminderType.alarm:
-          vibrate = true;
-          notification = true;
-          isAlarm = true;
-      }
+        bool vibrate;
+        bool notification;
+        bool isAlarm;
 
-      var alarm = Alarm(
+        switch (_states.reminderType) {
+          case null:
+            throw Exception('Reminder type is null');
+          case ReminderType.none:
+            vibrate = false;
+            notification = false;
+            isAlarm = false;
+          case ReminderType.notification:
+            vibrate = false;
+            notification = true;
+            isAlarm = false;
+          case ReminderType.vibration:
+            vibrate = true;
+            notification = true;
+            isAlarm = false;
+          case ReminderType.alarm:
+            vibrate = true;
+            notification = true;
+            isAlarm = true;
+        }
+
+        var alarm = Alarm(
           id: alarmId,
           timestamp: ringTime.toUtc().millisecondsSinceEpoch,
           fromAppAsset: PreferenceManager.instance.ringtonePath == null,
@@ -433,12 +437,13 @@ class AppTimer {
           loopTimes: 5,
           notificationTitle: notificationTitle,
           notificationContent: notificationContent,
-      );
+        );
 
-      _alarmList.add(alarmId);
+        _alarmList.add(alarmId);
 
-      // 注册闹钟
-      FlutterMethodChannel.instance.registerAlarm(alarm);
+        // 注册闹钟
+        result = await FlutterMethodChannel.instance.registerAlarm(alarm);
+      }
     }
   }
 

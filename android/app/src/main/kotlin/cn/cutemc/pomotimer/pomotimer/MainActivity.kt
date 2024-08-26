@@ -3,6 +3,8 @@ package cn.cutemc.pomotimer.pomotimer
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
 import cn.cutemc.pomotimer.pomotimer.channel.NativeMethodChannel
 import cn.cutemc.pomotimer.pomotimer.controllers.NotificationsController
 import io.flutter.embedding.android.FlutterActivity

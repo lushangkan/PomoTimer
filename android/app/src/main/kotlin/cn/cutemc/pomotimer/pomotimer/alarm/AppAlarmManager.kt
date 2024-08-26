@@ -58,4 +58,8 @@ object AppAlarmManager {
             Log.d("AppAlarmManager", "Alarm stopped: $id")
         }
     }
+
+    fun hasAlarm(id: Int): Boolean {
+        return alarms.values.any { it.id == id }
+    }
 }
