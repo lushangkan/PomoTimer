@@ -9,7 +9,7 @@ import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/timer/timer.dart';
 import 'package:pomotimer/themes/default_theme.dart';
 import '../../../common/preferences/preference_manager.dart';
-import '../../../common/Settings.dart';
+import '../../../common/settings.dart';
 import '../../../generated/l10n.dart';
 
 
