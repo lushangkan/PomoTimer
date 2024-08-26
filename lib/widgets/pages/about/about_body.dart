@@ -122,7 +122,7 @@ class DeveloperInfo extends StatelessWidget {
     
     return Container(
       width: 323,
-      height: 157,
+      height: 120,
       decoration: BoxDecoration(
         color: themeColor.primaryContainer.withAlpha(80),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -146,14 +146,6 @@ class DeveloperInfo extends StatelessWidget {
               Text("${S.current.codeRepo}:", style: titleText,),
               const SizedBox(width: 5,),
               Text("lushangkan/PomoTimer", style: contentText,),
-            ],),
-            // 代码协议: GPLv3
-            Row(children: [
-              SizedBox(child: Icon(LucideIcons.creative_commons, color: themeColor.onSurfaceVariant,size: 25, )),
-              const SizedBox(width: 7,),
-              Text("${S.current.codeLicense}:", style: titleText,),
-              const SizedBox(width: 5,),
-              Text("GPLv3", style: contentText,),
             ],),
           ],
 
