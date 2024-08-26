@@ -1,10 +1,7 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:pomotimer/common/app_text_style.dart';
-import 'package:pomotimer/themes/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/constants.dart';
@@ -15,8 +12,6 @@ class AboutBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeColor = Theme.of(context).colorScheme;
-
     return const Column(
         children: [
           Head(),

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pomotimer/routes/app_routes.dart';
 import 'package:pomotimer/widgets/pages/app_page.dart';
 import 'package:pomotimer/widgets/pages/home/click_listener.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';

@@ -5,11 +5,8 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:has_audio/has_audio.dart';
-import 'package:intl/intl.dart';
 import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/common/timer/timer.dart';
-import 'package:pomotimer/main.dart';
-import 'package:pomotimer/routes/app_routes.dart';
 import 'package:pomotimer/themes/default_theme.dart';
 import '../../../common/preferences/preference_manager.dart';
 import '../../../common/Settings.dart';
@@ -54,6 +51,7 @@ class _SettingBodyState extends State<SettingBody> {
 
     void onRingtoneTapFromStorage() async {
       if (!(await PermissionHandle.instance.isStoragePermissionGranted)) {
+        if (!context.mounted) return;
         var result = await PermissionHandle.instance.requestStoragePermission(context);
 
         if (!result) {

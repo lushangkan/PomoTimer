@@ -43,4 +43,7 @@ app.*.map.json
 /android/app/release
 /android/.gradle/
 
+# Key
+/android/key.properties
+
 *.bak

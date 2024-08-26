@@ -102,21 +102,21 @@ EventType? getEventType(TimerEvent event) {
 
   // dart没有反射，无法通过对象获取静态变量
   switch (event.runtimeType) {
-    case TimerTickEvent:
+    case TimerTickEvent _:
       return TimerTickEvent.type;
-    case TimerPhaseChangeEvent:
+    case TimerPhaseChangeEvent _:
       return TimerPhaseChangeEvent.type;
-    case TimerStartEvent:
+    case TimerStartEvent _:
       return TimerStartEvent.type;
-    case TimerPauseEvent:
+    case TimerPauseEvent _:
       return TimerPauseEvent.type;
-    case TimerStopEvent:
+    case TimerStopEvent _:
       return TimerStopEvent.type;
-    case TimerResumeEvent:
+    case TimerResumeEvent _:
       return TimerResumeEvent.type;
-    case AppLifecycleChangeEvent:
+    case AppLifecycleChangeEvent _:
       return EventType.appLifecycleChange;
-    case AppClickedEvent:
+    case AppClickedEvent _:
       return EventType.appClicked;
   }
 

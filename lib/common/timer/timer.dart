@@ -375,7 +375,7 @@ class AppTimer {
     var phases = getPhases();
 
     for (var data in phases) {
-      var cycle = data.$1;
+      // var cycle = data.$1;
       var phase = data.$2;
       var time = data.$3;
 

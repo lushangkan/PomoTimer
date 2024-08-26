@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pomotimer/widgets/pages/app_page.dart';
-import 'package:pomotimer/widgets/pages/home/click_listener.dart';
 import 'package:pomotimer/widgets/pages/about/about_body.dart';
 
 import '../../../generated/l10n.dart';

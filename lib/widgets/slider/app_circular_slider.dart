@@ -89,7 +89,7 @@ class _AppCircularSliderState extends State<AppCircularSlider>
                       : null),
               appearance: _AppCircularSliderAppearance(
                 animationEnabled: widget.animationEnabled,
-                sliderSize: widget.sliderSize,
+                size: widget.sliderSize,
                 progressWidth: widget.progressBarWidth,
                 colorScheme: colorScheme,
                 selectMode: widget.selectMode,
@@ -165,14 +165,13 @@ class _AppCircularSliderInner extends StatelessWidget {
 
 class _AppCircularSliderAppearance extends CircularSliderAppearance {
   _AppCircularSliderAppearance(
-      {required sliderSize,
+      {required super.size,
       required progressWidth,
       required ColorScheme colorScheme,
-      required animationEnabled,
+      required super.animationEnabled,
       required handlerSize,
       required selectMode})
       : super(
-          size: sliderSize,
           customWidths: CustomSliderWidths(
             trackWidth: progressWidth,
             progressBarWidth: progressWidth,
@@ -197,7 +196,6 @@ class _AppCircularSliderAppearance extends CircularSliderAppearance {
           ),
           startAngle: 270,
           angleRange: 360,
-          animationEnabled: animationEnabled,
           animDurationMultiplier: 1.05,
         );
 }
