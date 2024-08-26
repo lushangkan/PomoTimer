@@ -116,6 +116,10 @@ class AppTimer {
 
     // 如果在运行, 启动内部计时器
     _startInternalTimer();
+
+    // 注册响铃
+
+    _registerAlarm();
   }
 
   /// 启动计时

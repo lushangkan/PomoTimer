@@ -36,13 +36,16 @@ void main() async {
   // 初始化PermissionHandle
   await PermissionHandle.instance.checkAllPermissionStatus();
 
+  // 初始化Intl
+  await S.load(Locale(PreferenceManager.instance.language!));
+
+  // 初始化FlutterMethodChannel
+  FlutterMethodChannel();
+
   // 初始化Timer
   AppTimer(timerStates, appStates);
 
   runApp(App(timerStates: timerStates, appStates: appStates));
-
-  // 初始化FlutterMethodChannel
-  FlutterMethodChannel();
 }
 
 class App extends StatelessWidget {

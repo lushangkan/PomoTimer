@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../generated/l10n.dart';
 import '../main.dart';
