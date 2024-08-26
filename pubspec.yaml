@@ -100,8 +100,7 @@ flutter:
     - assets/media/default_ring.mp3
     - assets/media/blank.mp3
 
-    - assets/media/image/logo.png
-    - assets/media/image/aifadian.png
+    - assets/media/image/
 
   fonts:
     - family: MiSans

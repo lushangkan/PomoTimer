@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../generated/l10n.dart';
+import '../main.dart';
 
 class Settings {
   static const String language = 'language';
@@ -12,34 +16,34 @@ class Settings {
 
   static final Map<String, Setting> settingMap = {
     language: Setting(
-        icon: CupertinoIcons.globe,
+        icon: Icon(LucideIcons.globe, color: App.themeData!.colorScheme.onSurface),
         title: S.current.settingLanguageTitle,
         isSwitch: false),
     darkMode: Setting(
-        icon: CupertinoIcons.moon,
+        icon: Icon(LucideIcons.moon, color: App.themeData!.colorScheme.onSurface),
         title: S.current.settingDarkModeTitle,
         isSwitch: false),
     theme: Setting(
-        icon: CupertinoIcons.paintbrush,
+        icon: Icon(LucideIcons.palette, color: App.themeData!.colorScheme.onSurface),
         title: S.current.settingThemeTitle,
         isSwitch: false),
     autoNext: Setting(
-        icon: CupertinoIcons.arrow_right_arrow_left,
+        icon: Icon(LucideIcons.refresh_ccw, color: App.themeData!.colorScheme.onSurface),
         title: S.current.settingAutoNextTitle,
         isSwitch: true),
     ringtone: Setting(
-        icon: CupertinoIcons.bell,
+        icon: Icon(LucideIcons.bell_ring, color: App.themeData!.colorScheme.onSurface),
         title: S.current.settingRingtoneTitle,
         isSwitch: false),
     about: Setting(
-        icon: CupertinoIcons.info,
+        icon: Icon(LucideIcons.info, color: App.themeData!.colorScheme.onSurface),
         title: S.current.settingAboutTitle,
         isSwitch: false),
   };
 }
 
 class Setting {
-  final IconData icon;
+  final Widget icon;
   final String title;
   final bool isSwitch;
 

@@ -51,6 +51,8 @@ class App extends StatelessWidget {
   final TimerStates timerStates;
   final AppStates appStates;
 
+  static ThemeData? themeData;
+
   @override
   Widget build(BuildContext context) {
     AppTheme appTheme = AppTheme();
@@ -81,6 +83,8 @@ class App extends StatelessWidget {
       themeData = appTheme.getThemeData(PreferenceManager.instance.themeName!, false);
       darkThemeData = appTheme.getThemeData(PreferenceManager.instance.themeName!, true);
     }
+
+    App.themeData = themeData;
 
     return MultiProvider(
       providers: [

@@ -180,7 +180,7 @@ class PreferenceTile extends StatelessWidget {
   // icon, title
   const PreferenceTile({super.key, required this.icon, required this.title, required this.onPressed, required this.tileKey});
 
-  final IconData icon;
+  final Widget icon;
   final String title;
   final Function(String) onPressed;
   final String tileKey;
@@ -191,7 +191,7 @@ class PreferenceTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       onPressed: onPressed(tileKey),
       child: ListTile(
-        leading: Icon(icon),
+        leading: icon,
         title: Text(title),
       ),
     );
@@ -202,7 +202,7 @@ class PreferenceSwitchTile extends StatelessWidget {
   // icon, title, switchValue, onSwitchChanged
   const PreferenceSwitchTile({super.key, required this.icon, required this.title, required this.switchValue, required this.onSwitchChanged, required this.tileKey});
 
-  final IconData icon;
+  final Widget icon;
   final String title;
   final bool switchValue;
   final Function(String, bool) onSwitchChanged;
@@ -213,7 +213,7 @@ class PreferenceSwitchTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: ListTile(
-        leading: Icon(icon),
+        leading: icon,
         title: Text(title),
         trailing: Switch(
           value: switchValue,
@@ -321,14 +321,14 @@ class DarkModeDialog extends StatelessWidget {
         children: [
           ListTile(
             selected: PreferenceManager.instance.themeMode == 1,
-            title: Text(S.current.alwaysOn),
+            title: Text(S.current.alwaysOff),
             onTap: () {
               setDarkMode(1);
             },
           ),
           ListTile(
             selected: PreferenceManager.instance.themeMode == 2,
-            title: Text(S.current.alwaysOff),
+            title: Text(S.current.alwaysOn),
             onTap: () {
               setDarkMode(2);
             },
