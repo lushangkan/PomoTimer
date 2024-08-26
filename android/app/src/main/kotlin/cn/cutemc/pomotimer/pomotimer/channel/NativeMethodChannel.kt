@@ -44,8 +44,12 @@ object NativeMethodChannel : MethodChannel.MethodCallHandler {
                 }
 
                 val alarm = Alarm.fromJson(args as String)
+
+                if (AppAlarmManager.hasAlarm(alarm.id)) {
+                    result.error("ALARM_ALREADY_EXISTS", "Alarm with id ${alarm.id} already exists", null)
+                }
+
                 AppAlarmManager.addAlarm(alarm, MainActivity.appContext)
-                // TODO: 添加重复ID检查
                 result.success(null)
                 return
             }

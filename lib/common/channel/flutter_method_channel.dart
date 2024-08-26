@@ -67,8 +67,16 @@ class FlutterMethodChannel {
     methodChannel.invokeMethod(Methods.reloadLocale);
   }
 
-  Future<void> registerAlarm(Alarm alarm) async {
-    return await methodChannel.invokeMethod(Methods.registerAlarm, alarm.toJsonText());
+  Future<int> registerAlarm(Alarm alarm) async {
+    try {
+      await methodChannel.invokeMethod(Methods.registerAlarm, alarm.toJsonText());
+    } on PlatformException catch (e) {
+      if (e.code == "ALARM_ALREADY_EXISTS") {
+        return -1;
+      }
+    }
+
+    return 0;
   }
 
   Future<void> unregisterAlarm(String id) async {
