@@ -5,6 +5,9 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:pomotimer/common/app_text_style.dart';
 import 'package:pomotimer/themes/app_theme.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../../common/constants.dart';
 
 class AboutBody extends StatelessWidget {
   const AboutBody({super.key});
@@ -19,6 +22,8 @@ class AboutBody extends StatelessWidget {
           SizedBox(height: 50,),
           DeveloperInfo(),
           Acknowledgments(),
+          CopyRight(),
+          Bottom(),
         ],
       );
   }
@@ -33,10 +38,10 @@ class Head extends StatelessWidget {
   Widget build(BuildContext context) {
     var logoText = AppTextStyle.generate(
       fontSize: 20,
-      color: fromCssColor("#E8590C"),
+      color: fromCssColor("#E8580C"),
       shadows: [
         Shadow(
-          color: fromCssColor("#E8590C").withOpacity(0.25),
+          color: fromCssColor("#E8580C").withOpacity(0.25),
           offset: const Offset(1, 1),
           blurRadius: 4,
         ),
@@ -51,7 +56,7 @@ class Head extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(top: 50),
+      padding: const EdgeInsets.only(top: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -108,13 +113,13 @@ class DeveloperInfo extends StatelessWidget {
     var themeColor = Theme.of(context).colorScheme;
 
     var titleText = AppTextStyle.generate(
-      color: themeColor.onSurfaceVariant,
+      color: themeColor.onSurface,
       fontSize: 16,
       fontWeight: FontWeight.w500
     );
 
     var contentText = AppTextStyle.generate(
-      color: themeColor.onSurfaceVariant,
+      color: themeColor.onSurface,
       fontSize: 16,
       fontWeight: FontWeight.w300
     );
@@ -123,7 +128,7 @@ class DeveloperInfo extends StatelessWidget {
       width: 323,
       height: 157,
       decoration: BoxDecoration(
-        color: themeColor.surfaceContainer,
+        color: themeColor.primaryContainer.withAlpha(80),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
     ),
       child: Padding(
@@ -170,19 +175,19 @@ class Acknowledgments extends StatelessWidget {
     var themeColor = Theme.of(context).colorScheme;
 
     var titleText = AppTextStyle.generate(
-        color: themeColor.onSurfaceVariant,
+        color: themeColor.onSurface,
         fontSize: 16,
         fontWeight: FontWeight.w500
     );
 
     var contentText = AppTextStyle.generate(
-        color: themeColor.onSurfaceVariant,
+        color: themeColor.onSurface,
         fontSize: 15,
         fontWeight: FontWeight.w300
     );
 
     var lagerTitleText = AppTextStyle.generate(
-        color: themeColor.onSurfaceVariant,
+        color: themeColor.onSurface,
         fontSize: 18,
         fontWeight: FontWeight.w500
     );
@@ -201,7 +206,7 @@ class Acknowledgments extends StatelessWidget {
             width: 323,
             height: 60,
             decoration: BoxDecoration(
-              color: themeColor.surfaceContainer,
+              color: themeColor.primaryContainer.withAlpha(80),
               borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
             child: Padding(
@@ -209,7 +214,7 @@ class Acknowledgments extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                Text("imsale", style: titleText,),
+                Text("Imsale", style: titleText,),
                 const SizedBox(width: 5,),
                 Text("提供Logo设计指导", style: contentText,),
               ],)
@@ -217,6 +222,234 @@ class Acknowledgments extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+
+  
+}
+/// 版权信息
+class CopyRight extends StatelessWidget {
+  const CopyRight({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var themeColor = Theme.of(context).colorScheme;
+
+    var titleText = AppTextStyle.generate(
+        color: themeColor.onSurface,
+        fontSize: 16,
+        fontWeight: FontWeight.w500
+    );
+
+    var contentText = AppTextStyle.generate(
+        color: themeColor.onSurface,
+        fontSize: 16,
+        fontWeight: FontWeight.w300
+    );
+
+    var lagerTitleText = AppTextStyle.generate(
+        color: themeColor.onSurface,
+        fontSize: 18,
+        fontWeight: FontWeight.w500
+    );
+
+    return SizedBox(
+      width: 323,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Row(children: [
+              Text("版权信息", style: lagerTitleText,),
+            ],),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: themeColor.primaryContainer.withAlpha(80),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20, left: 26),
+              child: Row(children: [
+                Text("字体:", style: titleText,),
+                const SizedBox(width: 5,),
+                Text("MiSans", style: contentText,),
+              ],),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Bottom extends StatelessWidget {
+  const Bottom({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: SizedBox(
+        width: 323,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Sponsor(),
+
+            BugReport(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Sponsor extends StatelessWidget {
+  const Sponsor({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var themeColor = Theme.of(context).colorScheme;
+
+    var titleStyle = AppTextStyle.generate(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: themeColor.onSurface,
+    );
+
+    var buttonTextStyle = AppTextStyle.generate(
+      fontSize: 17,
+      fontWeight: FontWeight.w500,
+      color: themeColor.onPrimaryContainer,
+    );
+
+    var buttonStyle = FilledButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: theme.colorScheme.primaryContainer.withAlpha(80),
+    );
+
+    void onClick() {
+      var url = Uri.parse(Constants.sponsorUrl);
+      try {
+        launchUrl(url);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('无法打开链接: ${url.toString()} 原因: $e'),
+          ),
+        );
+      }
+    }
+
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 11,bottom: 20),
+                child: Text("赞助", style: titleStyle,),
+              ),
+              SizedBox(
+                width: 145,
+                height: 50,
+                child: FilledButton(
+                  style: buttonStyle,
+                  onPressed: onClick,
+                  child: Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(width:30, child: Image(image: AssetImage("assets/media/image/aifadian.png"))),
+                        const SizedBox(width: 5,),
+                        Text("爱发电", style: buttonTextStyle,)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BugReport extends StatelessWidget {
+  const BugReport({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var themeColor = Theme.of(context).colorScheme;
+
+    var titleStyle = AppTextStyle.generate(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: themeColor.onSurface,
+    );
+
+    var buttonTextStyle = AppTextStyle.generate(
+      fontSize: 17,
+      fontWeight: FontWeight.w500,
+      color: themeColor.onPrimaryContainer,
+    );
+
+    var buttonStyle = FilledButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      backgroundColor: theme.colorScheme.primaryContainer.withAlpha(80),
+    );
+
+    void onClick() {
+      var url = Uri.parse(Constants.issueUrl);
+      try {
+        launchUrl(url);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('无法打开链接: ${url.toString()} 原因: $e'),
+          ),
+        );
+      }
+    }
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 11,bottom: 20),
+          child: Text("问题反馈", style: titleStyle,),
+        ),
+        SizedBox(
+          width: 145,
+          height: 50,
+          child: FilledButton(
+            style: buttonStyle,
+            onPressed: onClick,
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(LucideIcons.github, size: 25, color: themeColor.onPrimaryContainer,),
+                  const SizedBox(width: 5,),
+                  Text("Github", style: buttonTextStyle,)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
   

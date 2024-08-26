@@ -37,4 +37,7 @@ class Constants {
   static const int longBreakInterval = 4;
 
   static const String pluginChannelId = "pomotimer_channel";
+
+  static const String issueUrl = "https://github.com/lushangkan/PomoTimer/issues";
+  static const String sponsorUrl = "https://afdian.com/a/lushangkan";
 }

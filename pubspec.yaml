@@ -60,7 +60,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   file_picker: ^8.0.6
   has_audio: ^0.0.6
-  flutter_svg: ^2.0.10+1
+  url_launcher: ^6.3.0
 
 dependency_overrides:
   intl: ^0.19.0
@@ -101,6 +101,8 @@ flutter:
     - assets/media/blank.mp3
 
     - assets/media/image/logo.png
+    - assets/media/image/aifadian.png
+
   fonts:
     - family: MiSans
       fonts:
