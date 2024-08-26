@@ -430,6 +430,176 @@ class S {
     );
   }
 
+  /// `需要权限`
+  String get needPermission {
+    return Intl.message(
+      '需要权限',
+      name: 'needPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `启动计时器需要一些权限, 是否继续?`
+  String get needPermissionContent {
+    return Intl.message(
+      '启动计时器需要一些权限, 是否继续?',
+      name: 'needPermissionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `需要权限`
+  String get needStoragePermission {
+    return Intl.message(
+      '需要权限',
+      name: 'needStoragePermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `选择铃声需要访问存储的权限, 是否继续?`
+  String get needStoragePermissionContent {
+    return Intl.message(
+      '选择铃声需要访问存储的权限, 是否继续?',
+      name: 'needStoragePermissionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `需要权限`
+  String get needBackgroundPermission {
+    return Intl.message(
+      '需要权限',
+      name: 'needBackgroundPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `计时器需要持续在后台运行, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“无限制”或允许应用在后台运行。`
+  String get needBackgroundPermissionContent {
+    return Intl.message(
+      '计时器需要持续在后台运行, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“无限制”或允许应用在后台运行。',
+      name: 'needBackgroundPermissionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `需要权限`
+  String get needNotificationPermission {
+    return Intl.message(
+      '需要权限',
+      name: 'needNotificationPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `计时器需要获取通知权限, 以便及时提醒您。\n请允许该应用的悬浮通知权限和锁屏通知权限。`
+  String get needNotificationPermissionContent {
+    return Intl.message(
+      '计时器需要获取通知权限, 以便及时提醒您。\n请允许该应用的悬浮通知权限和锁屏通知权限。',
+      name: 'needNotificationPermissionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `需要权限`
+  String get needPopoutPermission {
+    return Intl.message(
+      '需要权限',
+      name: 'needPopoutPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `计时器需要在到达一个阶段后弹出窗口提醒, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“允许‘勿扰’模式”。`
+  String get needPopoutPermissionContent {
+    return Intl.message(
+      '计时器需要在到达一个阶段后弹出窗口提醒, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“允许‘勿扰’模式”。',
+      name: 'needPopoutPermissionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `您拒绝了权限请求，无法测试响铃`
+  String get rejectionTestRingtonePermission {
+    return Intl.message(
+      '您拒绝了权限请求，无法测试响铃',
+      name: 'rejectionTestRingtonePermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `您拒绝了权限请求，无法开始计时`
+  String get rejectionPermission {
+    return Intl.message(
+      '您拒绝了权限请求，无法开始计时',
+      name: 'rejectionPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `权限未授予`
+  String get permissionNotGranted {
+    return Intl.message(
+      '权限未授予',
+      name: 'permissionNotGranted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `未选择文件`
+  String get notChooseFile {
+    return Intl.message(
+      '未选择文件',
+      name: 'notChooseFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `文件不含有音频`
+  String get fileHasNotAudio {
+    return Intl.message(
+      '文件不含有音频',
+      name: 'fileHasNotAudio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `响铃已注册`
+  String get ringtoneRegistered {
+    return Intl.message(
+      '响铃已注册',
+      name: 'ringtoneRegistered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `无法打开链接: {link} 原因: {reason}`
+  String cannotOpenLink(Object link, Object reason) {
+    return Intl.message(
+      '无法打开链接: $link 原因: $reason',
+      name: 'cannotOpenLink',
+      desc: '',
+      args: [link, reason],
+    );
+  }
+
   /// `集中注意力!`
   String get focusNotificationTitle {
     return Intl.message(

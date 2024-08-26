@@ -54,6 +54,34 @@
   "afadiana": "爱发电",
   "bugReport": "问题反馈",
 
+  "needPermission": "需要权限",
+  "needPermissionContent": "启动计时器需要一些权限, 是否继续?",
+
+  "needStoragePermission": "需要权限",
+  "needStoragePermissionContent": "选择铃声需要访问存储的权限, 是否继续?",
+
+  "needBackgroundPermission": "需要权限",
+  "needBackgroundPermissionContent": "计时器需要持续在后台运行, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“无限制”或允许应用在后台运行。",
+  
+  "needNotificationPermission": "需要权限",
+  "needNotificationPermissionContent": "计时器需要获取通知权限, 以便及时提醒您。\n请允许该应用的悬浮通知权限和锁屏通知权限。",
+
+  "needPopoutPermission": "需要权限",
+  "needPopoutPermissionContent": "计时器需要在到达一个阶段后弹出窗口提醒, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“允许‘勿扰’模式”。",
+
+  "rejectionTestRingtonePermission": "您拒绝了权限请求，无法测试响铃",
+  "rejectionPermission": "您拒绝了权限请求，无法开始计时",
+
+  "permissionNotGranted": "权限未授予",
+
+  "notChooseFile": "未选择文件",
+
+  "fileHasNotAudio": "文件不含有音频",
+
+  "ringtoneRegistered": "响铃已注册",
+
+  "cannotOpenLink": "无法打开链接: {link} 原因: {reason}",
+
   "focusNotificationTitle": "集中注意力!",
   "focusNotificationContent": "专注的时间开始了, 让我们沉浸在工作中吧! 🔥",
   "shortBreakNotificationTitle": "短暂休息!",

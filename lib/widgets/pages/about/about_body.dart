@@ -341,7 +341,7 @@ class Sponsor extends StatelessWidget {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('无法打开链接: ${url.toString()} 原因: $e'),
+            content: Text(S.current.cannotOpenLink(url.toString(), e)),
           ),
         );
       }
@@ -419,7 +419,7 @@ class BugReport extends StatelessWidget {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('无法打开链接: ${url.toString()} 原因: $e'),
+            content: Text(S.current.cannotOpenLink(url.toString(), e)),
           ),
         );
       }

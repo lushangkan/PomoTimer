@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../common/enum/attribute.dart';
 import '../../common/timer/timer.dart';
+import '../../generated/l10n.dart';
 import '../../states/timer_states.dart';
 import '../pages/home/reminder_type_switcher.dart';
 
@@ -75,12 +76,12 @@ class DebuggingTools extends StatelessWidget {
                   if (!context.mounted) return;
 
                   ScaffoldMessenger.of(context)
-                      .showSnackBar(const SnackBar(content: Text("响铃已注册")));
+                      .showSnackBar(SnackBar(content: Text(S.current.ringtoneRegistered)));
                 } else {
                   if (!context.mounted) return;
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("您拒绝了权限请求，无法测试响铃")));
+                       SnackBar(content: Text(S.current.rejectionTestRingtonePermission)));
                 }
               },
               onCancel: () {}));

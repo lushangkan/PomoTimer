@@ -54,6 +54,34 @@
   "afadiana": "Afadiana",
   "bugReport": "Bug Report",
 
+  "needPermission": "Permission Required",
+  "needPermissionContent": "Starting the timer requires some permissions. Do you want to continue?",
+
+  "needStoragePermission": "Permission Required",
+  "needStoragePermissionContent": "Selecting a ringtone requires access to storage. Do you want to continue?",
+
+  "needBackgroundPermission": "Permission Required",
+  "needBackgroundPermissionContent": "The timer needs to run continuously in the background to remind you in time.\nA permission settings page may pop up. If it does, please set this app to 'Unrestricted' or allow it to run in the background.",
+
+  "needNotificationPermission": "Permission Required",
+  "needNotificationPermissionContent": "The timer needs notification permissions to remind you in time.\nPlease allow floating notifications and lock screen notifications for this app.",
+
+  "needPopoutPermission": "Permission Required",
+  "needPopoutPermissionContent": "The timer needs to pop up a window to remind you when a stage is reached.\nA permission settings page may pop up. If it does, please set this app to 'Allow in Do Not Disturb mode'.",
+
+  "rejectionTestRingtonePermission": "You have denied the permission request, unable to test the ringtone",
+  "rejectionPermission": "You have denied the permission request, unable to start the timer",
+  
+  "permissionNotGranted": "Permission not granted",
+  
+  "notChooseFile": "No file selected",
+  
+  "fileHasNotAudio": "The file does not contain audio",
+  
+  "ringtoneRegistered": "Ringtone registered",
+  
+  "cannotOpenLink": "Cannot open link: {link} Reason: {reason}",
+
   "focusNotificationTitle": "Focus Time!",
   "focusNotificationContent": "It’s time to dive back into work with full concentration! 🔥",
   "shortBreakNotificationTitle": "Short Break!",

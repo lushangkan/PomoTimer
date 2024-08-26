@@ -5,6 +5,7 @@ import 'package:pomotimer/common/channel/flutter_method_channel.dart';
 import 'package:pomotimer/common/utils/platform_utils.dart';
 import 'package:provider/provider.dart';
 
+import '../generated/l10n.dart';
 import '../states/app_states.dart';
 import '../widgets/button_dialog_inner.dart';
 
@@ -47,7 +48,7 @@ class PermissionHandle {
         context: context,
         backgroundColor: colorScheme.surface,
         builder: (context) {
-          return const ButtonDialogInner(title: '需要权限', content: '启动计时器需要一些权限, 是否继续?',);
+          return ButtonDialogInner(title: S.current.needPermission, content: S.current.needPermissionContent,);
         }
     ) ?? false;
   }
@@ -61,7 +62,7 @@ class PermissionHandle {
         context: context,
         backgroundColor: colorScheme.surface,
         builder: (context) {
-          return const ButtonDialogInner(title: '需要权限', content: '选择铃声需要访问存储的权限, 是否继续?',);
+          return ButtonDialogInner(title: S.current.needStoragePermission, content: S.current.needStoragePermissionContent,);
         }
     ) ?? false;
   }
@@ -216,7 +217,7 @@ class PermissionHandle {
         context: context,
         backgroundColor: colorScheme.surface,
         builder: (context) {
-          return const ButtonDialogInner(title: '需要权限', content: '计时器需要持续在后台运行, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“无限制”或允许应用在后台运行。', selectMode: false,);
+          return ButtonDialogInner(title: S.current.needBackgroundPermission, content: S.current.needBackgroundPermissionContent, selectMode: false,);
         }
     ) ?? false;
   }
@@ -230,7 +231,7 @@ class PermissionHandle {
         context: context,
         backgroundColor: colorScheme.surface,
         builder: (context) {
-          return const ButtonDialogInner(title: '需要权限', content: '计时器需要获取通知权限, 以便及时提醒您。\n请允许该应用的悬浮通知权限和锁屏通知权限。', selectMode: false,);
+          return ButtonDialogInner(title: S.current.needNotificationPermission, content: S.current.needNotificationPermissionContent, selectMode: false,);
         }
     ) ?? false;
   }
@@ -244,7 +245,7 @@ class PermissionHandle {
         context: context,
         backgroundColor: colorScheme.surface,
         builder: (context) {
-          return const ButtonDialogInner(title: '需要权限', content: '计时器需要在到达一个阶段后弹出窗口提醒, 以便及时提醒您。\n可能会弹出权限设置页面, 若弹出, 请将该应用设置为“允许‘勿扰’模式”。', selectMode: false,);
+          return ButtonDialogInner(title: S.current.needPopoutPermission, content: S.current.needPopoutPermissionContent, selectMode: false,);
         }
     ) ?? false;
   }

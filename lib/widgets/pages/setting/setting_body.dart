@@ -59,9 +59,9 @@ class _SettingBodyState extends State<SettingBody> {
         if (!result) {
           // SnackBar提示用户
           if (!context.mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('未授予权限'),
-            duration: Duration(seconds: 2),
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(S.current.permissionNotGranted),
+            duration: const Duration(seconds: 2),
           ));
           return;
         }
@@ -72,9 +72,9 @@ class _SettingBodyState extends State<SettingBody> {
       if (result == null) {
         // SnackBar提示用户
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('未选择文件'),
-          duration: Duration(seconds: 2),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(S.current.notChooseFile),
+          duration: const Duration(seconds: 2),
         ));
         return;
       }
@@ -86,9 +86,9 @@ class _SettingBodyState extends State<SettingBody> {
       if (!hasAudio) {
         // SnackBar提示用户
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('文件不含有音频'),
-          duration: Duration(seconds: 2),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(S.current.fileHasNotAudio),
+          duration: const Duration(seconds: 2),
         ));
         return;
       }

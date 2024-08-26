@@ -20,7 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(time) => "Recommended to set to ${time} minutes";
+  static String m0(link, reason) =>
+      "Cannot open link: ${link} Reason: ${reason}";
+
+  static String m1(time) => "Recommended to set to ${time} minutes";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -34,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "appName": MessageLookupByLibrary.simpleMessage("PomoTimer"),
         "bugReport": MessageLookupByLibrary.simpleMessage("Bug Report"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "cannotOpenLink": m0,
         "chooseLanguage":
             MessageLookupByLibrary.simpleMessage("Choose Language"),
         "chooseRingtone":
@@ -48,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Default Ringtone"),
         "developer": MessageLookupByLibrary.simpleMessage("Developer"),
         "estimatedTime": MessageLookupByLibrary.simpleMessage("Estimated Time"),
+        "fileHasNotAudio": MessageLookupByLibrary.simpleMessage(
+            "The file does not contain audio"),
         "focus": MessageLookupByLibrary.simpleMessage("Focus"),
         "focusNotificationContent": MessageLookupByLibrary.simpleMessage(
             "It’s time to dive back into work with full concentration! 🔥"),
@@ -66,9 +72,37 @@ class MessageLookup extends MessageLookupByLibrary {
         "longBreakNotificationTitle":
             MessageLookupByLibrary.simpleMessage("Relaxation Time!"),
         "lushangkan": MessageLookupByLibrary.simpleMessage("lushangkan"),
+        "needBackgroundPermission":
+            MessageLookupByLibrary.simpleMessage("Permission Required"),
+        "needBackgroundPermissionContent": MessageLookupByLibrary.simpleMessage(
+            "The timer needs to run continuously in the background to remind you in time.\nA permission settings page may pop up. If it does, please set this app to \'Unrestricted\' or allow it to run in the background."),
+        "needNotificationPermission":
+            MessageLookupByLibrary.simpleMessage("Permission Required"),
+        "needNotificationPermissionContent": MessageLookupByLibrary.simpleMessage(
+            "The timer needs notification permissions to remind you in time.\nPlease allow floating notifications and lock screen notifications for this app."),
+        "needPermission":
+            MessageLookupByLibrary.simpleMessage("Permission Required"),
+        "needPermissionContent": MessageLookupByLibrary.simpleMessage(
+            "Starting the timer requires some permissions. Do you want to continue?"),
+        "needPopoutPermission":
+            MessageLookupByLibrary.simpleMessage("Permission Required"),
+        "needPopoutPermissionContent": MessageLookupByLibrary.simpleMessage(
+            "The timer needs to pop up a window to remind you when a stage is reached.\nA permission settings page may pop up. If it does, please set this app to \'Allow in Do Not Disturb mode\'."),
+        "needStoragePermission":
+            MessageLookupByLibrary.simpleMessage("Permission Required"),
+        "needStoragePermissionContent": MessageLookupByLibrary.simpleMessage(
+            "Selecting a ringtone requires access to storage. Do you want to continue?"),
+        "notChooseFile":
+            MessageLookupByLibrary.simpleMessage("No file selected"),
         "notificationStopButton": MessageLookupByLibrary.simpleMessage("Stop"),
+        "permissionNotGranted":
+            MessageLookupByLibrary.simpleMessage("Permission not granted"),
         "phase": MessageLookupByLibrary.simpleMessage("Phase"),
-        "recommendTime": m0,
+        "recommendTime": m1,
+        "rejectionPermission": MessageLookupByLibrary.simpleMessage(
+            "You have denied the permission request, unable to start the timer"),
+        "rejectionTestRingtonePermission": MessageLookupByLibrary.simpleMessage(
+            "You have denied the permission request, unable to test the ringtone"),
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("Alarm"),
         "reminderModeButtonTip":
             MessageLookupByLibrary.simpleMessage("Reminder Mode"),
@@ -76,6 +110,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminderNotification":
             MessageLookupByLibrary.simpleMessage("Notification"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("Vibration"),
+        "ringtoneRegistered":
+            MessageLookupByLibrary.simpleMessage("Ringtone registered"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settingAboutTitle": MessageLookupByLibrary.simpleMessage("About"),
         "settingAutoNextTitle":

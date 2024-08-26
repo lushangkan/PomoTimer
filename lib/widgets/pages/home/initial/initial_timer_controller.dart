@@ -9,6 +9,7 @@ import '../../../../common/constants.dart';
 import '../../../../common/enum/attribute.dart';
 import '../../../../common/enum/reminder_type.dart';
 import '../../../../common/timer/timer.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../states/timer_states.dart';
 import '../attribute_selector.dart';
 import '../attribute_switcher.dart';
@@ -91,7 +92,7 @@ class _InitialTimerControllerState extends TimerControllerState {
           return;
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("您拒绝了权限请求，无法开始计时")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.current.rejectionPermission)));
         logger.d('User denied permission.');
       }
     }
