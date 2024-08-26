@@ -32,10 +32,13 @@
   "alwaysOff": "总是关闭",
 
   "chooseTheme": "选择主题",
+  "defaultTheme": "默认主题",
 
   "chooseRingtone": "选择铃声",
   "defaultRingtone": "默认铃声",
   "fromStorage": "从存储中选择",
+
+  "about": "关于",
 
   "version": "版本",
 

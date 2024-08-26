@@ -32,11 +32,14 @@
   "alwaysOff": "Always Off",
 
   "chooseTheme": "Choose Theme",
+  "defaultTheme": "Default Theme",
+
 
   "chooseRingtone": "Choose Ringtone",
   "defaultRingtone": "Default Ringtone",
   "fromStorage": "Choose from Storage",
 
+  "about": "About",
   "version": "Version",
 
   "developer": "Developer",
@@ -54,6 +57,7 @@
   "afadiana": "Afadiana",
   "bugReport": "Bug Report",
 
+  
   "needPermission": "Permission Required",
   "needPermissionContent": "Starting the timer requires some permissions. Do you want to continue?",
 
@@ -71,15 +75,15 @@
 
   "rejectionTestRingtonePermission": "You have denied the permission request, unable to test the ringtone",
   "rejectionPermission": "You have denied the permission request, unable to start the timer",
-  
+
   "permissionNotGranted": "Permission not granted",
-  
+
   "notChooseFile": "No file selected",
-  
+
   "fileHasNotAudio": "The file does not contain audio",
-  
+
   "ringtoneRegistered": "Ringtone registered",
-  
+
   "cannotOpenLink": "Cannot open link: {link} Reason: {reason}",
 
   "focusNotificationTitle": "Focus Time!",

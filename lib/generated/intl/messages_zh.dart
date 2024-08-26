@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "about": MessageLookupByLibrary.simpleMessage("关于"),
         "acknowledgments": MessageLookupByLibrary.simpleMessage("鸣谢"),
         "acknowledgmentsLogoDesign":
             MessageLookupByLibrary.simpleMessage("提供Logo设计指导"),
@@ -44,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyrightInfo": MessageLookupByLibrary.simpleMessage("版权信息"),
         "darkMode": MessageLookupByLibrary.simpleMessage("暗色模式"),
         "defaultRingtone": MessageLookupByLibrary.simpleMessage("默认铃声"),
+        "defaultTheme": MessageLookupByLibrary.simpleMessage("默认主题"),
         "developer": MessageLookupByLibrary.simpleMessage("开发者"),
         "estimatedTime": MessageLookupByLibrary.simpleMessage("预计时间"),
         "fileHasNotAudio": MessageLookupByLibrary.simpleMessage("文件不含有音频"),

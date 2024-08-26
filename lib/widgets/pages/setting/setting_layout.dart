@@ -4,6 +4,8 @@ import 'package:pomotimer/widgets/pages/app_page.dart';
 import 'package:pomotimer/widgets/pages/home/click_listener.dart';
 import 'package:pomotimer/widgets/pages/setting/setting_body.dart';
 
+import '../../../generated/l10n.dart';
+
 class SettingPage extends AppPage {
   const SettingPage({super.key});
 
@@ -29,7 +31,7 @@ class TopBar extends AppBar {
   TopBar(ThemeData theme, BuildContext context, {super.key})
       : super(
             backgroundColor: Colors.transparent,
-            title: Text("设置", style: theme.textTheme.titleLarge,),
+            title: Text(S.current.setting, style: theme.textTheme.titleLarge,),
             leading: Container(
               margin: const EdgeInsets.only(left: 15),
               child: IconButton(

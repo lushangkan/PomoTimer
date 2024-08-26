@@ -280,6 +280,16 @@ class S {
     );
   }
 
+  /// `默认主题`
+  String get defaultTheme {
+    return Intl.message(
+      '默认主题',
+      name: 'defaultTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `选择铃声`
   String get chooseRingtone {
     return Intl.message(
@@ -305,6 +315,16 @@ class S {
     return Intl.message(
       '从存储中选择',
       name: 'fromStorage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `关于`
+  String get about {
+    return Intl.message(
+      '关于',
+      name: 'about',
       desc: '',
       args: [],
     );

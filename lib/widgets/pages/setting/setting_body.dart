@@ -249,13 +249,13 @@ class LanguageDialog extends StatelessWidget {
     }
 
     return AlertDialog(
-      title: const Text('选择语言'),
+      title: Text(S.current.chooseLanguage),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             selected: PreferenceManager.instance.language == null,
-            title: const Text('跟随系统'),
+            title: Text(S.current.followSystem),
             onTap: () {
               setLanguage(null);
             },
@@ -281,7 +281,7 @@ class LanguageDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('取消'),
+          child: Text(S.current.cancel),
         ),
       ],
     );
@@ -315,27 +315,27 @@ class DarkModeDialog extends StatelessWidget {
     }
 
     return AlertDialog(
-      title: const Text('选择主题'),
+      title: Text(S.current.darkMode),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             selected: PreferenceManager.instance.themeMode == 1,
-            title: const Text('始终关闭'),
+            title: Text(S.current.alwaysOn),
             onTap: () {
               setDarkMode(1);
             },
           ),
           ListTile(
             selected: PreferenceManager.instance.themeMode == 2,
-            title: const Text('始终开启'),
+            title: Text(S.current.alwaysOff),
             onTap: () {
               setDarkMode(2);
             },
           ),
           ListTile(
             selected: PreferenceManager.instance.themeMode == 0,
-            title: const Text('跟随系统'),
+            title: Text(S.current.followSystem),
             onTap: () {
               setDarkMode(0);
             },
@@ -347,7 +347,7 @@ class DarkModeDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('取消'),
+          child: Text(S.current.cancel),
         ),
       ],
     );
@@ -395,7 +395,7 @@ class ThemeDialog extends StatelessWidget {
             borderRadius: BorderRadius.circular(2),
           )
       ),
-      title: const Text('默认'),
+      title: Text(S.current.defaultTheme),
       onTap: () {
         PreferenceManager.instance.themeName = null;
 
@@ -405,7 +405,7 @@ class ThemeDialog extends StatelessWidget {
     ));
 
     return AlertDialog(
-      title: const Text('选择主题'),
+      title: Text(S.current.chooseTheme),
       content: SizedBox(
         height: 600,
         width: 300,
@@ -418,7 +418,7 @@ class ThemeDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('取消'),
+          child: Text(S.current.cancel),
         ),
       ],
     );
@@ -435,13 +435,13 @@ class RingtoneDialog extends StatelessWidget {
     AppTimer timer = AppTimer.instance;
 
     return AlertDialog(
-      title: const Text('选择铃声'),
+      title: Text(S.current.chooseRingtone),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             selected: PreferenceManager.instance.ringtonePath == null,
-            title: const Text('默认'),
+            title: Text(S.current.defaultRingtone),
             onTap: () {
               if (PreferenceManager.instance.ringtonePath == null) {
                 Navigator.pop(context);
@@ -456,7 +456,7 @@ class RingtoneDialog extends StatelessWidget {
           ),
           ListTile(
             selected: PreferenceManager.instance.ringtonePath != null,
-            title: const Text('从存储中选择'),
+            title: Text(S.current.fromStorage),
             onTap: () {
               Navigator.pop(context);
 
@@ -470,7 +470,7 @@ class RingtoneDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('取消'),
+          child: Text(S.current.cancel),
         ),
       ],
     );
