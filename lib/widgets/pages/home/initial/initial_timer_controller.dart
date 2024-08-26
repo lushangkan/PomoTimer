@@ -96,52 +96,50 @@ class _InitialTimerControllerState extends TimerControllerState {
       }
     }
 
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 300),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          AttributeSwitcher(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        AttributeSwitcher(
+          selected: selected,
+          onSelected: onAttributeSwitcherSelected,
+        ),
+        Hero(
+          tag: "time",
+          child: AttributeSelector(
             selected: selected,
-            onSelected: onAttributeSwitcherSelected,
+            customTimes: _tmpCustomTimes,
+            onSelected: onAttributeSelectorSelected,
           ),
-          Hero(
-            tag: "time",
-            child: AttributeSelector(
-              selected: selected,
-              customTimes: _tmpCustomTimes,
-              onSelected: onAttributeSelectorSelected,
-            ),
-          ),
-          SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TotalTimeDisplay(
-                    customTimes: _tmpCustomTimes,
-                    longBreakInterval: Constants.longBreakInterval),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: VerticalDivider(
-                    color: theme.colorScheme.onSurface.withOpacity(0.3),
-                    width: 1,
-                  ),
+        ),
+        SizedBox(
+          height: 60,
+          width: 300,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TotalTimeDisplay(
+                  customTimes: _tmpCustomTimes,
+                  longBreakInterval: Constants.longBreakInterval),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: VerticalDivider(
+                  color: theme.colorScheme.onSurface.withOpacity(0.3),
+                  width: 1,
                 ),
-                ReminderTypeSwitcher(
-                    reminderType: _tmpReminderType,
-                    onSelected: onReminderTypeSwitcherSelected),
-              ],
-            ),
+              ),
+              ReminderTypeSwitcher(
+                  reminderType: _tmpReminderType,
+                  onSelected: onReminderTypeSwitcherSelected),
+            ],
           ),
-          Hero(
-            tag: 'control_button',
-            child: StartButton(
-              onPressed: onPressedStartButton,
-            ),
-          )
-        ],
-      ),
+        ),
+        Hero(
+          tag: 'control_button',
+          child: StartButton(
+            onPressed: onPressedStartButton,
+          ),
+        )
+      ],
     );
   }
 }

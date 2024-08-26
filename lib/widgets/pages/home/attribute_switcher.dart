@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 
 import '../../../common/app_text_style.dart';
 import '../../../common/enum/attribute.dart';
+import '../../../generated/l10n.dart';
 
 class AttributeSwitcher extends StatefulWidget {
   const AttributeSwitcher({super.key, required this.selected, this.onSelected});
@@ -103,7 +104,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
         BoxyId(
           id: Phase.focus,
           child: AttributeBtn(
-            text: '专注',
+            text: S.current.focus,
             onPressed: () => _onPressed(Phase.focus),
           ),
         ),
@@ -111,7 +112,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
         BoxyId(
           id: Phase.shortBreak,
           child: AttributeBtn(
-            text: '小休息',
+            text: S.current.shortBreak,
             onPressed: () => _onPressed(Phase.shortBreak),
           ),
         ),
@@ -119,7 +120,7 @@ class _AttributeSwitcherState extends State<AttributeSwitcher>
         BoxyId(
           id: Phase.longBreak,
           child: AttributeBtn(
-            text: '大休息',
+            text: S.current.longBreak,
             onPressed: () => _onPressed(Phase.longBreak),
           ),
         ),

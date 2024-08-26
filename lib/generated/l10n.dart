@@ -130,6 +130,306 @@ class S {
     );
   }
 
+  /// `专注`
+  String get focus {
+    return Intl.message(
+      '专注',
+      name: 'focus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `小休息`
+  String get shortBreak {
+    return Intl.message(
+      '小休息',
+      name: 'shortBreak',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `大休息`
+  String get longBreak {
+    return Intl.message(
+      '大休息',
+      name: 'longBreak',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `推荐设置为{time}分钟`
+  String recommendTime(Object time) {
+    return Intl.message(
+      '推荐设置为$time分钟',
+      name: 'recommendTime',
+      desc: '',
+      args: [time],
+    );
+  }
+
+  /// `预计时间`
+  String get estimatedTime {
+    return Intl.message(
+      '预计时间',
+      name: 'estimatedTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `提醒模式`
+  String get reminderModeButtonTip {
+    return Intl.message(
+      '提醒模式',
+      name: 'reminderModeButtonTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `阶段`
+  String get phase {
+    return Intl.message(
+      '阶段',
+      name: 'phase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `设置`
+  String get setting {
+    return Intl.message(
+      '设置',
+      name: 'setting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `跟随系统`
+  String get followSystem {
+    return Intl.message(
+      '跟随系统',
+      name: 'followSystem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `取消`
+  String get cancel {
+    return Intl.message(
+      '取消',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `选择语言`
+  String get chooseLanguage {
+    return Intl.message(
+      '选择语言',
+      name: 'chooseLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `暗色模式`
+  String get darkMode {
+    return Intl.message(
+      '暗色模式',
+      name: 'darkMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `总是开启`
+  String get alwaysOn {
+    return Intl.message(
+      '总是开启',
+      name: 'alwaysOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `总是关闭`
+  String get alwaysOff {
+    return Intl.message(
+      '总是关闭',
+      name: 'alwaysOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `选择主题`
+  String get chooseTheme {
+    return Intl.message(
+      '选择主题',
+      name: 'chooseTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `选择铃声`
+  String get chooseRingtone {
+    return Intl.message(
+      '选择铃声',
+      name: 'chooseRingtone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `默认铃声`
+  String get defaultRingtone {
+    return Intl.message(
+      '默认铃声',
+      name: 'defaultRingtone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `从存储中选择`
+  String get fromStorage {
+    return Intl.message(
+      '从存储中选择',
+      name: 'fromStorage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `版本`
+  String get version {
+    return Intl.message(
+      '版本',
+      name: 'version',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `开发者`
+  String get developer {
+    return Intl.message(
+      '开发者',
+      name: 'developer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `路上看见`
+  String get lushangkan {
+    return Intl.message(
+      '路上看见',
+      name: 'lushangkan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `源码仓库`
+  String get codeRepo {
+    return Intl.message(
+      '源码仓库',
+      name: 'codeRepo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `项目协议`
+  String get codeLicense {
+    return Intl.message(
+      '项目协议',
+      name: 'codeLicense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `鸣谢`
+  String get acknowledgments {
+    return Intl.message(
+      '鸣谢',
+      name: 'acknowledgments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `提供Logo设计指导`
+  String get acknowledgmentsLogoDesign {
+    return Intl.message(
+      '提供Logo设计指导',
+      name: 'acknowledgmentsLogoDesign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `版权信息`
+  String get copyrightInfo {
+    return Intl.message(
+      '版权信息',
+      name: 'copyrightInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `字体`
+  String get fontCopyRight {
+    return Intl.message(
+      '字体',
+      name: 'fontCopyRight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `赞助`
+  String get sponsor {
+    return Intl.message(
+      '赞助',
+      name: 'sponsor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `爱发电`
+  String get afadiana {
+    return Intl.message(
+      '爱发电',
+      name: 'afadiana',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `问题反馈`
+  String get bugReport {
+    return Intl.message(
+      '问题反馈',
+      name: 'bugReport',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `集中注意力!`
   String get focusNotificationTitle {
     return Intl.message(

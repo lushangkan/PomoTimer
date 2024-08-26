@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pomotimer/common/constants.dart';
 import 'package:pomotimer/common/enum/reminder_type.dart';
 
+import '../../../generated/l10n.dart';
+
 class ReminderTypeSwitcher extends StatelessWidget {
   const ReminderTypeSwitcher({super.key, required this.reminderType, required this.onSelected});
 
@@ -22,7 +24,7 @@ class ReminderTypeSwitcher extends StatelessWidget {
         ),
         child: PopupMenuButton(
           // TODO: PopupMenuButton背景颜色和color不一致，提交issue
-          tooltip: "选择提醒类型",
+          tooltip: S.current.chooseRingtone,
           icon: Icon(reminderType.icon),
           onSelected: (ReminderType? value) {
             if (value != null) {

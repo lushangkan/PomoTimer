@@ -4,6 +4,7 @@ import 'package:pomotimer/common/utils/timer_utils.dart';
 
 import '../../../common/enum/attribute.dart';
 import '../../../common/utils/app_utils.dart';
+import '../../../generated/l10n.dart';
 
 
 class TotalTimeDisplay extends StatelessWidget {
@@ -63,7 +64,7 @@ class TotalTimeDisplay extends StatelessWidget {
               style: timeTextStyle,
             ),
             Text(
-              '预计时间',
+              S.current.estimatedTime,
               style: descriptionTextStyle,
             ),
           ],

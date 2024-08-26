@@ -20,26 +20,63 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(time) => "Recommended to set to ${time} minutes";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "acknowledgments":
+            MessageLookupByLibrary.simpleMessage("Acknowledgments"),
+        "acknowledgmentsLogoDesign": MessageLookupByLibrary.simpleMessage(
+            "Provided logo design guidance"),
+        "afadiana": MessageLookupByLibrary.simpleMessage("Afadiana"),
+        "alwaysOff": MessageLookupByLibrary.simpleMessage("Always Off"),
+        "alwaysOn": MessageLookupByLibrary.simpleMessage("Always On"),
         "appName": MessageLookupByLibrary.simpleMessage("PomoTimer"),
+        "bugReport": MessageLookupByLibrary.simpleMessage("Bug Report"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "chooseLanguage":
+            MessageLookupByLibrary.simpleMessage("Choose Language"),
+        "chooseRingtone":
+            MessageLookupByLibrary.simpleMessage("Choose Ringtone"),
+        "chooseTheme": MessageLookupByLibrary.simpleMessage("Choose Theme"),
+        "codeLicense": MessageLookupByLibrary.simpleMessage("Project License"),
+        "codeRepo": MessageLookupByLibrary.simpleMessage("Repo"),
+        "copyrightInfo":
+            MessageLookupByLibrary.simpleMessage("Copyright Information"),
+        "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+        "defaultRingtone":
+            MessageLookupByLibrary.simpleMessage("Default Ringtone"),
+        "developer": MessageLookupByLibrary.simpleMessage("Developer"),
+        "estimatedTime": MessageLookupByLibrary.simpleMessage("Estimated Time"),
+        "focus": MessageLookupByLibrary.simpleMessage("Focus"),
         "focusNotificationContent": MessageLookupByLibrary.simpleMessage(
             "It’s time to dive back into work with full concentration! 🔥"),
         "focusNotificationTitle":
             MessageLookupByLibrary.simpleMessage("Focus Time!"),
+        "followSystem": MessageLookupByLibrary.simpleMessage("Follow System"),
+        "fontCopyRight": MessageLookupByLibrary.simpleMessage("Font"),
         "foregroundNotificationDescription":
             MessageLookupByLibrary.simpleMessage(
                 "The timer is being processed in the background..."),
+        "fromStorage":
+            MessageLookupByLibrary.simpleMessage("Choose from Storage"),
+        "longBreak": MessageLookupByLibrary.simpleMessage("Long Break"),
         "longBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
             "You’ve been working hard, now it’s time to unwind and recharge before you go again! 🍹"),
         "longBreakNotificationTitle":
             MessageLookupByLibrary.simpleMessage("Relaxation Time!"),
+        "lushangkan": MessageLookupByLibrary.simpleMessage("lushangkan"),
         "notificationStopButton": MessageLookupByLibrary.simpleMessage("Stop"),
+        "phase": MessageLookupByLibrary.simpleMessage("Phase"),
+        "recommendTime": m0,
         "reminderAlarm": MessageLookupByLibrary.simpleMessage("Alarm"),
+        "reminderModeButtonTip":
+            MessageLookupByLibrary.simpleMessage("Reminder Mode"),
         "reminderNone": MessageLookupByLibrary.simpleMessage("None"),
         "reminderNotification":
             MessageLookupByLibrary.simpleMessage("Notification"),
         "reminderVibration": MessageLookupByLibrary.simpleMessage("Vibration"),
+        "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settingAboutTitle": MessageLookupByLibrary.simpleMessage("About"),
         "settingAutoNextTitle":
             MessageLookupByLibrary.simpleMessage("Auto Start Next Pomodoro"),
@@ -54,10 +91,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ringtone"),
         "settingThemeTitle": MessageLookupByLibrary.simpleMessage("Theme"),
         "settingTitle": MessageLookupByLibrary.simpleMessage("Settings"),
+        "shortBreak": MessageLookupByLibrary.simpleMessage("Short Break"),
         "shortBreakNotificationContent": MessageLookupByLibrary.simpleMessage(
             "A quick break will refresh you and get you ready for the next focus session! 🌟"),
         "shortBreakNotificationTitle":
             MessageLookupByLibrary.simpleMessage("Short Break!"),
-        "startBtn": MessageLookupByLibrary.simpleMessage("Start")
+        "sponsor": MessageLookupByLibrary.simpleMessage("Sponsor"),
+        "startBtn": MessageLookupByLibrary.simpleMessage("Start"),
+        "version": MessageLookupByLibrary.simpleMessage("Version")
       };
 }

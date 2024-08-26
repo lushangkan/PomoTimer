@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../common/app_text_style.dart';
 import '../../../common/constants.dart';
 import '../../../common/enum/attribute.dart';
+import '../../../generated/l10n.dart';
 import '../../../states/timer_states.dart';
 import '../../slider/app_circular_slider.dart';
 
@@ -61,7 +62,7 @@ class CircularSliderInner extends StatelessWidget {
     var showSecond = '00';
 
     var showText = '$showMinute:$showSecond';
-    var recText = '推荐设置为$recTimeMinute分钟';
+    var recText = S.current.recommendTime(recTimeMinute);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -70,9 +71,13 @@ class CircularSliderInner extends StatelessWidget {
           showText,
           style: textTheme,
         ),
-        Text(
-          recText,
-          style: recTextStyle,
+        SizedBox(
+          width: 100,
+          child: Text(
+            recText,
+            style: recTextStyle,
+            textAlign: TextAlign.center,
+          ),
         )
       ],
     );

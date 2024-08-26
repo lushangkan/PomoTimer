@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../common/app_text_style.dart';
 import '../../../common/enum/attribute.dart';
 import '../../../common/utils/app_utils.dart';
+import '../../../generated/l10n.dart';
 import '../../../states/timer_states.dart';
 
 class TimeDisplay extends StatelessWidget {
@@ -80,7 +81,7 @@ class _TimeDisplayInner extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(timeText, style: textTheme,),
-          Text("阶段 $smallCyclesCompleted / ${Constants.longBreakInterval}", style: cyclesTextStyle,)
+          Text("${S.current.phase} $smallCyclesCompleted / ${Constants.longBreakInterval}", style: cyclesTextStyle,)
         ],
       ),
     );

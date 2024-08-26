@@ -8,6 +8,7 @@ import 'package:pomotimer/themes/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/constants.dart';
+import '../../../generated/l10n.dart';
 
 class AboutBody extends StatelessWidget {
   const AboutBody({super.key});
@@ -89,7 +90,7 @@ class Head extends StatelessWidget {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("版本: v0.1.0", style: versionText,),
+                            Text("${S.current.version}: v0.1.0", style: versionText,),
                           ],
                         )
                       ],
@@ -139,15 +140,15 @@ class DeveloperInfo extends StatelessWidget {
             Row(children: [
               SizedBox(child: Icon(LucideIcons.code_xml, color: themeColor.onSurfaceVariant,size: 25, )),
               const SizedBox(width: 7,),
-              Text("开发者:", style: titleText,),
+              Text("${S.current.developer}:", style: titleText,),
               const SizedBox(width: 5,),
-              Text("路上看见", style: contentText,),
+              Text(S.current.lushangkan, style: contentText,),
             ],),
             // 代码仓库: lushangkan/PomoTimer
             Row(children: [
               SizedBox(child: Icon(LucideIcons.github, color: themeColor.onSurfaceVariant,size: 25, )),
               const SizedBox(width: 7,),
-              Text("代码仓库:", style: titleText,),
+              Text("${S.current.codeRepo}:", style: titleText,),
               const SizedBox(width: 5,),
               Text("lushangkan/PomoTimer", style: contentText,),
             ],),
@@ -155,7 +156,7 @@ class DeveloperInfo extends StatelessWidget {
             Row(children: [
               SizedBox(child: Icon(LucideIcons.creative_commons, color: themeColor.onSurfaceVariant,size: 25, )),
               const SizedBox(width: 7,),
-              Text("代码协议:", style: titleText,),
+              Text("${S.current.codeLicense}:", style: titleText,),
               const SizedBox(width: 5,),
               Text("GPLv3", style: contentText,),
             ],),
@@ -199,7 +200,7 @@ class Acknowledgments extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Row(children: [
-              Text("鸣谢", style: lagerTitleText,),
+              Text(S.current.acknowledgments, style: lagerTitleText,),
             ],),
           ),
           Container(
@@ -216,7 +217,7 @@ class Acknowledgments extends StatelessWidget {
                 children: [
                 Text("Imsale", style: titleText,),
                 const SizedBox(width: 5,),
-                Text("提供Logo设计指导", style: contentText,),
+                Text(S.current.acknowledgmentsLogoDesign, style: contentText,),
               ],)
             ),
           ),
@@ -261,7 +262,7 @@ class CopyRight extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Row(children: [
-              Text("版权信息", style: lagerTitleText,),
+              Text(S.current.copyrightInfo, style: lagerTitleText,),
             ],),
           ),
           Container(
@@ -272,7 +273,7 @@ class CopyRight extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 20, left: 26),
               child: Row(children: [
-                Text("字体:", style: titleText,),
+                Text("${S.current.fontCopyRight}:", style: titleText,),
                 const SizedBox(width: 5,),
                 Text("MiSans", style: contentText,),
               ],),
@@ -356,10 +357,10 @@ class Sponsor extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 11,bottom: 20),
-                child: Text("赞助", style: titleStyle,),
+                child: Text(S.current.sponsor, style: titleStyle,),
               ),
               SizedBox(
-                width: 145,
+                width: 160,
                 height: 50,
                 child: FilledButton(
                   style: buttonStyle,
@@ -370,7 +371,7 @@ class Sponsor extends StatelessWidget {
                       children: [
                         const SizedBox(width:30, child: Image(image: AssetImage("assets/media/image/aifadian.png"))),
                         const SizedBox(width: 5,),
-                        Text("爱发电", style: buttonTextStyle,)
+                        Text(S.current.afadiana, style: buttonTextStyle,)
                       ],
                     ),
                   ),
@@ -429,7 +430,7 @@ class BugReport extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 11,bottom: 20),
-          child: Text("问题反馈", style: titleStyle,),
+          child: Text(S.current.bugReport, style: titleStyle,),
         ),
         SizedBox(
           width: 145,

@@ -116,38 +116,35 @@ class InProgressTimeControllerState extends TimerControllerState  {
 
     var timer = AppTimer.instance;
 
-    return Container(
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          TotalProgressIndicator(
-              elapsedTime: timer.elapsedTime ?? 0,
-              totalTime: timer.totalTime!),
-          Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 265, maxHeight: 580),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  AttributeSwitcher(
-                    selected: phase ?? Phase.focus,
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        TotalProgressIndicator(
+            elapsedTime: timer.elapsedTime ?? 0,
+            totalTime: timer.totalTime!),
+        Center(
+          child: Container(
+            constraints: const BoxConstraints(maxHeight: 580),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                AttributeSwitcher(
+                  selected: phase ?? Phase.focus,
+                ),
+                Hero(
+                  tag: 'time',
+                  child: TimeDisplay(
+                    phase: phase ?? Phase.focus,
+                    timeOfCurrentPhase: timeOfCurrentPhase ?? 0,
+                    smallCyclesCompleted: smallCyclesCompleted ?? 0,
                   ),
-                  Hero(
-                    tag: 'time',
-                    child: TimeDisplay(
-                      phase: phase ?? Phase.focus,
-                      timeOfCurrentPhase: timeOfCurrentPhase ?? 0,
-                      smallCyclesCompleted: smallCyclesCompleted ?? 0,
-                    ),
-                  ),
-                  const ControlButtons()
-                ],
-              ),
+                ),
+                const ControlButtons()
+              ],
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }

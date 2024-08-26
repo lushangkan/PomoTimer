@@ -9,6 +9,51 @@
   "reminderAlarm": "Alarm",
   "startBtn": "Start",
 
+  "focus": "Focus",
+  "shortBreak": "Short Break",
+  "longBreak": "Long Break",
+
+  "recommendTime": "Recommended to set to {time} minutes",
+
+  "estimatedTime": "Estimated Time",
+
+  "reminderModeButtonTip": "Reminder Mode",
+
+  "phase": "Phase",
+
+  "setting": "Setting",
+  "followSystem": "Follow System",
+  "cancel": "Cancel",
+
+  "chooseLanguage": "Choose Language",
+  "darkMode": "Dark Mode",
+
+  "alwaysOn": "Always On",
+  "alwaysOff": "Always Off",
+
+  "chooseTheme": "Choose Theme",
+
+  "chooseRingtone": "Choose Ringtone",
+  "defaultRingtone": "Default Ringtone",
+  "fromStorage": "Choose from Storage",
+
+  "version": "Version",
+
+  "developer": "Developer",
+  "lushangkan": "lushangkan",
+  "codeRepo": "Repo",
+  "codeLicense": "Project License",
+
+  "acknowledgments": "Acknowledgments",
+  "acknowledgmentsLogoDesign": "Provided logo design guidance",
+
+  "copyrightInfo": "Copyright Information",
+  "fontCopyRight": "Font",
+
+  "sponsor": "Sponsor",
+  "afadiana": "Afadiana",
+  "bugReport": "Bug Report",
+
   "focusNotificationTitle": "Focus Time!",
   "focusNotificationContent": "It’s time to dive back into work with full concentration! 🔥",
   "shortBreakNotificationTitle": "Short Break!",

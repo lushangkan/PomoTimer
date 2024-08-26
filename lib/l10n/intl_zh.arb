@@ -9,6 +9,51 @@
   "reminderAlarm": "闹钟提醒",
   "startBtn": "开始",
 
+  "focus": "专注",
+  "shortBreak": "小休息",
+  "longBreak": "大休息",
+
+  "recommendTime": "推荐设置为{time}分钟",
+  
+  "estimatedTime": "预计时间",
+
+  "reminderModeButtonTip": "提醒模式",
+
+  "phase": "阶段",
+
+  "setting": "设置",
+  "followSystem": "跟随系统",
+  "cancel": "取消",
+
+  "chooseLanguage": "选择语言",
+  "darkMode": "暗色模式",
+
+  "alwaysOn": "总是开启",
+  "alwaysOff": "总是关闭",
+
+  "chooseTheme": "选择主题",
+
+  "chooseRingtone": "选择铃声",
+  "defaultRingtone": "默认铃声",
+  "fromStorage": "从存储中选择",
+
+  "version": "版本",
+
+  "developer": "开发者",
+  "lushangkan": "路上看见",
+  "codeRepo": "源码仓库",
+  "codeLicense": "项目协议",
+
+  "acknowledgments": "鸣谢",
+  "acknowledgmentsLogoDesign": "提供Logo设计指导",
+
+  "copyrightInfo": "版权信息",
+  "fontCopyRight": "字体",
+
+  "sponsor": "赞助",
+  "afadiana": "爱发电",
+  "bugReport": "问题反馈",
+
   "focusNotificationTitle": "集中注意力!",
   "focusNotificationContent": "专注的时间开始了, 让我们沉浸在工作中吧! 🔥",
   "shortBreakNotificationTitle": "短暂休息!",
