@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../../../../common/constants.dart';
 import '../../../../common/enum/attribute.dart';
 import '../../../../common/enum/reminder_type.dart';
+import '../../../../common/exceptions.dart';
 import '../../../../common/timer/timer.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../states/timer_states.dart';
@@ -89,7 +90,16 @@ class _InitialTimerControllerState extends TimerControllerState {
         timer.setCustomTimes(_tmpCustomTimes);
         timer.setReminderType(_tmpReminderType);
 
-        timer.start();
+        try {
+          timer.start();
+        } catch (e) {
+          if (e is PermissionDeniedException) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.current.rejectionPermission)));
+          } else {
+            logger.e(e);
+          }
+          return;
+      }
 
         context.go('/in-progress');
       } else {
