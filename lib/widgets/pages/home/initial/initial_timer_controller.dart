@@ -49,9 +49,8 @@ class _InitialTimerControllerState extends TimerControllerState {
     // 从State复制customTimes
     var timerStates = context.read<TimerStates>();
 
-    _tmpCustomTimes = timerStates.customTimes;
+    _tmpCustomTimes = Map<Phase, int>.from(timerStates.customTimes);
     _tmpReminderType = timerStates.reminderType!;
-
   }
 
   @override

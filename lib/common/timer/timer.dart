@@ -221,7 +221,7 @@ class AppTimer {
     if (totalTime != null &&
         elapsedTime != null &&
         elapsedTime! >= totalTime!) {
-        return true;
+      return true;
     }
     return false;
   }
@@ -253,7 +253,6 @@ class AppTimer {
         _states.customLongBreakTime = time;
         break;
       case Phase.finish:
-
     }
 
     _states.notifyListeners();
@@ -398,16 +397,19 @@ class AppTimer {
         throw Exception('Current phase is null');
       }
 
-      if (_shouldSkipPhase(currentPhase, currentPhaseCycles!, phaseCycle, phase)) {
+      if (_shouldSkipPhase(
+          currentPhase, currentPhaseCycles!, phaseCycle, phase)) {
         continue;
       }
 
-      var ringTime = DateTime.now().add(Duration(milliseconds: (time - elapsedTime!)));
+      var ringTime =
+          DateTime.now().add(Duration(milliseconds: (time - elapsedTime!)));
       await _registerUniqueAlarm(phase, ringTime);
     }
   }
 
-  bool _shouldSkipPhase(Phase currentPhase, int currentPhaseCycles, int phaseCycle, Phase phase) {
+  bool _shouldSkipPhase(
+      Phase currentPhase, int currentPhaseCycles, int phaseCycle, Phase phase) {
     var isShortBreak = currentPhase == Phase.shortBreak;
     var isLongBreak = currentPhase == Phase.longBreak;
 
@@ -432,14 +434,17 @@ class AppTimer {
 
     while (result != 0) {
       int alarmId = _randomAlarmId();
-      var (notificationTitle, notificationContent) = _getNotificationDetails(phase);
+      var (notificationTitle, notificationContent) =
+          _getNotificationDetails(phase);
 
       var alarm = Alarm(
         id: alarmId,
         timestamp: ringTime.toUtc().millisecondsSinceEpoch,
         fromAppAsset: PreferenceManager.instance.ringtonePath == null,
-        audioPath: PreferenceManager.instance.ringtonePath ?? 'assets/media/default_ring.mp3',
-        vibrate: _states.reminderType == ReminderType.vibration || _states.reminderType == ReminderType.alarm,
+        audioPath: PreferenceManager.instance.ringtonePath ??
+            'assets/media/default_ring.mp3',
+        vibrate: _states.reminderType == ReminderType.vibration ||
+            _states.reminderType == ReminderType.alarm,
         notification: _states.reminderType != ReminderType.none,
         isAlarm: _states.reminderType == ReminderType.alarm,
         loop: true,
@@ -456,13 +461,25 @@ class AppTimer {
   (String?, String?) _getNotificationDetails(Phase phase) {
     switch (phase) {
       case Phase.focus:
-        return (S.current.focusNotificationTitle, S.current.focusNotificationContent);
+        return (
+          S.current.focusNotificationTitle,
+          S.current.focusNotificationContent
+        );
       case Phase.shortBreak:
-        return (S.current.shortBreakNotificationTitle, S.current.shortBreakNotificationContent);
+        return (
+          S.current.shortBreakNotificationTitle,
+          S.current.shortBreakNotificationContent
+        );
       case Phase.longBreak:
-        return (S.current.longBreakNotificationTitle, S.current.longBreakNotificationContent);
+        return (
+          S.current.longBreakNotificationTitle,
+          S.current.longBreakNotificationContent
+        );
       case Phase.finish:
-        return (S.current.pomodoroEndNotificationTitle, S.current.pomodoroEndNotificationContent);
+        return (
+          S.current.pomodoroEndNotificationTitle,
+          S.current.pomodoroEndNotificationContent
+        );
       default:
         return (null, null);
     }
@@ -516,7 +533,13 @@ class AppTimer {
     _lastPhase = null;
 
     // 如果CustomTime小于最小时间，则重置
-    setCustomTimes(Constants.defaultTime);
+    if (_states.customFocusTime! < Constants.timeRange[Phase.focus]!.$1 ||
+        _states.customShortBreakTime! <
+            Constants.timeRange[Phase.shortBreak]!.$1 ||
+        _states.customLongBreakTime! <
+            Constants.timeRange[Phase.longBreak]!.$1) {
+      setCustomTimes(Constants.defaultTime);
+    }
 
     _states.notifyListeners();
 
@@ -533,7 +556,6 @@ class AppTimer {
     if (willAutoNext) {
       _startTimer();
     }
-
   }
 
   void _pauseTimer() {
