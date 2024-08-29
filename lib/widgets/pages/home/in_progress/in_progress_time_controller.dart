@@ -58,6 +58,10 @@ class InProgressTimeControllerState extends TimerControllerState  {
   }
 
   void onTimerStop(TimerStopEvent event) {
+    if (event.autoNext) {
+      return;
+    }
+
     isTimerStop = true;
     reset();
 

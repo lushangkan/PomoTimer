@@ -118,7 +118,9 @@ class AppTimer {
 
   /// 初始化，仅在应用启动时调用
   void init() {
-    _checkAndResetTimer();
+    if (_checkTimer()) {
+      _stopTimer();
+    }
 
     if (!isRunning || isPausing) {
       // 未运行
@@ -213,15 +215,13 @@ class AppTimer {
     _states.notifyListeners();
   }
 
-  /// 检查并重置计时器
-  /// 如果计时器已经完成，则重置计时器
+  /// 检查计时器
   /// @return 是否已经完成
-  bool _checkAndResetTimer() {
+  bool _checkTimer() {
     if (totalTime != null &&
         elapsedTime != null &&
         elapsedTime! >= totalTime!) {
-      _stopTimer();
-      return true;
+        return true;
     }
     return false;
   }
@@ -506,7 +506,7 @@ class AppTimer {
     _registerAlarm();
   }
 
-  void _stopTimer() {
+  void _stopTimer({bool autoNext = false}) {
     // 清除变量
     _states.startTime = null;
     resetOffsetTime();
@@ -522,11 +522,18 @@ class AppTimer {
 
     if (_timer != null) _destroyInternalTimer();
 
+    var willAutoNext = PreferenceManager.instance.autoNext && autoNext;
+
     // 触发事件
-    eventBus.fire(TimerStopEvent(this));
+    eventBus.fire(TimerStopEvent(this, willAutoNext));
 
     // 取消所有闹钟
     _unregisterAllAlarm();
+
+    if (willAutoNext) {
+      _startTimer();
+    }
+
   }
 
   void _pauseTimer() {
@@ -607,7 +614,8 @@ class AppTimer {
       return;
     }
 
-    if (_checkAndResetTimer()) {
+    if (_checkTimer()) {
+      _stopTimer(autoNext: true);
       return;
     }
 

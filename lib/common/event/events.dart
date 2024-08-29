@@ -67,8 +67,9 @@ class TimerStopEvent implements TimerEvent {
   static const EventType type = EventType.timerStop;
 
   final AppTimer timer;
+  final bool autoNext;
 
-  TimerStopEvent(this.timer);
+  TimerStopEvent(this.timer, this.autoNext);
 }
 
 /// 计时器恢复计时事件

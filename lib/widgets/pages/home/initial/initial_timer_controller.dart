@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pomotimer/common/event/event_bus.dart';
+import 'package:pomotimer/common/event/events.dart';
 import 'package:pomotimer/common/logger.dart';
 import 'package:pomotimer/common/permission_handle.dart';
 import 'package:pomotimer/widgets/pages/home/timer_controller.dart';
@@ -46,6 +51,7 @@ class _InitialTimerControllerState extends TimerControllerState {
 
     _tmpCustomTimes = timerStates.customTimes;
     _tmpReminderType = timerStates.reminderType!;
+
   }
 
   @override
