@@ -74,6 +74,7 @@ class Head extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("PomoTimer", style: logoText),
                         Container(

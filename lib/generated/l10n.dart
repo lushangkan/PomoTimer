@@ -680,6 +680,26 @@ class S {
     );
   }
 
+  /// `番茄钟结束!`
+  String get pomodoroEndNotificationTitle {
+    return Intl.message(
+      '番茄钟结束!',
+      name: 'pomodoroEndNotificationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `恭喜你完成了一个番茄钟，休息一下，准备迎接下一个挑战吧! 🎉`
+  String get pomodoroEndNotificationContent {
+    return Intl.message(
+      '恭喜你完成了一个番茄钟，休息一下，准备迎接下一个挑战吧! 🎉',
+      name: 'pomodoroEndNotificationContent',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `停止`
   String get notificationStopButton {
     return Intl.message(

@@ -100,6 +100,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "permissionNotGranted":
             MessageLookupByLibrary.simpleMessage("Permission not granted"),
         "phase": MessageLookupByLibrary.simpleMessage("Phase"),
+        "pomodoroEndNotificationContent": MessageLookupByLibrary.simpleMessage(
+            "Congratulations on completing a Pomodoro! Take a break and get ready for the next challenge! 🎉"),
+        "pomodoroEndNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("Pomodoro Finished!"),
         "recommendTime": m1,
         "rejectionPermission": MessageLookupByLibrary.simpleMessage(
             "You have denied the permission request, unable to start the timer"),

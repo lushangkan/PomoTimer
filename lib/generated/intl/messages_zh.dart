@@ -87,6 +87,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationStopButton": MessageLookupByLibrary.simpleMessage("停止"),
         "permissionNotGranted": MessageLookupByLibrary.simpleMessage("权限未授予"),
         "phase": MessageLookupByLibrary.simpleMessage("阶段"),
+        "pomodoroEndNotificationContent": MessageLookupByLibrary.simpleMessage(
+            "恭喜你完成了一个番茄钟，休息一下，准备迎接下一个挑战吧! 🎉"),
+        "pomodoroEndNotificationTitle":
+            MessageLookupByLibrary.simpleMessage("番茄钟结束!"),
         "recommendTime": m1,
         "rejectionPermission":
             MessageLookupByLibrary.simpleMessage("您拒绝了权限请求，无法开始计时"),

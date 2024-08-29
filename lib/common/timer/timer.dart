@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:intl/intl.dart';
 import 'package:pomotimer/common/alarm/alarm.dart';
 import 'package:pomotimer/common/channel/flutter_method_channel.dart';
 import 'package:pomotimer/common/event/events.dart';
@@ -88,6 +89,16 @@ class AppTimer {
       return passedTime;
     }
     return null;
+  }
+
+  int? get realElapsedTime {
+    if (_states.startTime == null) {
+      return null;
+    }
+
+    var now = DateTime.now();
+    var passedTime = now.difference(_states.startTime!).inMilliseconds;
+    return passedTime;
   }
 
   /// 获取偏移时间（含暂停时间）
@@ -241,6 +252,8 @@ class AppTimer {
       case Phase.longBreak:
         _states.customLongBreakTime = time;
         break;
+      case Phase.finish:
+
     }
 
     _states.notifyListeners();
@@ -322,19 +335,20 @@ class AppTimer {
 
     for (var i = 0; i < interval; i++) {
       // 记录专注阶段
-      time += focusTimeMs;
       phases.add((i, Phase.focus, time));
+      time += focusTimeMs;
 
       if (i != interval - 1) {
         // 如果不是最后一个循环，记录短休息阶段
-        time += shortBreakTimeMs;
         phases.add((i, Phase.shortBreak, time));
+        time += shortBreakTimeMs;
       }
     }
 
     // 记录长休息阶段
-    time += longBreakTimeMs;
     phases.add((interval, Phase.longBreak, time));
+    time += longBreakTimeMs;
+    phases.add((interval, Phase.finish, time));
 
     return phases;
   }
@@ -367,7 +381,6 @@ class AppTimer {
       return;
     }
 
-    // 检测权限
     if (!PermissionHandle.instance.isPermissionGranted) {
       throw PermissionDeniedException();
     }
@@ -375,75 +388,83 @@ class AppTimer {
     var phases = getPhases();
 
     for (var data in phases) {
-      // var cycle = data.$1;
+      var phaseCycle = data.$1;
       var phase = data.$2;
       var time = data.$3;
 
-      var ringTime = DateTime.now().add(Duration(milliseconds: time));
+      var (currentPhase, _, currentPhaseCycles) = getCurrentPhase!;
 
-      int? result;
-
-      // 当id重复时重新注册
-      while (result != 0) {
-        int alarmId = _randomAlarmId();
-        String? notificationTitle;
-        String? notificationContent;
-
-        if (phase == Phase.focus) {
-          notificationTitle = S.current.focusNotificationTitle;
-          notificationContent = S.current.focusNotificationContent;
-        } else if (phase == Phase.shortBreak) {
-          notificationTitle = S.current.shortBreakNotificationTitle;
-          notificationContent = S.current.shortBreakNotificationContent;
-        } else if (phase == Phase.longBreak) {
-          notificationTitle = S.current.longBreakNotificationTitle;
-          notificationContent = S.current.longBreakNotificationContent;
-        }
-
-        bool vibrate;
-        bool notification;
-        bool isAlarm;
-
-        switch (_states.reminderType) {
-          case null:
-            throw Exception('Reminder type is null');
-          case ReminderType.none:
-            vibrate = false;
-            notification = false;
-            isAlarm = false;
-          case ReminderType.notification:
-            vibrate = false;
-            notification = true;
-            isAlarm = false;
-          case ReminderType.vibration:
-            vibrate = true;
-            notification = true;
-            isAlarm = false;
-          case ReminderType.alarm:
-            vibrate = true;
-            notification = true;
-            isAlarm = true;
-        }
-
-        var alarm = Alarm(
-          id: alarmId,
-          timestamp: ringTime.toUtc().millisecondsSinceEpoch,
-          fromAppAsset: PreferenceManager.instance.ringtonePath == null,
-          audioPath: PreferenceManager.instance.ringtonePath ?? 'assets/media/default_ring.mp3',
-          vibrate: vibrate,
-          notification: notification,
-          isAlarm: isAlarm,
-          loop: true,
-          loopTimes: 5,
-          notificationTitle: notificationTitle,
-          notificationContent: notificationContent,
-        );
-
-        _alarmList.add(alarmId);
-
-        // 注册闹钟
-        result = await FlutterMethodChannel.instance.registerAlarm(alarm);
+      if (currentPhase == null) {
+        throw Exception('Current phase is null');
       }
+
+      if (_shouldSkipPhase(currentPhase, currentPhaseCycles!, phaseCycle, phase)) {
+        continue;
+      }
+
+      var ringTime = DateTime.now().add(Duration(milliseconds: (time - elapsedTime!)));
+      await _registerUniqueAlarm(phase, ringTime);
+    }
+  }
+
+  bool _shouldSkipPhase(Phase currentPhase, int currentPhaseCycles, int phaseCycle, Phase phase) {
+    var isShortBreak = currentPhase == Phase.shortBreak;
+    var isLongBreak = currentPhase == Phase.longBreak;
+
+    if (currentPhaseCycles > phaseCycle) {
+      return true;
+    }
+
+    if (currentPhaseCycles == phaseCycle) {
+      if ((isShortBreak || isLongBreak) && phase == Phase.focus) {
+        return true;
+      }
+      if (phase == currentPhase) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  Future<void> _registerUniqueAlarm(Phase phase, DateTime ringTime) async {
+    int result = -1;
+
+    while (result != 0) {
+      int alarmId = _randomAlarmId();
+      var (notificationTitle, notificationContent) = _getNotificationDetails(phase);
+
+      var alarm = Alarm(
+        id: alarmId,
+        timestamp: ringTime.toUtc().millisecondsSinceEpoch,
+        fromAppAsset: PreferenceManager.instance.ringtonePath == null,
+        audioPath: PreferenceManager.instance.ringtonePath ?? 'assets/media/default_ring.mp3',
+        vibrate: _states.reminderType == ReminderType.vibration || _states.reminderType == ReminderType.alarm,
+        notification: _states.reminderType != ReminderType.none,
+        isAlarm: _states.reminderType == ReminderType.alarm,
+        loop: true,
+        loopTimes: 5,
+        notificationTitle: notificationTitle,
+        notificationContent: notificationContent,
+      );
+
+      _alarmList.add(alarmId);
+      result = await FlutterMethodChannel.instance.registerAlarm(alarm);
+    }
+  }
+
+  (String?, String?) _getNotificationDetails(Phase phase) {
+    switch (phase) {
+      case Phase.focus:
+        return (S.current.focusNotificationTitle, S.current.focusNotificationContent);
+      case Phase.shortBreak:
+        return (S.current.shortBreakNotificationTitle, S.current.shortBreakNotificationContent);
+      case Phase.longBreak:
+        return (S.current.longBreakNotificationTitle, S.current.longBreakNotificationContent);
+      case Phase.finish:
+        return (S.current.pomodoroEndNotificationTitle, S.current.pomodoroEndNotificationContent);
+      default:
+        return (null, null);
     }
   }
 

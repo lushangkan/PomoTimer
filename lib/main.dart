@@ -21,6 +21,8 @@ void main() async {
 
   if (kDebugMode) {
     Logger.level = Level.trace;
+  } else {
+    Logger.level = Level.info;
   }
 
   initializeReflectable();

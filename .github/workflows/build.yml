@@ -36,16 +36,13 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: '21'
+          java-version: '17'
     
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build debug apk
         run: flutter build apk --split-per-abi --debug
-
-      - name: Build release apk
-        run: flutter build apk --split-per-abi
 
       - uses: actions/upload-artifact@v4
         with:

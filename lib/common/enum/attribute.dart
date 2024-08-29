@@ -1,1 +1,1 @@
-enum Phase { focus, shortBreak, longBreak }
+enum Phase { focus, shortBreak, longBreak, finish }

@@ -92,6 +92,8 @@
   "shortBreakNotificationContent": "A quick break will refresh you and get you ready for the next focus session! 🌟",
   "longBreakNotificationTitle": "Relaxation Time!",
   "longBreakNotificationContent": "You’ve been working hard, now it’s time to unwind and recharge before you go again! 🍹",
+  "pomodoroEndNotificationTitle": "Pomodoro Finished!",
+  "pomodoroEndNotificationContent": "Congratulations on completing a Pomodoro! Take a break and get ready for the next challenge! 🎉",
   "notificationStopButton": "Stop",
 
   "settingTitle": "Settings",

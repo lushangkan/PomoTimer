@@ -113,7 +113,7 @@ class _SettingBodyState extends State<SettingBody> {
         showSettingDialog(RingtoneDialog(onTapFromStorage: onRingtoneTapFromStorage,));
       },
       Settings.about: () {
-        context.go('/about');
+        context.push('/about');
       },
     };
 
