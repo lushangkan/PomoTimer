@@ -447,8 +447,8 @@ class AppTimer {
             _states.reminderType == ReminderType.alarm,
         notification: _states.reminderType != ReminderType.none,
         isAlarm: _states.reminderType == ReminderType.alarm,
-        loop: true,
-        loopTimes: 5,
+        loop: false,
+        loopTimes: 1,
         notificationTitle: notificationTitle,
         notificationContent: notificationContent,
       );
