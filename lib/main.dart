@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -39,7 +42,7 @@ void main() async {
   await PermissionHandle.instance.checkAllPermissionStatus();
 
   // 初始化Intl
-  await S.load(Locale(PreferenceManager.instance.language!));
+  await S.load(Locale(PreferenceManager.instance.language ?? PlatformDispatcher.instance.locale.languageCode));
 
   // 初始化FlutterMethodChannel
   FlutterMethodChannel();

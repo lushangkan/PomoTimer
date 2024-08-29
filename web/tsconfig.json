@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "sourceMap": true,
+    "target": "ESNext"
+  },
+  "files": [
+    "src/alarm.ts"
+  ]
+}

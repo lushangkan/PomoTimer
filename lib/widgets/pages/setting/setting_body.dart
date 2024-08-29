@@ -50,9 +50,9 @@ class _SettingBodyState extends State<SettingBody> {
     }
 
     void onRingtoneTapFromStorage() async {
-      if (!(await PermissionHandle.instance.isStoragePermissionGranted)) {
+      if (!(await PermissionHandle.instance.isAndroidStoragePermissionGranted)) {
         if (!context.mounted) return;
-        var result = await PermissionHandle.instance.requestStoragePermission(context);
+        var result = await PermissionHandle.instance.requestAndroidStoragePermission(context);
 
         if (!result) {
           // SnackBar提示用户

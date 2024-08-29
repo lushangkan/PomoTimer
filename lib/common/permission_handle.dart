@@ -1,3 +1,7 @@
+
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -28,6 +32,23 @@ class PermissionHandle {
 
   /// 获取权限状态
   Future<void> checkAllPermissionStatus() async {
+    if (kIsWeb) {
+      await checkWebAllPermissionStatus();
+      return;
+    }
+
+    if (Platform.isAndroid) {
+      await checkAndroidAllPermissionStatus();
+    }
+  }
+
+  Future<void> checkWebAllPermissionStatus() async {
+    var status = await Permission.notification.status;
+    _permissionStatus.update(Permission.notification, (value) => status);
+    return;
+  }
+
+  Future<void> checkAndroidAllPermissionStatus() async {
     for (var permission in permissionList) {
       if (permission == Permission.storage && await _isAndroid13Plus) {
         continue;
@@ -67,24 +88,52 @@ class PermissionHandle {
     ) ?? false;
   }
 
-  /// 请求权限, 如果未授权, 会弹出权限请求对话框
+  Future<bool> requestPermission(BuildContext context) async {
+    if (kIsWeb) {
+      return await requestWebPermission(context);
+    } else if (Platform.isAndroid) {
+      return await requestAndroidPermission(context);
+    }
+    return false;
+  }
+
+  Future<bool> requestWebPermission(BuildContext context) async {
+    var permission = Permission.notification;
+    var status = await permission.status;
+    if (status.isGranted) {
+      return true;
+    }
+
+    var newStatus = await permission.request();
+    if (newStatus.isGranted) {
+      _permissionStatus.update(permission, (value) => newStatus);
+      return true;
+    }
+    return false;
+  }
+
+  /// 请求安卓权限, 如果未授权, 会弹出权限请求对话框
   /// 如果已经请求过权限, 会直接返回true
   /// @param context 上下文
   /// @param askUser 是否询问用户
   /// @return 是否已授权
-  Future<bool> requestPermission(BuildContext context, {bool askUser = true}) async {
+  Future<bool> requestAndroidPermission(BuildContext context, {bool askUser = true}) async {
     var appStates = context.read<AppStates>();
 
     // 检查权限
     if (askUser) {
-      if (!PermissionHandle.instance.isPermissionGranted) {
+      if (PermissionHandle.instance.isPermissionGranted) {
+          return true;
+        }
+
         // 未授权
         var result = await showPermissionDialog(context);
 
         if (result != true) {
           return false;
         }
-      }
+
+        return true;
     }
 
     for (var permission in permissionList) {
@@ -120,21 +169,10 @@ class PermissionHandle {
         _permissionStatus.update(permission, (value) => newStatus);
 
         if (permission == Permission.notification && await getAndroidSDKVersion() >= 26 && await isMiui()) {
-          // 弹出请求悬浮通知权限，由于miui将此默认关闭
+          // 请求悬浮通知权限
           if (!context.mounted) return false;
-          if (await _requestHeadsUpPermission(context)) {
-            await FlutterMethodChannel.instance.requestHeadsUpPermission();
-            // 等待用户回到应用
-            if (appStates.appLifecycleState == AppLifecycleState.resumed) {
-              while (appStates.appLifecycleState == AppLifecycleState.resumed) {
-                await Future.delayed(const Duration(milliseconds: 100));
-              }
-            }
-            if (appStates.appLifecycleState != AppLifecycleState.resumed) {
-              while (appStates.appLifecycleState != AppLifecycleState.resumed) {
-                await Future.delayed(const Duration(milliseconds: 100));
-              }
-            }
+          if (!await requestNotificationHeadUpPermission(context, appStates)) {
+            return false;
           }
         }
 
@@ -145,7 +183,27 @@ class PermissionHandle {
     return true;
   }
 
-  Future<bool> requestStoragePermission(BuildContext context) async {
+  Future<bool> requestNotificationHeadUpPermission(BuildContext context, AppStates appStates) async {
+    // 弹出请求悬浮通知权限，由于miui将此默认关闭
+    if (!context.mounted) return false;
+    if (!await _requestHeadsUpPermission(context)) {
+      return false;
+    }
+    await FlutterMethodChannel.instance.requestHeadsUpPermission();
+    // 等待用户回到应用
+    await waitAndroidAppResumed(appStates);
+    return true;
+  }
+
+  Future<void> waitAndroidAppResumed(AppStates appStates) async {
+    if (appStates.appLifecycleState == AppLifecycleState.resumed) {
+      while (appStates.appLifecycleState == AppLifecycleState.resumed) {
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+    }
+  }
+
+  Future<bool> requestAndroidStoragePermission(BuildContext context) async {
     // 检查是否已经授权
     var status = await Permission.storage.status;
     if (status.isGranted) {
@@ -187,6 +245,15 @@ class PermissionHandle {
 
   /// 计时需要的权限是否已授权
   bool get isPermissionGranted {
+    if (kIsWeb) {
+      return _webIsPermissionGranted;
+    } else if (Platform.isAndroid) {
+      return _androidIsPermissionGranted;
+    }
+    return false;
+  }
+
+  bool get _androidIsPermissionGranted {
     for (var permission in permissionList) {
       if (_permissionStatus[permission] != PermissionStatus.granted && _permissionStatus[permission] != null) {
         return false;
@@ -195,8 +262,21 @@ class PermissionHandle {
     return true;
   }
 
+  bool get _webIsPermissionGranted {
+    return _permissionStatus[Permission.notification] == PermissionStatus.granted;
+  }
+
   /// 读取文件的权限是否已授权
   Future<bool> get isStoragePermissionGranted async {
+    if (kIsWeb) {
+      return true;
+    } else if (Platform.isAndroid) {
+      return await isAndroidStoragePermissionGranted;
+    }
+    return false;
+  }
+
+  Future<bool> get isAndroidStoragePermissionGranted async {
     if (await _isAndroid13Plus) {
       return _permissionStatus[Permission.audio] == PermissionStatus.granted;
     } else {
